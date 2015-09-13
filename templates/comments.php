@@ -30,8 +30,9 @@ if ( post_password_required() ) {
 			</div>
 			<div class="comment-metadata">
 				<a href="<%= link %>">
-					<time datetime="2015-07-27T20:15:37+00:00">
-						<!-- TODO: Date parsing --> July 27, 2015 at 8:15 pm
+					<time datetime="<%= ISOString %>">
+						<!-- TODO: Appropriate date formatting -->
+						<%= dateString %>
 					</time>
 				</a>
 				<span class="edit-link">
