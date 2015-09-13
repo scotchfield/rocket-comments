@@ -13,7 +13,7 @@ jQuery(function () {
 		model: CommentModel,
 		url: function () {
 			if (this.post_id) {
-				return WP_API_Settings.root + '/comments/?post=' + this.post_id;
+				return WP_API_Settings.root + '/comments/?orderby=id&order=ASC&post=' + this.post_id;
 			}
 			return WP_API_Settings.root + '/comments/';
 		}
@@ -33,6 +33,7 @@ jQuery(function () {
 			this.$el.empty();
 			if (!_.isEmpty(this.collection)) {
 				this.collection.each(function (item) {
+					console.log(item);
 					this.$el.append(item.render());
 				}, this);
 			}
