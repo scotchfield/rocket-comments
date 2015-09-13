@@ -24,7 +24,7 @@ jQuery(function () {
 		collection: new CommentsCollection(),
 
 		initialize: function () {
-			this.listenTo(this.collection, 'all', this.render);
+			this.listenTo(this.collection, 'add', this.render);
 			this.collection.post_id = this.$el.data('post-id');
 			this.collection.fetch();
 		},
