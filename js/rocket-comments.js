@@ -14,7 +14,7 @@ jQuery(function () {
 	}),
 
 	CommentsView = Backbone.View.extend({
-		el: 'div#comments',
+		el: 'ol.comment-list',
 		collection: new CommentsCollection(),
 
 		initialize: function () {
@@ -25,11 +25,9 @@ jQuery(function () {
 		render: function () {
 			this.$el.empty();
 			if (!_.isEmpty(this.collection)) {
-				this.$ol = jQuery('<ol>', {class: 'comment-list'});
-				this.$el.append(this.$ol);
 				this.collection.each(function (item) {
 					console.log(item);
-					this.$ol.append(item.render());
+					this.$el.append(item.render());
 				}, this);
 			}
 		},

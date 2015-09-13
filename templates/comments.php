@@ -10,7 +10,11 @@ if ( post_password_required() ) {
 }
 ?>
 
-<div id="comments" class="comments-area"></div><!-- .comments-area -->
+<div id="comments" class="comments-area">
+	<ol class="comment-list"></ol>
+
+	<?php comment_form(); ?>
+</div>
 
 <script type="text/template" id="comment-template">
 	<li id="comment-<%= id %>" class="comment">
