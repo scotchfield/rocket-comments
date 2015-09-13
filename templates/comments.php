@@ -11,7 +11,7 @@ if ( post_password_required() ) {
 ?>
 
 <div id="comments" class="comments-area">
-	<ol class="comment-list"></ol>
+	<ol class="comment-list" data-post-id="<?php echo the_ID(); ?>"></ol>
 
 	<?php comment_form(); ?>
 </div>

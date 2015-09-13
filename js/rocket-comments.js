@@ -10,7 +10,13 @@ jQuery(function () {
 	}),
 
 	CommentsCollection = wp.api.collections.Comments.extend({
-		model: CommentModel
+		model: CommentModel,
+		url: function () {
+			if (this.post_id) {
+				return WP_API_Settings.root + '/comments/?post=' + this.post_id;
+			}
+			return WP_API_Settings.root + '/comments/';
+		}
 	}),
 
 	CommentsView = Backbone.View.extend({
@@ -19,6 +25,7 @@ jQuery(function () {
 
 		initialize: function () {
 			this.listenTo(this.collection, 'all', this.render);
+			this.collection.post_id = this.$el.data('post-id');
 			this.collection.fetch();
 		},
 
@@ -26,7 +33,6 @@ jQuery(function () {
 			this.$el.empty();
 			if (!_.isEmpty(this.collection)) {
 				this.collection.each(function (item) {
-					console.log(item);
 					this.$el.append(item.render());
 				}, this);
 			}
