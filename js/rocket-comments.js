@@ -3,9 +3,11 @@ jQuery(function () {
 
 	var CommentModel = wp.api.models.Comment.extend({
 		template: _.template(jQuery('#comment-template').html()),
+		children: [],
 
 		render: function () {
-			return this.template(this.attributes);
+			var $el = jQuery('li#comment-' + this.get('id'));
+			$el.html(this.template(this.attributes));
 		}
 	}),
 
@@ -20,10 +22,13 @@ jQuery(function () {
 	}),
 
 	CommentsView = Backbone.View.extend({
-		el: 'ol.comment-list',
+		el: 'ol#comment-root',
 		collection: new CommentsCollection(),
 
 		initialize: function () {
+			this.collection.on('all', function(eventName) {
+				console.log(eventName + ' was triggered!');
+			});
 			this.listenTo(this.collection, 'add', this.render);
 			this.collection.post_id = this.$el.data('post-id');
 			this.collection.fetch();
@@ -33,8 +38,12 @@ jQuery(function () {
 			this.$el.empty();
 			if (!_.isEmpty(this.collection)) {
 				this.collection.each(function (item) {
-					console.log(item);
-					this.$el.append(item.render());
+					var $el = this.$el;
+					if (item.get('parent') > 0) {
+						$el = jQuery('ol#ol-comment-' + item.get('parent'));
+					}
+					$el.append('<li id="comment-' + item.get('id') + '" class="comment"></li>');
+					item.render();
 				}, this);
 			}
 		},
