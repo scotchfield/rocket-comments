@@ -18,6 +18,15 @@ jQuery(function () {
 				return WP_API_Settings.root + '/comments/?orderby=id&order=ASC&post=' + this.post_id;
 			}
 			return WP_API_Settings.root + '/comments/';
+		},
+
+		commentDepth: function (item) {
+			var depth = 1;
+			while (item.get('parent') > 0) {
+				item = this.where({'id': item.get('parent')})[0];
+				depth += 1;
+			}
+			return depth;
 		}
 	}),
 
@@ -42,7 +51,7 @@ jQuery(function () {
 					if (item.get('parent') > 0) {
 						$el = jQuery('ol#ol-comment-' + item.get('parent'));
 					}
-					$el.append('<li id="comment-' + item.get('id') + '" class="comment"></li>');
+					$el.append('<li id="comment-' + item.get('id') + '" class="comment depth-' + this.collection.commentDepth(item) + '"></li>');
 					item.render();
 				}, this);
 			}

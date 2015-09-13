@@ -48,5 +48,5 @@ if ( post_password_required() ) {
 			<a rel='nofollow' class='comment-reply-link' href='http://localhost:8888/2015/07/27/hello-world/?replytocom=1#respond' onclick='return addComment.moveForm( "div-comment-1", "1", "respond", "1" )' aria-label='Reply to Mr WordPress'>Reply</a>
 		</div>
 	</article>
-	<ol id="ol-comment-<%= id %>" class="comment-list"></ol>
+	<ol id="ol-comment-<%= id %>" class="children"></ol>
 </script>
