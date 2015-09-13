@@ -1,19 +1,30 @@
-var RocketComments = (function () {
+jQuery(function () {
 	'use strict';
 
-	var rc = {};
+	var CommentsView = Backbone.View.extend({
+		el: 'div#comments',
 
-	rc.loadComments = function (id) {
-		jQuery.get('/wp-json/wp/v2/comments', function (data) {
-			var el = jQuery('div#comments');
-			console.log(data);
-			el.html('Comments retrieved!');
-		});
-	};
+		initialize: function () {
+			this.collection = new wp.api.collections.Comments();
+			this.listenTo(this.collection, 'all', this.render);
+			this.collection.fetch();
+		},
 
-	jQuery(function () {
-		rc.loadComments();
+		render: function () {
+			this.$el.empty();
+			this.collection.each(function (item) {
+				this.renderComment(item);
+			}, this);
+		},
+
+		renderComment: function (item) {
+			/*var commentView = new CommentView({
+				model: item
+			}) ;*/
+			console.log(item);
+			this.$el.append('<p>' + item.get('author_name') + '</p>');
+		}
 	});
 
-	return rc;
-}());
+	var commentsView = new CommentsView();
+});

@@ -10,8 +10,5 @@ if ( post_password_required() ) {
 }
 ?>
 
-<div id="comments" class="comments-area">
+<div id="comments" class="comments-area"></div><!-- .comments-area -->
 
-	<h2>Comments will appear here!</h2>
-
-</div><!-- .comments-area -->
