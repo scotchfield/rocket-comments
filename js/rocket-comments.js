@@ -24,10 +24,14 @@ jQuery(function () {
 
 		render: function () {
 			this.$el.empty();
-			this.collection.each(function (item) {
-				console.log(item);
-				this.$el.append(item.render());
-			}, this);
+			if (!_.isEmpty(this.collection)) {
+				this.$ol = jQuery('<ol>', {class: 'comment-list'});
+				this.$el.append(this.$ol);
+				this.collection.each(function (item) {
+					console.log(item);
+					this.$ol.append(item.render());
+				}, this);
+			}
 		},
 	});
 
