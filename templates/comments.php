@@ -40,7 +40,7 @@ if ( ! $thread_comments ) {
 	<article id="div-comment-<%= id %>" class="comment-body">
 		<footer class="comment-meta">
 			<div class="comment-author vcard">
-				<!-- img -->
+				<img alt src="<%= author_avatar_urls['48'] %>" class="avatar" height="48" width="48" />
 				<b class="fn">
 					<a href='<%= author_url %>' rel='external nofollow' class='url'>
 						<%= author_name %>
