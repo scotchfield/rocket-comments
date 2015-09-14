@@ -32,7 +32,10 @@ jQuery(function () {
 				item = this.where({'id': item.get('parent')})[0];
 				depth += 1;
 			}
-			return depth;
+			if (! this.threaded) {
+				this.threaded = jQuery('div#comments').data('threaded');
+			}
+			return depth < this.threaded ? depth : this.threaded;
 		}
 	}),
 
@@ -56,11 +59,14 @@ jQuery(function () {
 			});
 			if (!_.isEmpty(this.collection)) {
 				this.collection.each(function (item) {
-					var $el = this.$el;
-					if (item.get('parent') > 0) {
+					var $el = this.$el,
+						depth = this.collection.commentDepth(item);
+
+					if (item.get('parent') > 0 && depth > 1) {
 						$el = jQuery('ol#ol-comment-' + item.get('parent'));
 					}
-					$el.append('<li id="comment-' + item.get('id') + '" class="comment depth-' + this.collection.commentDepth(item) + '"></li>');
+
+					$el.append('<li id="comment-' + item.get('id') + '" class="comment depth-' + depth + '"></li>');
 					item.render();
 					console.log(item);
 				}, this);

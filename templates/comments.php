@@ -10,7 +10,15 @@ if ( post_password_required() ) {
 }
 ?>
 
-<div id="comments" class="comments-area">
+<div id="comments" class="comments-area"<?php
+$thread_comments = get_option( 'thread_comments', true );
+if ( ! $thread_comments ) {
+	echo ' data-threaded="1"';
+} else {
+	$thread_depth = get_option( 'thread_comments_depth' );
+	echo ' data-threaded="' . $thread_depth . '"';
+}
+?>>
 	<div id="wp-loading">
 		<img src="<?php echo plugins_url(); ?>/rocket-comments/images/wp-loading.gif">
 	</div>
