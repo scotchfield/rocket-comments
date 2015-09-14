@@ -5,6 +5,12 @@ jQuery(function () {
 		template: _.template(jQuery('#comment-template').html()),
 		children: [],
 
+		initialize: function () {
+			var date = new Date(wp.api.utils.parseISO8601(this.get('date')));
+			this.set({'dateString': date.toLocaleString()});
+			this.set({'ISOString': date.toISOString()});
+		},
+
 		render: function () {
 			var $el = jQuery('li#comment-' + this.get('id'));
 			$el.html(this.template(this.attributes));
@@ -45,6 +51,9 @@ jQuery(function () {
 
 		render: function () {
 			this.$el.empty();
+			jQuery('div#wp-loading').fadeOut(400, function () {
+				jQuery('ol#comment-root').fadeIn(400);
+			});
 			if (!_.isEmpty(this.collection)) {
 				this.collection.each(function (item) {
 					var $el = this.$el;
@@ -53,6 +62,7 @@ jQuery(function () {
 					}
 					$el.append('<li id="comment-' + item.get('id') + '" class="comment depth-' + this.collection.commentDepth(item) + '"></li>');
 					item.render();
+					console.log(item);
 				}, this);
 			}
 		},

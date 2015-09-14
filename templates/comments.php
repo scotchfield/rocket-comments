@@ -11,6 +11,10 @@ if ( post_password_required() ) {
 ?>
 
 <div id="comments" class="comments-area">
+	<div id="wp-loading">
+		<img src="<?php echo plugins_url(); ?>/rocket-comments/images/wp-loading.gif">
+	</div>
+
 	<ol id="comment-root" class="comment-list" data-post-id="<?php echo the_ID(); ?>"></ol>
 
 	<?php comment_form(); ?>

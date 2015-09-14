@@ -27,7 +27,7 @@ class RocketComments {
 		);
 
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
-		add_action( 'wp_enqueue_styles', array( $this, 'enqueue_styles' ) );
+		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_styles' ) );
 
 		add_filter( 'comments_template', array( $this, 'comments_template' ) );
 
