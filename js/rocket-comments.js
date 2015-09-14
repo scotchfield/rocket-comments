@@ -64,6 +64,12 @@ jQuery(function () {
 					item.render();
 					console.log(item);
 				}, this);
+				if (this.collection.length == 1) {
+					jQuery('.comments-area #comment-single').fadeIn();
+				} else {
+					jQuery('span#comment-count').html(this.collection.length);
+					jQuery('.comments-area #comment-multiple').fadeIn();
+				}
 			}
 		},
 	});

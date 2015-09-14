@@ -15,6 +15,14 @@ if ( post_password_required() ) {
 		<img src="<?php echo plugins_url(); ?>/rocket-comments/images/wp-loading.gif">
 	</div>
 
+	<h2 id="comment-single" class="comments-title">
+		<?php printf( __( 'One thought on &ldquo;%s&rdquo;', 'rocket-comments' ), get_the_title() ); ?>
+	</h2>
+
+	<h2 id="comment-multiple" class="comments-title">
+		<?php printf( __( '<span id="comment-count"></span> thoughts on &ldquo;%s&rdquo;', 'rocket-comments' ), get_the_title() ); ?>
+	</h2>
+
 	<ol id="comment-root" class="comment-list" data-post-id="<?php echo the_ID(); ?>"></ol>
 
 	<?php comment_form(); ?>

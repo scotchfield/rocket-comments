@@ -6,3 +6,6 @@
 .comments-area ol#comment-root {
 	display: none;
 }
+.comments-area .comments-title {
+	display: none;
+}
