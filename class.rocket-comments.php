@@ -16,6 +16,13 @@ class RocketComments {
 			return false;
 		}
 
+		if ( ! is_plugin_active( 'rest-api/plugin.php' ) ) {
+			add_action( 'admin_init', array( $this, 'plugin_deactivate' ) );
+			add_action( 'admin_notices', array( $this, 'plugin_deactivate_notice' ) );
+
+			return false;
+		}
+
 		wp_register_script(
 			'rocket-comments-script',
 			plugins_url( '/js/rocket-comments.js', __FILE__ ),
@@ -34,6 +41,18 @@ class RocketComments {
 		// TODO: Check with the WP-API team for the best way of getting the appropriate URL.
 		// This doesn't feel right.
 		add_filter( 'rest_url', array( $this, 'filter_rest_url' ), 10, 4 );
+	}
+
+	public function plugin_deactivate() {
+		deactivate_plugins( plugin_dir_path( __FILE__ ) . '/rocket-comments.php' );
+	}
+
+	public function plugin_deactivate_notice() {
+		echo '<div class="updated"><p><strong>Rocket Comments</strong> depends on <strong>WP-API</strong>. Please install and activate it first! Thanks!</p></div>';
+
+		if ( isset( $_GET[ 'activate' ] ) ) {
+			unset( $_GET[ 'activate' ] );
+		}
 	}
 
 	public function comments_template( $comment_template ) {
