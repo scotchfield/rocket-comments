@@ -7,8 +7,8 @@ jQuery(function () {
 
 		initialize: function () {
 			var date = new Date(wp.api.utils.parseISO8601(this.get('date')));
-			this.set({'dateString': date.toLocaleString()});
-			this.set({'ISOString': date.toISOString()});
+			this.set({'date_string': date.toLocaleString()});
+			this.set({'iso_string': date.toISOString()});
 		},
 
 		render: function () {

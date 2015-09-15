@@ -50,9 +50,9 @@ if ( ! $thread_comments ) {
 			</div>
 			<div class="comment-metadata">
 				<a href="<%= link %>">
-					<time datetime="<%= ISOString %>">
+					<time datetime="<%= iso_string %>">
 						<!-- TODO: Appropriate date formatting -->
-						<%= dateString %>
+						<%= date_string %>
 					</time>
 				</a>
 				<span class="edit-link">
