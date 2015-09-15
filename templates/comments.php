@@ -18,6 +18,8 @@ if ( ! $thread_comments ) {
 	$thread_depth = get_option( 'thread_comments_depth' );
 	echo ' data-threaded="' . $thread_depth . '"';
 }
+
+echo ' data-user-id="' . get_current_user_id() . '"';
 ?>>
 	<div id="wp-loading">
 		<img src="<?php echo plugins_url(); ?>/rocket-comments/images/wp-loading.gif">

@@ -49,6 +49,7 @@ jQuery(function () {
 			});
 			this.listenTo(this.collection, 'add', this.render);
 			this.collection.post_id = this.$el.data('post-id');
+			this.collection.user_id = this.$el.data('user-id');
 			this.collection.fetch();
 		},
 
@@ -60,13 +61,14 @@ jQuery(function () {
 			if (!_.isEmpty(this.collection)) {
 				this.collection.each(function (item) {
 					var $el = this.$el,
-						depth = this.collection.commentDepth(item);
+						depth = this.collection.commentDepth(item),
+						bypostauthor = '';
 
 					if (item.get('parent') > 0 && depth > 1) {
 						$el = jQuery('ol#ol-comment-' + item.get('parent'));
 					}
 
-					$el.append('<li id="comment-' + item.get('id') + '" class="comment depth-' + depth + '"></li>');
+					$el.append('<li id="comment-' + item.get('id') + '" class="comment depth-' + depth + bypostauthor + '"></li>');
 					item.render();
 					console.log(item);
 				}, this);
