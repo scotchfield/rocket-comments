@@ -1,9 +1,41 @@
 jQuery(function () {
 	'use strict';
 
-	var CommentModel = wp.api.models.Comment.extend({
+	var CommentModel = Backbone.Model.extend({ //wp.api.models.Comment.extend({
 		template: _.template(jQuery('#comment-template').html()),
 		children: [],
+
+		idAttribute: 'id',
+
+		defaults: {
+			id: null,
+			author: null,
+			author_email: '',
+			author_ip: '',
+			author_name: '',
+			author_url: '',
+			author_user_agent: '',
+			content: {},
+			date: new Date(),
+			date_gmt: new Date(),
+			karma: 0,
+			link: '',
+			parent: 0,
+			post: null,
+			status: 'hold',
+			type: '',
+			_links: {}
+		},
+
+		url: function() {
+			var post_id = this.get( 'post' );
+			post_id = post_id || '';
+
+			var id = this.get( 'id' );
+			id = id || '';
+
+			return WP_API_Settings.root + '/posts/' + post_id + '/comments/' + id;
+		},
 
 		initialize: function () {
 			var date = new Date(wp.api.utils.parseISO8601(this.get('date')));
@@ -66,6 +98,10 @@ jQuery(function () {
 
 					if (item.get('parent') > 0 && depth > 1) {
 						$el = jQuery('ol#ol-comment-' + item.get('parent'));
+					}
+
+					if (item.get('author') == this.collection.user_id) {
+						bypostauthor = ' bypostauthor';
 					}
 
 					$el.append('<li id="comment-' + item.get('id') + '" class="comment depth-' + depth + bypostauthor + '"></li>');
