@@ -41,23 +41,15 @@ if ( ! $thread_comments ) {
 		<footer class="comment-meta">
 			<div class="comment-author vcard">
 				<img alt src="<%= author_avatar_urls['48'] %>" class="avatar" height="48" width="48" />
-				<b class="fn">
-					<a href='<%= author_url %>' rel='external nofollow' class='url'>
-						<%= author_name %>
-					</a>
-				</b>
-				<span class="says">says:</span>
+				<?php _e( '<b class="fn"><a href="<%= author_url %>" rel="external nofollow" class="url"><%= author_name %></a></b><span class="says">says:</span>', 'rocket-comments' ); ?>
 			</div>
 			<div class="comment-metadata">
 				<a href="<%= link %>">
-					<time datetime="<%= iso_string %>">
-						<!-- TODO: Appropriate date formatting -->
-						<%= date_string %>
-					</time>
+					<time datetime="<%= iso_string %>"><%= date_string %></time>
 				</a>
 				<span class="edit-link">
-					<a class="comment-edit-link" href="http://localhost:8888/wp-admin/comment.php?action=editcomment&amp;c=1">
-						Edit
+					<a class="comment-edit-link" href="<?php echo get_admin_url() ?>comment.php?action=editcomment&amp;c=<%= id %>">
+						<?php _e( 'Edit', 'rocket-comments' ); ?>
 					</a>
 				</span>
 			</div>
@@ -66,7 +58,7 @@ if ( ! $thread_comments ) {
 			<%= content.rendered %>
 		</div>
 		<div class="reply">
-			<a rel='nofollow' class='comment-reply-link' href='http://localhost:8888/2015/07/27/hello-world/?replytocom=1#respond' onclick='return addComment.moveForm( "div-comment-1", "1", "respond", "1" )' aria-label='Reply to Mr WordPress'>Reply</a>
+			<a rel='nofollow' class='comment-reply-link' href='<?php echo get_permalink(); ?>?replytocom=1#respond' onclick='return addComment.moveForm( "div-comment-<%= id %>", "<%= id %>", "respond", "<%= id %>" )' aria-label='<?php _e( 'Leave a reply', 'rocket-comments' ); ?>'><?php _e( 'Reply', 'rocket-comments' ); ?></a>
 		</div>
 	</article>
 	<ol id="ol-comment-<%= id %>" class="children"></ol>
