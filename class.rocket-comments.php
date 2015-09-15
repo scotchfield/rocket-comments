@@ -16,7 +16,7 @@ class RocketComments {
 			return false;
 		}
 
-		if ( ! is_plugin_active( 'rest-api/plugin.php' ) ) {
+		if ( function_exists( 'is_plugin_active' ) && ! is_plugin_active( 'rest-api/plugin.php' ) ) {
 			add_action( 'admin_init', array( $this, 'plugin_deactivate' ) );
 			add_action( 'admin_notices', array( $this, 'plugin_deactivate_notice' ) );
 
