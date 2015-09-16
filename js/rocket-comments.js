@@ -2,11 +2,8 @@ jQuery(function () {
 	'use strict';
 
 	var CommentModel = Backbone.Model.extend({ //wp.api.models.Comment.extend({
-		template: _.template(jQuery('#comment-template').html()),
 		children: [],
-
 		idAttribute: 'id',
-
 		defaults: {
 			id: null,
 			author: null,
@@ -43,9 +40,18 @@ jQuery(function () {
 			this.set({'iso_string': date.toISOString()});
 		},
 
-		render: function () {
-			var $el = jQuery('li#comment-' + this.get('id'));
-			$el.html(this.template(this.attributes));
+	}),
+
+	CommentView = Backbone.View.extend({
+		tagName: 'li',
+		template: _.template(jQuery('#comment-template').html()),
+
+		render: function (class_list) {
+			this.$el.html(this.template(this.model.attributes))
+				.attr('id', 'comment-' + this.model.get('id'))
+				.addClass(class_list);
+
+			return this;
 		}
 	}),
 
@@ -104,8 +110,9 @@ jQuery(function () {
 						bypostauthor = ' bypostauthor';
 					}
 
-					$el.append('<li id="comment-' + item.get('id') + '" class="comment depth-' + depth + bypostauthor + '"></li>');
-					item.render();
+					var item_view = new CommentView({model: item});
+					$el.append(item_view.render('comment depth-' + depth + bypostauthor).el);
+
 					console.log(item);
 				}, this);
 				if (this.collection.length == 1) {
