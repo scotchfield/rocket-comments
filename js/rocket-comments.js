@@ -6,6 +6,11 @@ var CommentModel = Backbone.Model.extend({ //wp.api.models.Comment.extend({
 	defaults: {
 		id: null,
 		author: null,
+		author_avatar_urls: {
+			'24': '',
+			'48': '',
+			'96': ''
+		},
 		author_email: '',
 		author_ip: '',
 		author_name: '',
@@ -21,6 +26,33 @@ var CommentModel = Backbone.Model.extend({ //wp.api.models.Comment.extend({
 		status: 'hold',
 		type: '',
 		_links: {}
+	},
+
+	/**
+	 * Set nonce header before every Backbone sync
+	 * Borrowed from wp-api.js
+	 *
+	 * @param {string} method
+	 * @param {Backbone.Model} model
+	 * @param {{beforeSend}, *} options
+	 * @returns {*}
+	 */
+	sync: function( method, model, options ) {
+		options = options || {};
+
+		if ( 'undefined' !== typeof WP_API_Settings.nonce ) {
+			var beforeSend = options.beforeSend;
+
+			options.beforeSend = function( xhr ) {
+				xhr.setRequestHeader( 'X-WP-Nonce', WP_API_Settings.nonce );
+
+				if ( beforeSend ) {
+					return beforeSend.apply( this, arguments );
+				}
+			};
+		}
+
+		return Backbone.sync( method, model, options );
 	},
 
 	url: function() {
@@ -46,9 +78,10 @@ CommentView = Backbone.View.extend({
 	template: _.template(jQuery('#comment-template').html()),
 
 	render: function (class_list) {
-		this.$el.html(this.template(this.model.attributes))
+		this.$el.html(this.template(this.model))
 			.attr('id', 'comment-' + this.model.get('id'))
-			.addClass(class_list);
+			.addClass(class_list)
+			.data('comment-id', this.model.get('id'));
 
 		return this;
 	}
@@ -80,6 +113,10 @@ CommentsView = Backbone.View.extend({
 	el: 'ol#comment-root',
 	collection: new CommentsCollection(),
 
+	events: {
+		'click .comment-respond .submit': 'submitComment'
+	},
+
 	initialize: function () {
 		this.collection.on('all', function(eventName) {
 			console.log(eventName + ' was triggered!');
@@ -87,6 +124,7 @@ CommentsView = Backbone.View.extend({
 		this.listenTo(this.collection, 'add', this.render);
 		this.collection.post_id = this.$el.data('post-id');
 		this.collection.user_id = this.$el.data('user-id');
+		this.collection.user_name = this.$el.data('user-name');
 		this.collection.fetch();
 	},
 
@@ -122,6 +160,23 @@ CommentsView = Backbone.View.extend({
 			}
 		}
 	},
+
+	submitComment: function (e) {
+		e.preventDefault();
+
+		var $el = jQuery(e.currentTarget).closest('li'),
+			parent_id = $el.data('comment-id'),
+			content = jQuery('.comment-respond textarea#comment').val(),
+			attributes = {
+				content: {rendered: content},
+				parent: parent_id,
+				author: this.collection.user_id,
+				name: this.collection.user_name,
+			},
+			item = new CommentModel(attributes);
+
+		this.collection.add(item);
+	}
 });
 
 jQuery(function () {
