@@ -26,7 +26,9 @@ class RocketComments {
 		wp_register_script(
 			'rocket-comments-script',
 			plugins_url( '/js/rocket-comments.js', __FILE__ ),
-			array( 'jquery', 'backbone', 'wp-api' )
+			array( 'jquery', 'backbone', 'wp-api' ),
+			'0.1.0',
+			true
 		);
 		wp_register_style(
 			'rocket-comments-style',
