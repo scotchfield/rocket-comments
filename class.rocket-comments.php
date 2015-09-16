@@ -56,7 +56,6 @@ class RocketComments {
 	}
 
 	public function comments_template( $comment_template ) {
-		// TODO: Check if WP-API is enabled, don't change if it's not
 		return dirname( __FILE__ ) . '/templates/comments.php';
 	}
 
