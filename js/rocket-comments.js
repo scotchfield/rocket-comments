@@ -118,5 +118,9 @@ jQuery(function () {
 		},
 	});
 
+	jQuery('form#commentform').submit(function (e) {
+		e.preventDefault();
+	});
+
 	var commentsView = new CommentsView();
 });
