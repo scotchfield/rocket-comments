@@ -9,6 +9,7 @@ var CommentModel = Backbone.Model.extend({ //wp.api.models.Comment.extend({
 		author_avatar_urls: {
 			'24': '',
 			'48': '',
+			'56': '',
 			'96': ''
 		},
 		author_email: '',
@@ -56,13 +57,10 @@ var CommentModel = Backbone.Model.extend({ //wp.api.models.Comment.extend({
 	},
 
 	url: function() {
-		var post_id = this.get( 'post' );
-		post_id = post_id || '';
-
 		var id = this.get( 'id' );
 		id = id || '';
 
-		return WP_API_Settings.root + '/posts/' + post_id + '/comments/' + id;
+		return WP_API_Settings.root + '/comments/' + id;
 	},
 
 	initialize: function () {
@@ -125,6 +123,7 @@ CommentsView = Backbone.View.extend({
 		this.collection.post_id = this.$el.data('post-id');
 		this.collection.user_id = this.$el.data('user-id');
 		this.collection.user_name = this.$el.data('user-name');
+		this.collection.user_avatar = this.$el.data('user-avatar');
 		this.collection.fetch();
 	},
 
@@ -166,15 +165,24 @@ CommentsView = Backbone.View.extend({
 
 		var $el = jQuery(e.currentTarget).closest('li'),
 			parent_id = $el.data('comment-id'),
+			author_name = jQuery('.comment-respond textarea#author').val(),
+			author_email = jQuery('.comment-respond textarea#email').val(),
+			author_url = jQuery('.comment-respond textarea#url').val(),
 			content = jQuery('.comment-respond textarea#comment').val(),
 			attributes = {
-				content: {rendered: content},
-				parent: parent_id,
 				author: this.collection.user_id,
-				name: this.collection.user_name,
+				author_email: author_email,
+				author_name: author_name,
+				content: content,
+				parent: parent_id,
+				post: this.collection.post_id
 			},
 			item = new CommentModel(attributes);
 
+		item.save();
+
+		item.attributes.author_name = this.collection.user_name;
+		item.attributes.author_avatar_urls['56'] = this.collection.user_avatar;
 		this.collection.add(item);
 	}
 });

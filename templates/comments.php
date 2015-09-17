@@ -36,7 +36,7 @@ $current_user = wp_get_current_user();
 		<?php printf( __( '<span id="comment-count"></span> thoughts on &ldquo;%s&rdquo;', 'rocket-comments' ), get_the_title() ); ?>
 	</h2>
 
-	<ol id="comment-root" class="comment-list" data-post-id="<?php echo the_ID(); ?>" data-user-id="<?php echo get_current_user_id(); ?>" data-user-name="<?php echo $current_user->display_name ?>"></ol>
+	<ol id="comment-root" class="comment-list" data-post-id="<?php echo the_ID(); ?>" data-user-id="<?php echo $current_user->ID; ?>" data-user-name="<?php echo $current_user->display_name ?>" data-user-avatar="<?php echo get_avatar_url( $current_user->ID ); ?>"></ol>
 
 	<?php comment_form(); ?>
 </div>
@@ -45,7 +45,7 @@ $current_user = wp_get_current_user();
 	<article id="div-comment-<%= attributes.id %>" class="comment-body">
 		<footer class="comment-meta">
 			<div class="comment-author vcard">
-				<img alt src="<%= attributes.author_avatar_urls['48'] %>" class="avatar" height="48" width="48" />
+				<img alt src="<%= attributes.author_avatar_urls['56'] %>" class="avatar" height="56" width="56" />
 				<?php _e( '<b class="fn"><a href="<%= attributes.author_url %>" rel="external nofollow" class="url"><%= attributes.author_name %></a></b><span class="says">says:</span>', 'rocket-comments' ); ?>
 			</div>
 			<div class="comment-metadata">
@@ -60,7 +60,7 @@ $current_user = wp_get_current_user();
 			</div>
 		</footer>
 		<div class="comment-content">
-			<%= attributes.content.rendered %>
+			<%= attributes.content.rendered ? attributes.content.rendered : attributes.content %>
 		</div>
 		<div class="reply">
 			<a rel='nofollow' class='comment-reply-link' href='<?php echo get_permalink(); ?>?replytocom=1#respond' onclick='return addComment.moveForm( "div-comment-<%= attributes.id %>", "<%= attributes.id %>", "respond", "<%= attributes.id %>" )' aria-label='<?php _e( 'Leave a reply', 'rocket-comments' ); ?>'><?php _e( 'Reply', 'rocket-comments' ); ?></a>

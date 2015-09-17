@@ -39,6 +39,8 @@ class RocketComments {
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_styles' ) );
 
 		add_filter( 'comments_template', array( $this, 'comments_template' ) );
+		add_filter( 'rest_avatar_sizes', array( $this, 'avatar_sizes' ) );
+		add_filter( 'rest_pre_insert_comment', array( $this, 'pre_insert_comment' ), 10, 2 );
 
 		// TODO: Check with the WP-API team for the best way of getting the appropriate URL.
 		// This doesn't feel right.
@@ -71,6 +73,38 @@ class RocketComments {
 
 	public function filter_rest_url( $url, $path, $blog_id, $scheme ) {
 		return $url . 'wp/v2';
+	}
+
+	public function avatar_sizes( $sizes ) {
+		array_push( $sizes, 56 );
+		return $sizes;
+	}
+
+	public function pre_insert_comment( $prepared_comment, $request ) {
+/*		print_r( $prepared_comment );
+		print_r( $request );*/
+
+		if ( is_user_logged_in() ) {
+			$user = wp_get_current_user();
+
+			if ( $prepared_comment['user_id'] != $user->ID ) {
+				return false;
+			}
+
+			$prepared_comment['comment_author'] = $user->display_name;
+			$prepared_comment['comment_author_email'] = $user->user_email;
+			$prepared_comment['comment_author_url'] = $user->user_url;
+			$prepared_comment['comment_author_IP'] = $_SERVER['REMOTE_ADDR'];
+			$prepared_comment['comment_user_agent'] = $_SERVER['HTTP_USER_AGENT'];
+
+		} else {
+			return false;
+		}
+
+/*		print_r( $prepared_comment );
+		exit;*/
+
+		return $prepared_comment;
 	}
 
 }
