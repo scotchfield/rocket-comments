@@ -22,7 +22,7 @@ if ( ! $thread_comments ) {
 
 $current_user = wp_get_current_user();
 
-?>>
+?> data-post-id="<?php echo the_ID(); ?>" data-user-id="<?php echo $current_user->ID; ?>" data-user-name="<?php echo $current_user->display_name ?>" data-user-avatar="<?php echo get_avatar_url( $current_user->ID ); ?>">
 
 	<div id="wp-loading">
 		<img src="<?php echo plugins_url(); ?>/rocket-comments/images/wp-loading.gif">
@@ -36,7 +36,7 @@ $current_user = wp_get_current_user();
 		<?php printf( __( '<span id="comment-count"></span> thoughts on &ldquo;%s&rdquo;', 'rocket-comments' ), get_the_title() ); ?>
 	</h2>
 
-	<ol id="comment-root" class="comment-list" data-post-id="<?php echo the_ID(); ?>" data-user-id="<?php echo $current_user->ID; ?>" data-user-name="<?php echo $current_user->display_name ?>" data-user-avatar="<?php echo get_avatar_url( $current_user->ID ); ?>"></ol>
+	<ol id="comment-root" class="comment-list"></ol>
 
 	<?php comment_form(); ?>
 </div>

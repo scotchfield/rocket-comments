@@ -108,7 +108,7 @@ CommentsCollection = wp.api.collections.Comments.extend({
 }),
 
 CommentsView = Backbone.View.extend({
-	el: 'ol#comment-root',
+	el: '.comments-area',
 	collection: new CommentsCollection(),
 
 	events: {
@@ -128,18 +128,19 @@ CommentsView = Backbone.View.extend({
 	},
 
 	render: function () {
-		this.$el.empty();
+		var $ol = this.$el.find('ol#comment-root');
+		$ol.empty();
+
 		jQuery('div#wp-loading').fadeOut(400, function () {
-			jQuery('ol#comment-root').fadeIn(400);
+			$ol.fadeIn(400);
 		});
 		if (!_.isEmpty(this.collection)) {
 			this.collection.each(function (item) {
-				var $el = this.$el,
-					depth = this.collection.commentDepth(item),
+				var depth = this.collection.commentDepth(item),
 					bypostauthor = '';
 
 				if (item.get('parent') > 0 && depth > 1) {
-					$el = jQuery('ol#ol-comment-' + item.get('parent'));
+					$ol = jQuery('ol#ol-comment-' + item.get('parent'));
 				}
 
 				if (item.get('author') == this.collection.user_id) {
@@ -147,7 +148,7 @@ CommentsView = Backbone.View.extend({
 				}
 
 				var item_view = new CommentView({model: item});
-				$el.append(item_view.render('comment depth-' + depth + bypostauthor).el);
+				$ol.append(item_view.render('comment depth-' + depth + bypostauthor).el);
 
 				console.log(item);
 			}, this);
