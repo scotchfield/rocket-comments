@@ -3,9 +3,6 @@
 	padding-bottom: 2em;
 	text-align: center;
 }
-.comments-area ol#comment-root {
-	display: none;
-}
 .comments-area .comments-title {
 	display: none;
 }

@@ -125,15 +125,16 @@ CommentsView = Backbone.View.extend({
 		this.collection.user_name = this.$el.data('user-name');
 		this.collection.user_avatar = this.$el.data('user-avatar');
 		this.collection.fetch();
+
+		setInterval(this.intervalFetch, 10000, this.collection);
 	},
 
 	render: function () {
 		var $ol = this.$el.find('ol#comment-root');
 		$ol.empty();
 
-		jQuery('div#wp-loading').fadeOut(400, function () {
-			$ol.fadeIn(400);
-		});
+		jQuery('div#wp-loading').fadeOut(400);
+
 		if (!_.isEmpty(this.collection)) {
 			this.collection.each(function (item) {
 				var depth = this.collection.commentDepth(item),
@@ -152,6 +153,7 @@ CommentsView = Backbone.View.extend({
 
 				console.log(item);
 			}, this);
+			jQuery('.comments-area .comments-title').css('display', 'none');
 			if (this.collection.length == 1) {
 				jQuery('.comments-area #comment-single').fadeIn();
 			} else {
@@ -185,6 +187,10 @@ CommentsView = Backbone.View.extend({
 		item.attributes.author_name = this.collection.user_name;
 		item.attributes.author_avatar_urls['56'] = this.collection.user_avatar;
 		this.collection.add(item);
+	},
+
+	intervalFetch: function (collection) {
+		collection.fetch();
 	}
 });
 
