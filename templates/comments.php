@@ -60,7 +60,9 @@ $current_user = wp_get_current_user();
 			</div>
 		</footer>
 		<div class="comment-content">
-			<%= attributes.content.rendered ? attributes.content.rendered : attributes.content %>
+			<p>
+				<%= attributes.content.rendered ? attributes.content.rendered : attributes.content %>
+			</p>
 		</div>
 		<div class="reply">
 			<a rel='nofollow' class='comment-reply-link' href='<?php echo get_permalink(); ?>?replytocom=1#respond' onclick='return addComment.moveForm( "div-comment-<%= attributes.id %>", "<%= attributes.id %>", "respond", "<%= attributes.id %>" )' aria-label='<?php _e( 'Leave a reply', 'rocket-comments' ); ?>'><?php _e( 'Reply', 'rocket-comments' ); ?></a>
