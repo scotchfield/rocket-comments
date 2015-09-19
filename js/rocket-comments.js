@@ -279,6 +279,9 @@ addComment.editForm = function(commentId, respondId) {
 	comment.parentNode.insertBefore(respond, comment.nextSibling);
 	cancel.style.display = '';
 
+	var content = jQuery('#div-comment-' + commentId + ' .comment-content').text();
+	jQuery('#respond textarea#comment').val(content.trim());
+
 	jQuery('#div-comment-' + commentId).hide();
 
 	cancel.onclick = function() {
