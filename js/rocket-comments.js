@@ -203,8 +203,9 @@ addComment.moveForm = function(commId, parentId, respondId, postId) {
 		parent = t.I('comment_parent'),
 		post = t.I('comment_post_ID');
 
-	if ( ! comm || ! respond || ! cancel || ! parent )
+	if ( ! comm || ! respond || ! cancel || ! parent ) {
 		return;
+	}
 
 	jQuery(cancel).trigger('click');
 
@@ -217,6 +218,10 @@ addComment.moveForm = function(commId, parentId, respondId, postId) {
 		div.style.display = 'none';
 		respond.parentNode.insertBefore(div, respond);
 	}
+
+	var cancel_object = jQuery('#cancel-comment-reply-link').parent();
+	jQuery('h3#reply-title').html(jQuery('div#comments').data('comment-title-reply'))
+		.append(jQuery('<small>').append(cancel_object));
 
 	comm.parentNode.insertBefore(respond, comm.nextSibling);
 	if ( post && postId )
@@ -266,6 +271,10 @@ addComment.editForm = function(commentId, respondId) {
 		div.style.display = 'none';
 		respond.parentNode.insertBefore(div, respond);
 	}
+
+	var cancel_object = jQuery('#cancel-comment-reply-link').parent();
+	jQuery('h3#reply-title').html(jQuery('div#comments').data('comment-title-edit'))
+		.append(jQuery('<small>').append(cancel_object));
 
 	comment.parentNode.insertBefore(respond, comment.nextSibling);
 	cancel.style.display = '';
