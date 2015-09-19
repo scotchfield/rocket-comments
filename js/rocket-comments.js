@@ -242,6 +242,9 @@ addComment.moveForm = function(commId, parentId, respondId, postId) {
 		temp.parentNode.removeChild(temp);
 		this.style.display = 'none';
 		this.onclick = null;
+
+		jQuery('#respond textarea#comment').val('');
+
 		return false;
 	};
 
@@ -297,6 +300,7 @@ addComment.editForm = function(commentId, respondId) {
 		this.onclick = null;
 
 		jQuery('#div-comment-' + commentId).show();
+		jQuery('#respond textarea#comment').val('');
 
 		return false;
 	};
