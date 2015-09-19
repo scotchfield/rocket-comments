@@ -194,6 +194,50 @@ CommentsView = Backbone.View.extend({
 	}
 });
 
+addComment.editForm = function(commentId) {
+	var div,
+		comment = this.I('div-comment-' + commentId),
+		cancel = this.I('cancel-comment-reply-link');
+
+	if ( ! comment || ! cancel ) {
+		return;
+	}
+
+	if ( ! this.I('wp-temp-form-div') ) {
+		div = document.createElement('div');
+		div.id = 'wp-temp-form-div';
+		div.style.display = 'none';
+		respond.parentNode.insertBefore(div, respond);
+	}
+
+	comment.parentNode.insertBefore(respond, comment.nextSibling);
+	cancel.style.display = '';
+
+	jQuery('#div-comment-' + commentId).hide();
+
+	cancel.onclick = function() {
+		var temp = addComment.I('wp-temp-form-div');
+
+		if ( ! temp || ! respond )
+			return;
+
+		addComment.I('comment_parent').value = '0';
+		temp.parentNode.insertBefore(respond, temp);
+		temp.parentNode.removeChild(temp);
+		this.style.display = 'none';
+		this.onclick = null;
+
+		jQuery('#div-comment-' + commentId).show();
+
+		return false;
+	};
+
+	try { addComment.I('comment').focus(); }
+	catch(e) {}
+
+	return false;
+};
+
 jQuery(function () {
 	jQuery('form#commentform').submit(function (e) {
 		e.preventDefault();
