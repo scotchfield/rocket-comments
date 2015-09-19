@@ -53,7 +53,7 @@ $current_user = wp_get_current_user();
 					<time datetime="<%= attributes.iso_string %>"><%= attributes.date_string %></time>
 				</a>
 				<span class="edit-link">
-					<a class="comment-edit-link" href="<?php echo get_admin_url() ?>comment.php?action=editcomment&amp;c=<%= attributes.id %>" onclick='return addComment.editForm(<%= attributes.id %>);'>
+					<a class="comment-edit-link" href="<?php echo get_admin_url() ?>comment.php?action=editcomment&amp;c=<%= attributes.id %>" onclick='return addComment.editForm(<%= attributes.id %>, "respond");'>
 						<?php _e( 'Edit', 'rocket-comments' ); ?>
 					</a>
 				</span>
