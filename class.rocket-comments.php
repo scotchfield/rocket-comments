@@ -81,28 +81,22 @@ class RocketComments {
 	}
 
 	public function pre_insert_comment( $prepared_comment, $request ) {
-/*		print_r( $prepared_comment );
-		print_r( $request );*/
-
 		if ( is_user_logged_in() ) {
 			$user = wp_get_current_user();
 
-			if ( $prepared_comment['user_id'] != $user->ID ) {
+			if ( ! isset( $prepared_comment['user_id'] ) || $prepared_comment['user_id'] != $user->ID ) {
 				return false;
 			}
 
 			$prepared_comment['comment_author'] = $user->display_name;
 			$prepared_comment['comment_author_email'] = $user->user_email;
 			$prepared_comment['comment_author_url'] = $user->user_url;
-			$prepared_comment['comment_author_IP'] = $_SERVER['REMOTE_ADDR'];
-			$prepared_comment['comment_user_agent'] = $_SERVER['HTTP_USER_AGENT'];
+			$prepared_comment['comment_author_IP'] = isset( $_SERVER['REMOTE_ADDR'] ) ? $_SERVER['REMOTE_ADDR'] : '';
+			$prepared_comment['comment_user_agent'] = isset( $_SERVER['HTTP_USER_AGENT'] ) ? $_SERVER['HTTP_USER_AGENT'] : '';
 
 		} else {
 			return false;
 		}
-
-/*		print_r( $prepared_comment );
-		exit;*/
 
 		return $prepared_comment;
 	}

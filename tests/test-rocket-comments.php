@@ -42,4 +42,40 @@ class Test_RocketComments extends WP_UnitTestCase {
 		$this->assertFalse( $this->class->pre_insert_comment( array(), array() ) );
 	}
 
+	/**
+	 * @covers RocketComments::pre_insert_comment
+	 */
+	public function test_pre_insert_comment_logged_in_empty_comment() {
+		$user = new WP_User( $this->factory->user->create() );
+		$old_user_id = get_current_user_id();
+		wp_set_current_user( $user->ID );
+
+		$this->assertFalse( $this->class->pre_insert_comment( array(), array() ) );
+
+		wp_set_current_user( $old_user_id );
+	}
+
+	/**
+	 * @covers RocketComments::pre_insert_comment
+	 */
+	public function test_pre_insert_comment_logged_in_comment() {
+		$author = 'test_author';
+		$author_email = 'test_email';
+		$author_url = 'test_url';
+
+		$user = new WP_User( $this->factory->user->create( array(
+			'display_name' => $author,
+			'user_email' => $author_email,
+			'user_url' => $author_url
+		) ) );
+		$old_user_id = get_current_user_id();
+		wp_set_current_user( $user->ID );
+
+		$result = $this->class->pre_insert_comment( array( 'user_id' => $user->ID ), array() );
+
+		$this->assertEquals( $result['comment_author'], $author );
+
+		wp_set_current_user( $old_user_id );
+	}
+
 }
