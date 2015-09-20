@@ -284,6 +284,8 @@ addComment.editForm = function(commentId, respondId) {
 	comment.parentNode.insertBefore(respond, comment.nextSibling);
 	cancel.style.display = '';
 
+	var model = commentsView.collection.get(commentId);
+
 	var content = jQuery('#div-comment-' + commentId + ' .comment-content').text();
 	jQuery('#respond textarea#comment').val(content.trim());
 	jQuery('#respond').data('action', 'edit');
