@@ -116,9 +116,9 @@ CommentsView = Backbone.View.extend({
 	},
 
 	initialize: function () {
-		this.collection.on('all', function(eventName) {
+		/*this.collection.on('all', function(eventName) {
 			console.log(eventName + ' was triggered!');
-		});
+		});*/
 		this.listenTo(this.collection, 'add', this.render);
 		this.collection.post_id = this.$el.data('post-id');
 		this.collection.user_id = this.$el.data('user-id');
@@ -151,7 +151,7 @@ CommentsView = Backbone.View.extend({
 				var item_view = new CommentView({model: item});
 				$ol.append(item_view.render('comment depth-' + depth + bypostauthor).el);
 
-				console.log(item);
+				//console.log(item);
 			}, this);
 			jQuery('.comments-area .comments-title').css('display', 'none');
 			if (this.collection.length == 1) {
@@ -228,6 +228,7 @@ addComment.moveForm = function(commId, parentId, respondId, postId) {
 		post.value = postId;
 	parent.value = parentId;
 	cancel.style.display = '';
+	jQuery('#respond').data('action', 'reply');
 
 	cancel.onclick = function() {
 		var t = addComment,
@@ -244,6 +245,7 @@ addComment.moveForm = function(commId, parentId, respondId, postId) {
 		this.onclick = null;
 
 		jQuery('#respond textarea#comment').val('');
+		jQuery('#respond').removeData('action');
 
 		return false;
 	};
@@ -284,6 +286,7 @@ addComment.editForm = function(commentId, respondId) {
 
 	var content = jQuery('#div-comment-' + commentId + ' .comment-content').text();
 	jQuery('#respond textarea#comment').val(content.trim());
+	jQuery('#respond').data('action', 'edit');
 
 	jQuery('#div-comment-' + commentId).hide();
 
@@ -301,6 +304,7 @@ addComment.editForm = function(commentId, respondId) {
 
 		jQuery('#div-comment-' + commentId).show();
 		jQuery('#respond textarea#comment').val('');
+		jQuery('#respond').removeData('action');
 
 		return false;
 	};
