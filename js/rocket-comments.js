@@ -257,7 +257,7 @@ addComment.moveForm = function(commId, parentId, respondId, postId) {
 };
 
 addComment.editForm = function(commentId, respondId) {
-	var div,
+	var div, cancel_object, model, content,
 		comment = this.I('div-comment-' + commentId),
 		respond = this.I(respondId),
 		cancel = this.I('cancel-comment-reply-link');
@@ -277,16 +277,16 @@ addComment.editForm = function(commentId, respondId) {
 		respond.parentNode.insertBefore(div, respond);
 	}
 
-	var cancel_object = jQuery('#cancel-comment-reply-link').parent();
+	cancel_object = jQuery('#cancel-comment-reply-link').parent();
 	jQuery('h3#reply-title').html(jQuery('div#comments').data('comment-title-edit'))
 		.append(jQuery('<small>').append(cancel_object));
 
 	comment.parentNode.insertBefore(respond, comment.nextSibling);
 	cancel.style.display = '';
 
-	var model = commentsView.collection.get(commentId);
+	model = commentsView.collection.get(commentId);
 
-	var content = jQuery('#div-comment-' + commentId + ' .comment-content').text();
+	content = jQuery('#div-comment-' + commentId + ' .comment-content').text();
 	jQuery('#respond textarea#comment').val(content.trim());
 	jQuery('#respond').data('action', 'edit');
 
