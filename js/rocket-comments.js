@@ -315,10 +315,8 @@ addComment.editForm = function(commentId, respondId) {
 	return false;
 };
 
-jQuery(function () {
-	jQuery('form#commentform').submit(function (e) {
-		e.preventDefault();
-	});
-
-	var commentsView = new CommentsView();
+jQuery('form#commentform').submit(function (e) {
+	e.preventDefault();
 });
+
+var commentsView = new CommentsView();
