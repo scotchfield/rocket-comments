@@ -175,24 +175,58 @@ CommentsView = Backbone.View.extend({
 			action = jQuery('#respond').data('action'),
 			attributes, item;
 
-		if (action == 'reply') {
+		if (action == 'edit') {
+			item = this.collection.get(jQuery('#respond').data('comment-id'));
+			item.set({content: content, type: ''});
+			item.save({}, {
+				success: function(model, response) {
+					commentsView.collection.set(response, {remove: false});
+					item.set({id: response.id});
+					console.log('success!');
+					console.log(model);
+					console.log(response);
+				},
+				error: function(model, response) {
+					console.log('error!');
+					console.log(response);
+				}
+			});
+
+			//this.collection.set({item}, {remove: false});
+		} else {
 			attributes = {
 				author: this.collection.user_id,
 				author_email: author_email,
 				author_name: author_name,
 				content: content,
 				parent: parent_id,
-				post: this.collection.post_id
+				post: this.collection.post_id,
 			};
 			item = new CommentModel(attributes);
-			item.save();
+			item.save({}, {
+				success: function(model, response) {
+					commentsView.collection.add(response);
+					item.set({id: response.id});
+					console.log('success!');
+					console.log(model);
+					console.log(response);
+				},
+				error: function(model, response) {
+					console.log('error!');
+					console.log(response);
+				}
+			});
 
-			item.attributes.author_name = this.collection.user_name;
+
+			/*item.attributes.author_name = this.collection.user_name;
 			item.attributes.author_avatar_urls['56'] = this.collection.user_avatar;
-			this.collection.add(item);
-		} else if (action == 'edit') {
-			console.log('edit');
+			this.collection.add(item);*/
 		}
+
+		jQuery('#cancel-comment-reply-link').trigger('click');
+		jQuery('#respond textarea#comment').val('');
+
+		this.render();
 	},
 
 	intervalFetch: function (collection) {
@@ -200,7 +234,7 @@ CommentsView = Backbone.View.extend({
 	}
 });
 
-addComment.setupForm = function (cancel, respond, action) {
+addComment.setupForm = function (commentId, cancel, respond, action) {
 	var div, cancel_object;
 
 	jQuery(cancel).trigger('click');
@@ -216,6 +250,7 @@ addComment.setupForm = function (cancel, respond, action) {
 	jQuery('h3#reply-title').html(jQuery('div#comments').data('comment-title-' + action))
 		.append(jQuery('<small>').append(cancel_object));
 
+	jQuery('#respond').data('comment-id', commentId);
 	jQuery('#respond').data('action', action);
 };
 
@@ -231,7 +266,7 @@ addComment.moveForm = function(commId, parentId, respondId, postId) {
 		return;
 	}
 
-	addComment.setupForm(cancel, respond, 'reply');
+	addComment.setupForm(commId, cancel, respond, 'reply');
 
 	this.respondId = respondId;
 	postId = postId || false;
@@ -257,6 +292,7 @@ addComment.moveForm = function(commId, parentId, respondId, postId) {
 
 		jQuery('#respond textarea#comment').val('');
 		jQuery('#respond').removeData('action');
+		jQuery('#respond').removeData('comment-id');
 
 		return false;
 	};
@@ -277,7 +313,7 @@ addComment.editForm = function(commentId, respondId) {
 		return;
 	}
 
-	addComment.setupForm(cancel, respond, 'edit');
+	addComment.setupForm(commentId, cancel, respond, 'edit');
 
 	this.respondId = respondId;
 
@@ -306,6 +342,7 @@ addComment.editForm = function(commentId, respondId) {
 		jQuery('#div-comment-' + commentId).show();
 		jQuery('#respond textarea#comment').val('');
 		jQuery('#respond').removeData('action');
+		jQuery('#respond').removeData('comment-id');
 
 		return false;
 	};
