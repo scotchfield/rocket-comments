@@ -172,6 +172,10 @@ CommentsView = Backbone.View.extend({
 			author_email = jQuery('.comment-respond textarea#email').val(),
 			author_url = jQuery('.comment-respond textarea#url').val(),
 			content = jQuery('.comment-respond textarea#comment').val(),
+			action = jQuery('#respond').data('action'),
+			attributes, item;
+
+		if (action == 'reply') {
 			attributes = {
 				author: this.collection.user_id,
 				author_email: author_email,
@@ -179,14 +183,16 @@ CommentsView = Backbone.View.extend({
 				content: content,
 				parent: parent_id,
 				post: this.collection.post_id
-			},
+			};
 			item = new CommentModel(attributes);
+			item.save();
 
-		item.save();
-
-		item.attributes.author_name = this.collection.user_name;
-		item.attributes.author_avatar_urls['56'] = this.collection.user_avatar;
-		this.collection.add(item);
+			item.attributes.author_name = this.collection.user_name;
+			item.attributes.author_avatar_urls['56'] = this.collection.user_avatar;
+			this.collection.add(item);
+		} else if (action == 'edit') {
+			console.log('edit');
+		}
 	},
 
 	intervalFetch: function (collection) {
@@ -194,51 +200,56 @@ CommentsView = Backbone.View.extend({
 	}
 });
 
-addComment.moveForm = function(commId, parentId, respondId, postId) {
-	var t = this,
-		div,
-		comm = t.I(commId),
-		respond = t.I(respondId),
-		cancel = t.I('cancel-comment-reply-link'),
-		parent = t.I('comment_parent'),
-		post = t.I('comment_post_ID');
-
-	if ( ! comm || ! respond || ! cancel || ! parent ) {
-		return;
-	}
+addComment.setupForm = function (cancel, respond, action) {
+	var div, cancel_object;
 
 	jQuery(cancel).trigger('click');
 
-	t.respondId = respondId;
-	postId = postId || false;
-
-	if ( ! t.I('wp-temp-form-div') ) {
+	if ( ! this.I('wp-temp-form-div') ) {
 		div = document.createElement('div');
 		div.id = 'wp-temp-form-div';
 		div.style.display = 'none';
 		respond.parentNode.insertBefore(div, respond);
 	}
 
-	var cancel_object = jQuery('#cancel-comment-reply-link').parent();
-	jQuery('h3#reply-title').html(jQuery('div#comments').data('comment-title-reply'))
+	cancel_object = jQuery('#cancel-comment-reply-link').parent();
+	jQuery('h3#reply-title').html(jQuery('div#comments').data('comment-title-' + action))
 		.append(jQuery('<small>').append(cancel_object));
+
+	jQuery('#respond').data('action', action);
+};
+
+addComment.moveForm = function(commId, parentId, respondId, postId) {
+	var div,
+		comm = this.I(commId),
+		respond = this.I(respondId),
+		cancel = this.I('cancel-comment-reply-link'),
+		parent = this.I('comment_parent'),
+		post = this.I('comment_post_ID');
+
+	if ( ! comm || ! respond || ! cancel || ! parent ) {
+		return;
+	}
+
+	addComment.setupForm(cancel, respond, 'reply');
+
+	this.respondId = respondId;
+	postId = postId || false;
 
 	comm.parentNode.insertBefore(respond, comm.nextSibling);
 	if ( post && postId )
 		post.value = postId;
 	parent.value = parentId;
 	cancel.style.display = '';
-	jQuery('#respond').data('action', 'reply');
 
 	cancel.onclick = function() {
-		var t = addComment,
-			temp = t.I('wp-temp-form-div'),
-			respond = t.I(t.respondId);
+		var temp = addComment.I('wp-temp-form-div'),
+			respond = addComment.I(addComment.respondId);
 
 		if ( ! temp || ! respond )
 			return;
 
-		t.I('comment_parent').value = '0';
+		addComment.I('comment_parent').value = '0';
 		temp.parentNode.insertBefore(respond, temp);
 		temp.parentNode.removeChild(temp);
 		this.style.display = 'none';
@@ -250,7 +261,7 @@ addComment.moveForm = function(commId, parentId, respondId, postId) {
 		return false;
 	};
 
-	try { t.I('comment').focus(); }
+	try { this.I('comment').focus(); }
 	catch(e) {}
 
 	return false;
@@ -266,20 +277,9 @@ addComment.editForm = function(commentId, respondId) {
 		return;
 	}
 
-	jQuery(cancel).trigger('click');
+	addComment.setupForm(cancel, respond, 'edit');
 
 	this.respondId = respondId;
-
-	if ( ! this.I('wp-temp-form-div') ) {
-		div = document.createElement('div');
-		div.id = 'wp-temp-form-div';
-		div.style.display = 'none';
-		respond.parentNode.insertBefore(div, respond);
-	}
-
-	cancel_object = jQuery('#cancel-comment-reply-link').parent();
-	jQuery('h3#reply-title').html(jQuery('div#comments').data('comment-title-edit'))
-		.append(jQuery('<small>').append(cancel_object));
 
 	comment.parentNode.insertBefore(respond, comment.nextSibling);
 	cancel.style.display = '';
@@ -288,7 +288,6 @@ addComment.editForm = function(commentId, respondId) {
 
 	content = jQuery('#div-comment-' + commentId + ' .comment-content').text();
 	jQuery('#respond textarea#comment').val(content.trim());
-	jQuery('#respond').data('action', 'edit');
 
 	jQuery('#div-comment-' + commentId).hide();
 
