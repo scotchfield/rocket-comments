@@ -58,11 +58,12 @@ $current_user = wp_get_current_user();
 					</a>
 				</span>
 			</div>
+			<% if (attributes.status == 'hold') { %>
+				<p class="comment-awaiting-moderation">Your comment is awaiting moderation.</p>
+			<% } %>
 		</footer>
 		<div class="comment-content">
-			<p>
-				<%= attributes.content.rendered ? attributes.content.rendered : attributes.content %>
-			</p>
+			<%= attributes.content.rendered ? attributes.content.rendered : attributes.content %>
 		</div>
 		<div class="reply">
 			<a rel='nofollow' class='comment-reply-link' href='<?php echo get_permalink(); ?>?replytocom=1#respond' onclick='return addComment.moveForm( "div-comment-<%= attributes.id %>", "<%= attributes.id %>", "respond", "<%= attributes.id %>" )' aria-label='<?php _e( 'Leave a Reply', 'rocket-comments' ); ?>'><?php _e( 'Reply', 'rocket-comments' ); ?></a>
