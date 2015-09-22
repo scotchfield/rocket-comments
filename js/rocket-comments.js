@@ -179,22 +179,22 @@ CommentsView = Backbone.View.extend({
 
 			item.save({}, {
 				success: function(model, response) {
-					commentsView.collection.set(response, {remove: false});
-					item.set({id: response.id});
-					console.log('success!');
-					console.log(model);
-					console.log(response);
+					if (response !== null) {
+						commentsView.collection.set(item, {remove: false});
+					}
 				},
 				error: function(model, response) {
-					console.log('error!');
+					console.log('Error!');
 					console.log(response);
 				}
 			});
 		} else {
 			attributes = {
+				id: null,
 				author: this.collection.user_id,
 				author_email: author_email,
 				author_name: author_name,
+				author_url: author_url,
 				content: content,
 				parent: parent_id,
 				post: this.collection.post_id,
@@ -204,14 +204,12 @@ CommentsView = Backbone.View.extend({
 
 			item.save({}, {
 				success: function(model, response) {
-					commentsView.collection.add(response);
-					item.set({id: response.id});
-					console.log('success!');
-					console.log(model);
-					console.log(response);
+					if (response !== null) {
+						commentsView.collection.add(item);
+					}
 				},
 				error: function(model, response) {
-					console.log('error!');
+					console.log('Error!');
 					console.log(response);
 				}
 			});
