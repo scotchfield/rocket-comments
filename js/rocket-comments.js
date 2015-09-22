@@ -165,16 +165,18 @@ CommentsView = Backbone.View.extend({
 
 		var $el = jQuery(e.currentTarget).closest('li'),
 			parent_id = $el.data('comment-id'),
-			author_name = jQuery('.comment-respond textarea#author').val(),
-			author_email = jQuery('.comment-respond textarea#email').val(),
-			author_url = jQuery('.comment-respond textarea#url').val(),
+			author_name = jQuery('.comment-respond input#author').val(),
+			author_email = jQuery('.comment-respond input#email').val(),
+			author_url = jQuery('.comment-respond input#url').val(),
 			content = jQuery('.comment-respond textarea#comment').val(),
 			action = jQuery('#respond').data('action'),
 			attributes, item;
 
 		if (action == 'edit') {
 			item = this.collection.get(jQuery('#respond').data('comment-id'));
+
 			item.set({content: content, type: ''});
+
 			item.save({}, {
 				success: function(model, response) {
 					commentsView.collection.set(response, {remove: false});
@@ -188,8 +190,6 @@ CommentsView = Backbone.View.extend({
 					console.log(response);
 				}
 			});
-
-			//this.collection.set({item}, {remove: false});
 		} else {
 			attributes = {
 				author: this.collection.user_id,
@@ -215,10 +215,6 @@ CommentsView = Backbone.View.extend({
 					console.log(response);
 				}
 			});
-
-			/*item.attributes.author_name = this.collection.user_name;
-			item.attributes.author_avatar_urls['56'] = this.collection.user_avatar;
-			this.collection.add(item);*/
 		}
 
 		jQuery('#cancel-comment-reply-link').trigger('click');
