@@ -95,7 +95,7 @@ class RocketComments {
 			$prepared_comment['comment_user_agent'] = isset( $_SERVER['HTTP_USER_AGENT'] ) ? $_SERVER['HTTP_USER_AGENT'] : '';
 
 		} else {
-			return false;
+			// TODO: Handle anonymous comments
 		}
 
 		return $prepared_comment;

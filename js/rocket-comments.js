@@ -24,7 +24,6 @@ var CommentModel = Backbone.Model.extend({ //wp.api.models.Comment.extend({
 		link: '',
 		parent: 0,
 		post: null,
-		status: 'hold',
 		type: '',
 		_links: {}
 	},
@@ -150,8 +149,6 @@ CommentsView = Backbone.View.extend({
 
 				var item_view = new CommentView({model: item});
 				$ol.append(item_view.render('comment depth-' + depth + bypostauthor).el);
-
-				//console.log(item);
 			}, this);
 			jQuery('.comments-area .comments-title').css('display', 'none');
 			if (this.collection.length == 1) {
@@ -202,7 +199,9 @@ CommentsView = Backbone.View.extend({
 				parent: parent_id,
 				post: this.collection.post_id,
 			};
+
 			item = new CommentModel(attributes);
+
 			item.save({}, {
 				success: function(model, response) {
 					commentsView.collection.add(response);
@@ -216,7 +215,6 @@ CommentsView = Backbone.View.extend({
 					console.log(response);
 				}
 			});
-
 
 			/*item.attributes.author_name = this.collection.user_name;
 			item.attributes.author_avatar_urls['56'] = this.collection.user_avatar;
