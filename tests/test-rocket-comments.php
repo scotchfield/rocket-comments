@@ -39,7 +39,7 @@ class Test_RocketComments extends WP_UnitTestCase {
 	 * @covers RocketComments::pre_insert_comment
 	 */
 	public function test_pre_insert_comment_not_logged_in_empty_comment() {
-		$this->assertFalse( $this->class->pre_insert_comment( array(), array() ) );
+		$this->assertEmpty( $this->class->pre_insert_comment( array(), array() ) );
 	}
 
 	/**
