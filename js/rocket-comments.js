@@ -123,9 +123,15 @@ CommentsView = Backbone.View.extend({
 		this.collection.user_id = this.$el.data('user-id');
 		this.collection.user_name = this.$el.data('user-name');
 		this.collection.user_avatar = this.$el.data('user-avatar');
-		this.collection.fetch();
 
-		setInterval(this.intervalFetch, 10000, this.collection);
+		this.collection.fetch({
+			success: function () {
+				commentsView.interval = setInterval(commentsView.fetchComments, 5000, commentsView.collection);
+			},
+			error: function () {
+				console.log('Error: Could not retrieve comments!');
+			}
+		});
 	},
 
 	render: function () {
@@ -221,9 +227,14 @@ CommentsView = Backbone.View.extend({
 		this.render();
 	},
 
-	intervalFetch: function (collection) {
-		collection.fetch();
-	}
+	fetchComments: function (collection) {
+		collection.fetch({
+			error: function () {
+				console.log('Error: Could not update collection!');
+			}
+		});
+	},
+
 });
 
 addComment.setupForm = function (commentId, cancel, respond, action) {
