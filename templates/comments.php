@@ -102,7 +102,7 @@ if ( is_user_logged_in() ) {
 				<a href="<%= attributes.link %>">
 					<time datetime="<%= attributes.iso_string %>"><%= attributes.date_string %></time>
 				</a>
-				<span class="edit-link">
+				<span class="edit-link <%= attributes.edit_class %>">
 					<a class="comment-edit-link" href="<?php echo get_admin_url() ?>comment.php?action=editcomment&amp;c=<%= attributes.id %>" onclick='return addComment.editForm(<%= attributes.id %>, "respond");'>
 						<?php _e( 'Edit', 'rocket-comments' ); ?>
 					</a>

@@ -6,3 +6,6 @@
 .comments-area .comments-title {
 	display: none;
 }
+.comments-area .comment-metadata .hidden {
+	display: none;
+}
