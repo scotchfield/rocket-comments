@@ -51,30 +51,31 @@ $current_user = wp_get_current_user();
 <?php
 if ( is_user_logged_in() ) {
 ?>
-			<p class="logged-in-as">
-				<?php printf( __( 'Logged in as <a href="%sprofile.php">%s</a>.', 'rocket-comments' ), get_admin_url(), $current_user->display_name ); ?>
-				<a href="<?php echo wp_logout_url( get_permalink() ); ?>" title="<?php _e( 'Log out of this account', 'rocket-comments' ); ?>"><?php _e( 'Log out?', 'rocket-comments' ); ?></a>
-			</p>
-<?php
-} else {
-?>
-			<p class="comment-notes">
-				<span id="email-notes">Your email address will not be published.</span> Required fields are marked <span class="required">*</span>
-			</p>
-			<p class="comment-form-author">
-				<label for="author">Name <span class="required">*</span></label>
-				<input id="author" name="author" type="text" value="" size="30" aria-required='true' required='required' />
-			</p>
-			<p class="comment-form-email">
-				<label for="email">Email <span class="required">*</span></label>
-				<input id="email" name="email" type="email" value="" size="30" aria-describedby="email-notes" aria-required='true' required='required' />
-			</p>
-			<p class="comment-form-url">
-				<label for="url">Website</label> <input id="url" name="url" type="url" value="" size="30" />
-			</p>
+			<div class=".comment-author-logged-in">
+				<p class="logged-in-as">
+					<?php printf( __( 'Logged in as <a href="%sprofile.php">%s</a>.', 'rocket-comments' ), get_admin_url(), $current_user->display_name ); ?>
+					<a href="<?php echo wp_logout_url( get_permalink() ); ?>" title="<?php _e( 'Log out of this account', 'rocket-comments' ); ?>"><?php _e( 'Log out?', 'rocket-comments' ); ?></a>
+				</p>
+			</div>
 <?php
 }
 ?>
+			<div class=".comment-author-not-logged-in <?php if ( is_user_logged_in() ) { echo 'hidden'; } ?>">
+				<p class="comment-notes">
+					<span id="email-notes">Your email address will not be published.</span> Required fields are marked <span class="required">*</span>
+				</p>
+				<p class="comment-form-author">
+					<label for="author">Name <span class="required">*</span></label>
+					<input id="author" name="author" type="text" value="" size="30" aria-required='true' required='required' />
+				</p>
+				<p class="comment-form-email">
+					<label for="email">Email <span class="required">*</span></label>
+					<input id="email" name="email" type="email" value="" size="30" aria-describedby="email-notes" aria-required='true' required='required' />
+				</p>
+				<p class="comment-form-url">
+					<label for="url">Website</label> <input id="url" name="url" type="url" value="" size="30" />
+				</p>
+			</div>
 			<p class="comment-form-comment">
 				<label for="comment"><?php _e( 'Comment', 'rocket-comments' ); ?></label>
 				<textarea id="comment" name="comment" cols="45" rows="8"  aria-required="true" required="required"></textarea>
