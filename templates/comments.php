@@ -22,7 +22,7 @@ if ( ! $thread_comments ) {
 
 $current_user = wp_get_current_user();
 
-?> data-post-id="<?php echo the_ID(); ?>" data-user-id="<?php echo $current_user->ID; ?>" data-user-name="<?php echo $current_user->display_name ?>" data-user-avatar="<?php echo get_avatar_url( $current_user->ID ); ?>" data-comment-title-edit="<?php echo __( 'Edit Comment', 'rocket-comments' ); ?>" data-comment-title-reply="<?php echo __( 'Leave a Reply', 'rocket-comments' ); ?>">
+?> data-post-id="<?php echo get_the_ID(); ?>" data-user-id="<?php echo $current_user->ID; ?>" data-user-name="<?php echo $current_user->display_name ?>" data-user-avatar="<?php echo get_avatar_url( $current_user->ID ); ?>" data-comment-title-edit="<?php echo __( 'Edit Comment', 'rocket-comments' ); ?>" data-comment-title-reply="<?php echo __( 'Leave a Reply', 'rocket-comments' ); ?>">
 
 	<div id="wp-loading">
 		<img src="<?php echo plugins_url(); ?>/rocket-comments/images/wp-loading.gif">
@@ -38,7 +38,33 @@ $current_user = wp_get_current_user();
 
 	<ol id="comment-root" class="comment-list"></ol>
 
-	<?php comment_form(); ?>
+	<div id="respond" class="comment-respond">
+		<h3 id="reply-title" class="comment-reply-title">
+			<?php _e( 'Leave a Reply', 'rocket-comments' ); ?>
+			<small>
+				<a rel="nofollow" id="cancel-comment-reply-link" href="/2015/07/27/hello-world/#respond" style="display: none;">
+					<?php _e( 'Cancel reply', 'rocket-comments' ); ?>
+				</a>
+			</small>
+		</h3>
+		<form action="http://localhost:8888/wp-comments-post.php" method="post" id="commentform" class="comment-form" novalidate>
+			<p class="logged-in-as">
+				<?php printf( __( 'Logged in as <a href="%sprofile.php">%s</a>.', 'rocket-comments' ), get_admin_url(), $current_user->display_name ); ?>
+				<a href="<?php echo wp_logout_url( get_permalink() ); ?>" title="<?php _e( 'Log out of this account', 'rocket-comments' ); ?>"><?php _e( 'Log out?', 'rocket-comments' ); ?></a></p>
+			<p class="comment-form-comment">
+				<label for="comment"><?php _e( 'Comment', 'rocket-comments' ); ?></label>
+				<textarea id="comment" name="comment" cols="45" rows="8"  aria-required="true" required="required"></textarea>
+			</p>
+			<p class="form-submit">
+				<input name="submit" type="submit" id="submit" class="submit" value="<?php _e( 'Post Comment', 'rocket-comments' ); ?>" />
+				<input type='hidden' name='comment_post_ID' value='<?php echo get_the_ID(); ?>' id='comment_post_ID' />
+				<input type='hidden' name='comment_parent' id='comment_parent' value='0' />
+			</p>
+			<?php wp_nonce_field( 'unfiltered-html-comment_' . get_the_ID(), '_wp_unfiltered_html_comment_disabled', false ); ?>
+			<script>(function(){if(window===window.parent){document.getElementById('_wp_unfiltered_html_comment_disabled').name='_wp_unfiltered_html_comment';}})();</script>
+		</form>
+	</div>
+
 </div>
 
 <script type="text/template" id="comment-template">
@@ -66,7 +92,7 @@ $current_user = wp_get_current_user();
 			<%= attributes.content.rendered ? attributes.content.rendered : attributes.content %>
 		</div>
 		<div class="reply">
-			<a rel='nofollow' class='comment-reply-link' href='<?php echo get_permalink(); ?>?replytocom=1#respond' onclick='return addComment.moveForm( "div-comment-<%= attributes.id %>", "<%= attributes.id %>", "respond", "<%= attributes.id %>" )' aria-label='<?php _e( 'Leave a Reply', 'rocket-comments' ); ?>'><?php _e( 'Reply', 'rocket-comments' ); ?></a>
+			<a rel='nofollow' class='comment-reply-link' href='<?php echo get_permalink(); ?>?replytocom=<%= attributes.id %>#respond' onclick='return addComment.moveForm( "div-comment-<%= attributes.id %>", "<%= attributes.id %>", "respond", "<%= attributes.id %>" )' aria-label='<?php _e( 'Leave a Reply', 'rocket-comments' ); ?>'><?php _e( 'Reply', 'rocket-comments' ); ?></a>
 		</div>
 	</article>
 	<ol id="ol-comment-<%= attributes.id %>" class="children"></ol>
