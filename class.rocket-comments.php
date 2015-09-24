@@ -41,6 +41,7 @@ class RocketComments {
 		add_filter( 'comments_template', array( $this, 'comments_template' ) );
 		add_filter( 'rest_avatar_sizes', array( $this, 'avatar_sizes' ) );
 		add_filter( 'rest_pre_insert_comment', array( $this, 'pre_insert_comment' ), 10, 2 );
+		add_filter( 'rest_prepare_comment', array( $this, 'rest_prepare_comment' ), 10, 3 );
 
 		// TODO: Check with the WP-API team for the best way of getting the appropriate URL.
 		// This doesn't feel right.
@@ -99,6 +100,31 @@ class RocketComments {
 		}
 
 		return $prepared_comment;
+	}
+
+	public function get_comment_time( $comment ) {
+		$format = get_option( 'time_format' );
+		$date = mysql2date( $format, $comment->comment_date, true );
+
+		return apply_filters( 'get_comment_time', $date, $format, false, true, $comment );
+	}
+
+	public function rest_prepare_comment( $data, $comment, $request ) {
+		$updates = array(
+			'comment_date' => get_comment_date( '', $comment->comment_ID ),
+			'comment_time' => $this->get_comment_time( $comment ),
+			'edit' => 0,
+		);
+
+		if ( current_user_can( 'edit_comment', $comment->comment_ID ) ) {
+			$updates['edit'] = 1;
+		}
+
+		foreach ( $updates as $k => $v ) {
+			$data->data[ $k ] = $v;
+		}
+
+		return $data;
 	}
 
 }

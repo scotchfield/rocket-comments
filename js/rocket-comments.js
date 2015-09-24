@@ -63,16 +63,12 @@ var CommentModel = Backbone.Model.extend({ //wp.api.models.Comment.extend({
 	},
 
 	initialize: function () {
-		var date = new Date(this.get('date')),
-			user_id = commentsView.collection.user_id;
+		var date = new Date(this.get('date'));
 
 		this.set({'iso_string': date.toISOString()});
-		this.set({'comment_date': date.toLocaleDateString()});
-		this.set({'comment_time': date.toLocaleTimeString()});
 
 		this.set({'edit_class': 'hidden'});
-
-		if (user_id > 0 && this.get('author') == user_id) {
+		if (this.get('edit') == 1) {
 			this.set({'edit_class': ''});
 		}
 	},
