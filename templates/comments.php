@@ -100,7 +100,9 @@ if ( is_user_logged_in() ) {
 			</div>
 			<div class="comment-metadata">
 				<a href="<%= attributes.link %>">
-					<time datetime="<%= attributes.iso_string %>"><%= attributes.date_string %></time>
+					<time datetime="<%= attributes.iso_string %>">
+						<?php printf( __( '%1$s at %2$s' ), '<%= attributes.comment_date %>', '<%= attributes.comment_time %>' ); ?>
+					</time>
 				</a>
 				<span class="edit-link <%= attributes.edit_class %>">
 					<a class="comment-edit-link" href="<?php echo get_admin_url() ?>comment.php?action=editcomment&amp;c=<%= attributes.id %>" onclick='return addComment.editForm(<%= attributes.id %>, "respond");'>
