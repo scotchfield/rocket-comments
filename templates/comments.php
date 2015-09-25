@@ -51,7 +51,7 @@ $current_user = wp_get_current_user();
 <?php
 if ( is_user_logged_in() ) {
 ?>
-			<div class=".comment-author-logged-in">
+			<div class="comment-author-logged-in">
 				<p class="logged-in-as">
 					<?php printf( __( 'Logged in as <a href="%sprofile.php">%s</a>.', 'rocket-comments' ), get_admin_url(), $current_user->display_name ); ?>
 					<a href="<?php echo wp_logout_url( get_permalink() ); ?>" title="<?php _e( 'Log out of this account', 'rocket-comments' ); ?>"><?php _e( 'Log out?', 'rocket-comments' ); ?></a>
@@ -60,7 +60,7 @@ if ( is_user_logged_in() ) {
 <?php
 }
 ?>
-			<div class=".comment-author-not-logged-in <?php if ( is_user_logged_in() ) { echo 'hidden'; } ?>">
+			<div class="comment-author-not-logged-in <?php if ( is_user_logged_in() ) { echo 'hidden'; } ?>">
 				<p class="comment-notes">
 					<span id="email-notes">Your email address will not be published.</span> Required fields are marked <span class="required">*</span>
 				</p>

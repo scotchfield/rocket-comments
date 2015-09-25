@@ -330,6 +330,15 @@ addComment.editForm = function(commentId, respondId) {
 
 	model = commentsView.collection.get(commentId);
 
+	if (model.get('author') != commentsView.collection.user_id) {
+		jQuery('.comment-author-logged-in').hide();
+		jQuery('.comment-author-not-logged-in').show();
+
+		jQuery('.comment-respond #author').val(model.get('author_name'));
+		jQuery('.comment-respond #email').val(model.get('author_email'));
+		jQuery('.comment-respond #url').val(model.get('author_url'));
+	}
+
 	content = jQuery('#div-comment-' + commentId + ' .comment-content').text();
 	jQuery('#respond textarea#comment').val(content.trim());
 
@@ -351,6 +360,9 @@ addComment.editForm = function(commentId, respondId) {
 		jQuery('#respond textarea#comment').val('');
 		jQuery('#respond').removeData('action');
 		jQuery('#respond').removeData('comment-id');
+
+		jQuery('.comment-author-not-logged-in').hide();
+		jQuery('.comment-author-logged-in').show();
 
 		return false;
 	};
