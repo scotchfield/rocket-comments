@@ -53,7 +53,9 @@ class RocketComments {
 	}
 
 	public function plugin_deactivate_notice() {
-		echo '<div class="updated"><p><strong>Rocket Comments</strong> depends on <strong>WP-API</strong>. Please install and activate it first! Thanks!</p></div>';
+		echo '<div class="updated"><p>' .
+			__(' <strong>Rocket Comments</strong> depends on <strong>WP-API</strong>. Please install and activate it first! Thanks!', 'rocket-comments' ) .
+			'</p></div>';
 
 		if ( isset( $_GET[ 'activate' ] ) ) {
 			unset( $_GET[ 'activate' ] );
