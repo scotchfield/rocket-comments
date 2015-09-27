@@ -21,6 +21,7 @@ if ( ! $thread_comments ) {
 }
 
 $current_user = wp_get_current_user();
+$require_name_email = get_option( 'require_name_email' );
 
 ?> data-post-id="<?php echo get_the_ID(); ?>" data-user-id="<?php echo $current_user->ID; ?>" data-user-name="<?php echo $current_user->display_name ?>" data-user-avatar="<?php echo get_avatar_url( $current_user->ID ); ?>" data-comment-title-edit="<?php echo __( 'Edit Comment', 'rocket-comments' ); ?>" data-comment-title-reply="<?php echo __( 'Leave a Reply', 'rocket-comments' ); ?>">
 
@@ -62,14 +63,15 @@ if ( is_user_logged_in() ) {
 ?>
 			<div class="comment-author-not-logged-in <?php if ( is_user_logged_in() ) { echo 'hidden'; } ?>">
 				<p class="comment-notes">
-					<span id="email-notes">Your email address will not be published.</span> Required fields are marked <span class="required">*</span>
+					<span id="email-notes">Your email address will not be published.</span>
+					<?php if ( $require_name_email ) { _e( 'Required fields are marked <span class="required">*</span>', 'rocket-coments' ); } ?>
 				</p>
 				<p class="comment-form-author">
-					<label for="author">Name <span class="required">*</span></label>
+					<label for="author">Name<?php if ( $require_name_email ) { echo '<span class="required">*</span>'; } ?></label>
 					<input id="author" name="author" type="text" value="" size="30" aria-required='true' required='required' />
 				</p>
 				<p class="comment-form-email">
-					<label for="email">Email <span class="required">*</span></label>
+					<label for="email">Email<?php if ( $require_name_email ) { echo '<span class="required">*</span>'; } ?></label>
 					<input id="email" name="email" type="email" value="" size="30" aria-describedby="email-notes" aria-required='true' required='required' />
 				</p>
 				<p class="comment-form-url">
