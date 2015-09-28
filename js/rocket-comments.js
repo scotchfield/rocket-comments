@@ -121,6 +121,8 @@ CommentsView = Backbone.View.extend({
 	},
 
 	initialize: function () {
+		var data = {};
+
 		/*this.collection.on('all', function(eventName) {
 			console.log(eventName + ' was triggered!');
 		});*/
@@ -130,14 +132,19 @@ CommentsView = Backbone.View.extend({
 		this.collection.user_name = this.$el.data('user-name');
 		this.collection.user_avatar = this.$el.data('user-avatar');
 
+		this.page_comments = this.$el.data('page-comments');
 		this.comment_page = this.$el.data('comment-page');
 		this.comments_per_page = this.$el.data('comments-per-page');
 
-		this.collection.fetch({
-			data: {
+		if (this.page_comments > 0) {
+			data = {
 				'page': this.comment_page,
 				'per_page': this.comments_per_page,
-			},
+			};
+		}
+
+		this.collection.fetch({
+			data: data,
 			success: function (collection, response, options) {
 				commentsView.totalComments = parseInt(options.xhr.getResponseHeader('X-WP-Total'));
 				commentsView.totalPages = parseInt(options.xhr.getResponseHeader('X-WP-TotalPages'));
@@ -245,11 +252,17 @@ CommentsView = Backbone.View.extend({
 	},
 
 	fetchComments: function (collection) {
-		collection.fetch({
-			data: {
+		var data = {};
+
+		if (commentsView.page_comments > 0) {
+			data = {
 				'page': commentsView.comment_page,
 				'per_page': commentsView.comments_per_page,
-			},
+			};
+		}
+
+		collection.fetch({
+			data: data,
 			success: function (collection, response, options) {
 				commentsView.totalComments = options.xhr.getResponseHeader('X-WP-Total');
 				commentsView.totalPages = options.xhr.getResponseHeader('X-WP-TotalPages');
