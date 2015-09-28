@@ -48,9 +48,19 @@ $require_name_email = get_option( 'require_name_email' );
 				</a>
 			</small>
 		</h3>
+
+<?php
+if ( get_option( 'comment_registration' ) && ! is_user_logged_in() ) {
+?>
+		<p class="must-log-in"><?php printf( __( 'You must be <a href="%s">logged in</a> to post a comment.' ), wp_login_url( apply_filters( 'the_permalink', get_permalink( $post_id ) ) ) ); ?></p>
+<?php
+	do_action( 'comment_form_must_log_in_after' );
+} else {
+?>
+
 		<form action="http://localhost:8888/wp-comments-post.php" method="post" id="commentform" class="comment-form" novalidate>
 <?php
-if ( is_user_logged_in() ) {
+	if ( is_user_logged_in() ) {
 ?>
 			<div class="comment-author-logged-in">
 				<p class="logged-in-as">
@@ -59,7 +69,7 @@ if ( is_user_logged_in() ) {
 				</p>
 			</div>
 <?php
-}
+	}
 ?>
 			<div class="comment-author-not-logged-in <?php if ( is_user_logged_in() ) { echo 'hidden'; } ?>">
 				<p class="comment-notes">
@@ -90,6 +100,9 @@ if ( is_user_logged_in() ) {
 			<?php wp_nonce_field( 'unfiltered-html-comment_' . get_the_ID(), '_wp_unfiltered_html_comment_disabled', false ); ?>
 			<script>(function(){if(window===window.parent){document.getElementById('_wp_unfiltered_html_comment_disabled').name='_wp_unfiltered_html_comment';}})();</script>
 		</form>
+<?php
+}
+?>
 	</div>
 
 </div>
