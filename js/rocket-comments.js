@@ -91,6 +91,7 @@ CommentView = Backbone.View.extend({
 
 CommentsCollection = wp.api.collections.Comments.extend({
 	model: CommentModel,
+
 	url: function () {
 		if (this.post_id) {
 			return WP_API_Settings.root + '/comments/?orderby=id&order=ASC&post=' + this.post_id;
@@ -129,8 +130,25 @@ CommentsView = Backbone.View.extend({
 		this.collection.user_name = this.$el.data('user-name');
 		this.collection.user_avatar = this.$el.data('user-avatar');
 
+		this.comment_page = this.$el.data('comment-page');
+		this.comments_per_page = this.$el.data('comments-per-page');
+
 		this.collection.fetch({
-			success: function () {
+			data: {
+				'page': this.comment_page,
+				'per_page': this.comments_per_page,
+			},
+			success: function (collection, response, options) {
+				commentsView.totalComments = parseInt(options.xhr.getResponseHeader('X-WP-Total'));
+				commentsView.totalPages = parseInt(options.xhr.getResponseHeader('X-WP-TotalPages'));
+
+				if (commentsView.totalComments == 1) {
+					jQuery('.comments-area #comment-single').fadeIn();
+				} else {
+					jQuery('span#comment-count').html(commentsView.totalComments);
+					jQuery('.comments-area #comment-multiple').fadeIn();
+				}
+
 				commentsView.interval = setInterval(commentsView.fetchComments, 5000, commentsView.collection);
 			},
 			error: function () {
@@ -162,12 +180,6 @@ CommentsView = Backbone.View.extend({
 				$ol.append(item_view.render('comment depth-' + depth + bypostauthor).el);
 			}, this);
 			jQuery('.comments-area .comments-title').css('display', 'none');
-			if (this.collection.length == 1) {
-				jQuery('.comments-area #comment-single').fadeIn();
-			} else {
-				jQuery('span#comment-count').html(this.collection.length);
-				jQuery('.comments-area #comment-multiple').fadeIn();
-			}
 		}
 	},
 
@@ -234,6 +246,21 @@ CommentsView = Backbone.View.extend({
 
 	fetchComments: function (collection) {
 		collection.fetch({
+			data: {
+				'page': commentsView.comment_page,
+				'per_page': commentsView.comments_per_page,
+			},
+			success: function (collection, response, options) {
+				commentsView.totalComments = options.xhr.getResponseHeader('X-WP-Total');
+				commentsView.totalPages = options.xhr.getResponseHeader('X-WP-TotalPages');
+
+				if (commentsView.totalComments == 1) {
+					jQuery('.comments-area #comment-single').fadeIn();
+				} else {
+					jQuery('span#comment-count').html(commentsView.totalComments);
+					jQuery('.comments-area #comment-multiple').fadeIn();
+				}
+			},
 			error: function () {
 				console.log('Error: Could not update collection!');
 			}

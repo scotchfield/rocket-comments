@@ -8,6 +8,27 @@
 if ( post_password_required() ) {
 	return;
 }
+
+function rocket_comments_comment_nav() {
+	if ( get_option( 'page_comments' ) ) {
+?>
+<nav class="navigation comment-navigation" role="navigation">
+	<h2 class="screen-reader-text">
+		<?php _e( 'Comment navigation', 'rocket-comments' ); ?>
+	</h2>
+	<div class="nav-links">
+		<div class="nav-previous">
+			<a><?php _e( 'Older Comments', 'rocket-comments' ); ?></a>
+		</div>
+		<div class="nav-next">
+			<a><?php _e( 'Newer Comments', 'rocket-comments' ); ?></a>
+		</div>
+	</div>
+</nav>
+<?php
+	}
+}
+
 ?>
 
 <div id="comments" class="comments-area"<?php
@@ -22,8 +43,10 @@ if ( ! $thread_comments ) {
 
 $current_user = wp_get_current_user();
 $require_name_email = get_option( 'require_name_email' );
+$order_comments = 'newest' == get_option( 'default_comments_page' ) ? 'DESC' : 'ASC';
+$page_comments = intval( get_option( 'page_comments' ) );
 
-?> data-post-id="<?php echo get_the_ID(); ?>" data-user-id="<?php echo $current_user->ID; ?>" data-user-name="<?php echo $current_user->display_name ?>" data-user-avatar="<?php echo get_avatar_url( $current_user->ID ); ?>" data-comment-title-edit="<?php echo __( 'Edit Comment', 'rocket-comments' ); ?>" data-comment-title-reply="<?php echo __( 'Leave a Reply', 'rocket-comments' ); ?>">
+?> data-post-id="<?php echo get_the_ID(); ?>" data-user-id="<?php echo $current_user->ID; ?>" data-user-name="<?php echo $current_user->display_name ?>" data-user-avatar="<?php echo get_avatar_url( $current_user->ID ); ?>" data-comment-title-edit="<?php echo __( 'Edit Comment', 'rocket-comments' ); ?>" data-comment-title-reply="<?php echo __( 'Leave a Reply', 'rocket-comments' ); ?>" data-comment-page="0" data-comments-per-page="<?php echo $page_comments; ?>" data-comment-order="<?php echo $order_comments; ?>">
 
 	<div id="wp-loading">
 		<img src="<?php echo plugins_url(); ?>/rocket-comments/images/wp-loading.gif">
@@ -36,6 +59,8 @@ $require_name_email = get_option( 'require_name_email' );
 	<h2 id="comment-multiple" class="comments-title">
 		<?php printf( __( '<span id="comment-count"></span> thoughts on &ldquo;%s&rdquo;', 'rocket-comments' ), get_the_title() ); ?>
 	</h2>
+
+<?php rocket_comments_comment_nav(); ?>
 
 	<ol id="comment-root" class="comment-list"></ol>
 
