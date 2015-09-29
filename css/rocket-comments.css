@@ -9,9 +9,6 @@
 .comments-area .hidden {
 	display: none;
 }
-.nav-previous, .nav-next {
-	display: none;
-}
 .nav-previous a, .nav-next a {
 	cursor: pointer;
 }

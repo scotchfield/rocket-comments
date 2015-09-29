@@ -170,9 +170,15 @@ CommentsView = Backbone.View.extend({
 			jQuery('.comment-navigation').show();
 
 			if (this.comment_page > 1) {
-				jQuery('.nav-previous').show();
+				if (undefined !== this.$nav_previous_children) {
+					jQuery('.nav-previous').append(this.$nav_previous_children);
+					this.$nav_previous_children = undefined;
+				}
 			} else {
-				jQuery('.nav-previous').hide();
+				var $children = jQuery('.nav-previous').children().detach();
+				if ($children.length > 0) {
+					this.$nav_previous_children = $children;
+				}
 			}
 
 			if (this.comment_page < this.total_pages) {
