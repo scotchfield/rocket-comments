@@ -146,13 +146,13 @@ CommentsView = Backbone.View.extend({
 		this.collection.fetch({
 			data: data,
 			success: function (collection, response, options) {
-				commentsView.totalComments = parseInt(options.xhr.getResponseHeader('X-WP-Total'));
-				commentsView.totalPages = parseInt(options.xhr.getResponseHeader('X-WP-TotalPages'));
+				commentsView.total_comments = parseInt(options.xhr.getResponseHeader('X-WP-Total'));
+				commentsView.total_pages = parseInt(options.xhr.getResponseHeader('X-WP-TotalPages'));
 
-				if (commentsView.totalComments == 1) {
+				if (commentsView.total_comments == 1) {
 					jQuery('.comments-area #comment-single').fadeIn();
 				} else {
-					jQuery('span#comment-count').html(commentsView.totalComments);
+					jQuery('span#comment-count').html(commentsView.total_comments);
 					jQuery('.comments-area #comment-multiple').fadeIn();
 				}
 
@@ -166,7 +166,7 @@ CommentsView = Backbone.View.extend({
 	},
 
 	updateNavigationLinks: function () {
-		if (this.totalPages > 1) {
+		if (this.total_pages > 1) {
 			jQuery('.comment-navigation').show();
 
 			if (this.comment_page > 1) {
@@ -175,7 +175,7 @@ CommentsView = Backbone.View.extend({
 				jQuery('.nav-previous').hide();
 			}
 
-			if (this.comment_page < this.totalPages) {
+			if (this.comment_page < this.total_pages) {
 				jQuery('.nav-next').show();
 			} else {
 				jQuery('.nav-next').hide();
@@ -195,7 +195,10 @@ CommentsView = Backbone.View.extend({
 					bypostauthor = '';
 
 				if (item.get('parent') > 0 && depth > 1) {
-					$ol = jQuery('ol#ol-comment-' + item.get('parent'));
+					var $parent_ol = jQuery('ol#ol-comment-' + item.get('parent'));
+					if ($parent_ol.length !== 0) {
+						$ol = $parent_ol;
+					}
 				}
 
 				if (item.get('author') == this.collection.user_id) {
@@ -283,15 +286,17 @@ CommentsView = Backbone.View.extend({
 		collection.fetch({
 			data: data,
 			success: function (collection, response, options) {
-				commentsView.totalComments = options.xhr.getResponseHeader('X-WP-Total');
-				commentsView.totalPages = options.xhr.getResponseHeader('X-WP-TotalPages');
+				commentsView.total_comments = options.xhr.getResponseHeader('X-WP-Total');
+				commentsView.total_pages = options.xhr.getResponseHeader('X-WP-TotalPages');
 
-				if (commentsView.totalComments == 1) {
+				if (commentsView.total_comments == 1) {
 					jQuery('.comments-area #comment-single').fadeIn();
 				} else {
-					jQuery('span#comment-count').html(commentsView.totalComments);
+					jQuery('span#comment-count').html(commentsView.total_comments);
 					jQuery('.comments-area #comment-multiple').fadeIn();
 				}
+
+				commentsView.updateNavigationLinks();
 			},
 			error: function () {
 				console.log('Error: Could not update collection!');
@@ -434,7 +439,6 @@ addComment.editForm = function(commentId, respondId) {
 
 var rocketShiftPage = function (delta) {
 	commentsView.comment_page += delta;
-	console.log(commentsView.comment_page);
 	commentsView.fetchComments(commentsView.collection);
 };
 
