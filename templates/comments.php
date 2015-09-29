@@ -167,7 +167,17 @@ if ( get_option( 'comment_registration' ) && ! is_user_logged_in() ) {
 			<%= attributes.content.rendered ? attributes.content.rendered : attributes.content %>
 		</div>
 		<div class="reply">
+<?php
+if ( get_option( 'comment_registration' ) && ! is_user_logged_in() ) {
+?>
+			<a rel="nofollow" class="comment-reply-login" href="<?php echo esc_url( wp_login_url( get_permalink() ) ); ?>"><?php _e( 'Log in to Reply', 'rocket-comments' ); ?></a>
+<?php
+} else {
+?>
 			<a rel='nofollow' class='comment-reply-link' href='<?php echo get_permalink(); ?>?replytocom=<%= attributes.id %>#respond' onclick='return addComment.moveForm( "div-comment-<%= attributes.id %>", "<%= attributes.id %>", "respond", "<%= attributes.id %>" )' aria-label='<?php _e( 'Leave a Reply', 'rocket-comments' ); ?>'><?php _e( 'Reply', 'rocket-comments' ); ?></a>
+<?php
+}
+?>
 		</div>
 	</article>
 	<ol id="ol-comment-<%= attributes.id %>" class="children"></ol>
