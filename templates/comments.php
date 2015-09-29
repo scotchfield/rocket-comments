@@ -11,14 +11,15 @@ if ( post_password_required() ) {
 
 function rocket_comments_comment_nav() {
 	if ( get_option( 'page_comments' ) ) {
+		$newest_comments = 'newest' == get_option( 'default_comments_page' ) ? true : false;
 ?>
 <nav class="navigation comment-navigation" role="navigation">
 	<h2 class="screen-reader-text">
 		<?php _e( 'Comment navigation', 'rocket-comments' ); ?>
 	</h2>
 	<div class="nav-links">
-		<div class="nav-previous"><a onclick="rocketShiftPage(-1);"><?php _e( 'Older Comments', 'rocket-comments' ); ?></a></div>
-		<div class="nav-next"><a onclick="rocketShiftPage(1);"><?php _e( 'Newer Comments', 'rocket-comments' ); ?></a>
+		<div class="nav-previous"><a onclick="rocketShiftPage(-1);"><?php _e( $newest_comments ? 'Newer Comments' : 'Older Comments', 'rocket-comments' ); ?></a></div>
+		<div class="nav-next"><a onclick="rocketShiftPage(1);"><?php _e( $newest_comments ? 'Older Comments' : 'Newer Comments', 'rocket-comments' ); ?></a>
 		</div>
 	</div>
 </nav>

@@ -1,6 +1,9 @@
 'use strict';
 
-var CommentModel = Backbone.Model.extend({ //wp.api.models.Comment.extend({
+/**
+ *
+ */
+var CommentModel = Backbone.Model.extend({
 	children: [],
 	idAttribute: 'id',
 	defaults: {
@@ -91,10 +94,11 @@ CommentView = Backbone.View.extend({
 
 CommentsCollection = wp.api.collections.Comments.extend({
 	model: CommentModel,
+	order: jQuery('.comments-area').data('comment-order'),
 
 	url: function () {
 		if (this.post_id) {
-			return WP_API_Settings.root + '/comments/?orderby=id&order=ASC&post=' + this.post_id;
+			return WP_API_Settings.root + '/comments/?orderby=id&order=' + this.order + '&post=' + this.post_id;
 		}
 		return WP_API_Settings.root + '/comments/';
 	},
