@@ -41,9 +41,9 @@ if ( ! $thread_comments ) {
 
 $current_user = wp_get_current_user();
 $require_name_email = get_option( 'require_name_email' );
-$order_comments = 'newest' == get_option( 'default_comments_page' ) ? 'DESC' : 'ASC';
 $page_comments = intval( get_option( 'page_comments' ) );
 $comments_per_page = intval( get_option( 'comments_per_page' ) );
+$order_comments = ( $page_comments > 0 && 'newest' == get_option( 'default_comments_page' ) ) ? 'DESC' : 'ASC';
 
 $current_page = $page_comments ? 1 : 0;
 
