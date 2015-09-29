@@ -10,3 +10,4 @@ Replace the standard WordPress comment system with a Backbone-powered single-pag
 - Submitting new comments or replies to existing comments are handled without reloading the page, and added to the active page as necessary.
 - New comments load automatically without a page refresh.
 - Built to respect the comment form structure used by the twenty* themes.
+- Support for single-page comment pagination.
