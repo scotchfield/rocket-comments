@@ -101,7 +101,7 @@ CommentsCollection = wp.api.collections.Comments.extend({
 
 	commentDepth: function (item) {
 		var depth = 1;
-		while (item.get('parent') > 0) {
+		while (item && item.get('parent') > 0) {
 			item = this.where({'id': item.get('parent')})[0];
 			depth += 1;
 		}
@@ -156,12 +156,31 @@ CommentsView = Backbone.View.extend({
 					jQuery('.comments-area #comment-multiple').fadeIn();
 				}
 
+				commentsView.updateNavigationLinks();
 				commentsView.interval = setInterval(commentsView.fetchComments, 5000, commentsView.collection);
 			},
 			error: function () {
 				console.log('Error: Could not retrieve comments!');
 			}
 		});
+	},
+
+	updateNavigationLinks: function () {
+		if (this.totalPages > 1) {
+			jQuery('.comment-navigation').show();
+
+			if (this.comment_page > 1) {
+				jQuery('.nav-previous').show();
+			} else {
+				jQuery('.nav-previous').hide();
+			}
+
+			if (this.comment_page < this.totalPages) {
+				jQuery('.nav-next').show();
+			} else {
+				jQuery('.nav-next').hide();
+			}
+		}
 	},
 
 	render: function () {
@@ -411,6 +430,12 @@ addComment.editForm = function(commentId, respondId) {
 	catch(e) {}
 
 	return false;
+};
+
+var rocketShiftPage = function (delta) {
+	commentsView.comment_page += delta;
+	console.log(commentsView.comment_page);
+	commentsView.fetchComments(commentsView.collection);
 };
 
 jQuery('form#commentform').submit(function (e) {

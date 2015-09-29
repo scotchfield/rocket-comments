@@ -18,10 +18,14 @@ function rocket_comments_comment_nav() {
 	</h2>
 	<div class="nav-links">
 		<div class="nav-previous">
-			<a><?php _e( 'Older Comments', 'rocket-comments' ); ?></a>
+			<a onclick="rocketShiftPage(-1);">
+				<?php _e( 'Older Comments', 'rocket-comments' ); ?>
+			</a>
 		</div>
 		<div class="nav-next">
-			<a><?php _e( 'Newer Comments', 'rocket-comments' ); ?></a>
+			<a onclick="rocketShiftPage(1);">
+				<?php _e( 'Newer Comments', 'rocket-comments' ); ?>
+			</a>
 		</div>
 	</div>
 </nav>
@@ -47,7 +51,9 @@ $order_comments = 'newest' == get_option( 'default_comments_page' ) ? 'DESC' : '
 $page_comments = intval( get_option( 'page_comments' ) );
 $comments_per_page = intval( get_option( 'comments_per_page' ) );
 
-?> data-post-id="<?php echo get_the_ID(); ?>" data-user-id="<?php echo $current_user->ID; ?>" data-user-name="<?php echo $current_user->display_name ?>" data-user-avatar="<?php echo get_avatar_url( $current_user->ID ); ?>" data-comment-title-edit="<?php echo __( 'Edit Comment', 'rocket-comments' ); ?>" data-comment-title-reply="<?php echo __( 'Leave a Reply', 'rocket-comments' ); ?>" data-comment-page="0" data-page-comments="<?php echo $page_comments; ?>" data-comments-per-page="<?php echo $comments_per_page; ?>" data-comment-order="<?php echo $order_comments; ?>">
+$current_page = $page_comments ? 1 : 0;
+
+?> data-post-id="<?php echo get_the_ID(); ?>" data-user-id="<?php echo $current_user->ID; ?>" data-user-name="<?php echo $current_user->display_name ?>" data-user-avatar="<?php echo get_avatar_url( $current_user->ID ); ?>" data-comment-title-edit="<?php echo __( 'Edit Comment', 'rocket-comments' ); ?>" data-comment-title-reply="<?php echo __( 'Leave a Reply', 'rocket-comments' ); ?>" data-comment-page="<?php echo $current_page; ?>" data-page-comments="<?php echo $page_comments; ?>" data-comments-per-page="<?php echo $comments_per_page; ?>" data-comment-order="<?php echo $order_comments; ?>">
 
 	<div id="wp-loading">
 		<img src="<?php echo plugins_url(); ?>/rocket-comments/images/wp-loading.gif">
