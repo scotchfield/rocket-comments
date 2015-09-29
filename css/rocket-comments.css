@@ -3,6 +3,9 @@
 	padding-bottom: 2em;
 	text-align: center;
 }
+.comments-area div#wp-comment-content {
+	display: none;
+}
 .comments-area .comments-title {
 	display: none;
 }

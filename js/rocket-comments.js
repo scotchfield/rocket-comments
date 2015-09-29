@@ -197,7 +197,9 @@ CommentsView = Backbone.View.extend({
 		var $ol = this.$el.find('ol#comment-root');
 		$ol.empty();
 
-		jQuery('div#wp-loading').fadeOut(400);
+		jQuery('div#wp-loading').fadeOut(400, function () {
+			jQuery('#wp-comment-content').fadeIn(400);
+		});
 
 		if (!_.isEmpty(this.collection)) {
 			this.collection.each(function (item) {
