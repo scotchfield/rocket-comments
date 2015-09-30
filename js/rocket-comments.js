@@ -1,9 +1,9 @@
 'use strict';
 
-/**
- *
- */
-var CommentModel = Backbone.Model.extend({
+var rocketComments = rocketComments || {},
+	addComment = addComment || {};
+
+rocketComments.CommentModel = Backbone.Model.extend({
 	children: [],
 	idAttribute: 'id',
 	defaults: {
@@ -76,11 +76,11 @@ var CommentModel = Backbone.Model.extend({
 		}
 	},
 
-}),
+});
 
-CommentView = Backbone.View.extend({
+rocketComments.CommentView = Backbone.View.extend({
 	tagName: 'li',
-	template: _.template(jQuery('#comment-template').html()),
+	template: jQuery('#comment-template').length ? _.template(jQuery('#comment-template').html()) : undefined,
 
 	render: function (class_list) {
 		this.$el.html(this.template(this.model))
@@ -90,10 +90,10 @@ CommentView = Backbone.View.extend({
 
 		return this;
 	}
-}),
+});
 
-CommentsCollection = wp.api.collections.Comments.extend({
-	model: CommentModel,
+rocketComments.CommentsCollection = wp.api.collections.Comments.extend({
+	model: rocketComments.CommentModel,
 	order: jQuery('.comments-area').data('comment-order'),
 
 	url: function () {
@@ -114,11 +114,11 @@ CommentsCollection = wp.api.collections.Comments.extend({
 		}
 		return depth < this.threaded ? depth : this.threaded;
 	}
-}),
+});
 
-CommentsView = Backbone.View.extend({
+rocketComments.CommentsView = Backbone.View.extend({
 	el: '.comments-area',
-	collection: new CommentsCollection(),
+	collection: new rocketComments.CommentsCollection(),
 
 	events: {
 		'click .comment-respond .submit': 'submitComment'
@@ -150,18 +150,21 @@ CommentsView = Backbone.View.extend({
 		this.collection.fetch({
 			data: data,
 			success: function (collection, response, options) {
-				commentsView.total_comments = parseInt(options.xhr.getResponseHeader('X-WP-Total'));
-				commentsView.total_pages = parseInt(options.xhr.getResponseHeader('X-WP-TotalPages'));
+				rocketComments.commentsView.total_comments = parseInt(options.xhr.getResponseHeader('X-WP-Total'));
+				rocketComments.commentsView.total_pages = parseInt(options.xhr.getResponseHeader('X-WP-TotalPages'));
 
-				if (commentsView.total_comments == 1) {
+				if (rocketComments.commentsView.total_comments == 1) {
 					jQuery('.comments-area #comment-single').fadeIn();
 				} else {
-					jQuery('span#comment-count').html(commentsView.total_comments);
+					jQuery('span#comment-count').html(rocketComments.commentsView.total_comments);
 					jQuery('.comments-area #comment-multiple').fadeIn();
 				}
 
-				commentsView.updateNavigationLinks();
-				commentsView.interval = setInterval(commentsView.fetchComments, 5000, commentsView.collection);
+				rocketComments.commentsView.updateNavigationLinks();
+				if (undefined !== rocketComments.commentsView.interval) {
+					clearTimeout(rocketComments.commentsView.interval);
+				}
+				rocketComments.commentsView.interval = setInterval(rocketComments.commentsView.fetchComments, 5000, rocketComments.commentsView.collection);
 			},
 			error: function () {
 				console.log('Error: Could not retrieve comments!');
@@ -217,7 +220,7 @@ CommentsView = Backbone.View.extend({
 					bypostauthor = ' bypostauthor';
 				}
 
-				var item_view = new CommentView({model: item});
+				var item_view = new rocketComments.CommentView({model: item});
 				$ol.append(item_view.render('comment depth-' + depth + bypostauthor).el);
 			}, this);
 			jQuery('.comments-area .comments-title').css('display', 'none');
@@ -244,7 +247,7 @@ CommentsView = Backbone.View.extend({
 			item.save({}, {
 				success: function(model, response) {
 					if (response !== null) {
-						commentsView.collection.set(item, {remove: false});
+						rocketComments.commentsView.collection.set(item, {remove: false});
 					}
 				},
 				error: function(model, response) {
@@ -264,12 +267,12 @@ CommentsView = Backbone.View.extend({
 				post: this.collection.post_id,
 			};
 
-			item = new CommentModel(attributes);
+			item = new rocketComments.CommentModel(attributes);
 
 			item.save({}, {
 				success: function(model, response) {
 					if (response !== null) {
-						commentsView.collection.add(item);
+						rocketComments.commentsView.collection.add(item);
 					}
 				},
 				error: function(model, response) {
@@ -288,27 +291,27 @@ CommentsView = Backbone.View.extend({
 	fetchComments: function (collection) {
 		var data = {};
 
-		if (commentsView.page_comments > 0) {
+		if (rocketComments.commentsView.page_comments > 0) {
 			data = {
-				'page': commentsView.comment_page,
-				'per_page': commentsView.comments_per_page,
+				'page': rocketComments.commentsView.comment_page,
+				'per_page': rocketComments.commentsView.comments_per_page,
 			};
 		}
 
 		collection.fetch({
 			data: data,
 			success: function (collection, response, options) {
-				commentsView.total_comments = options.xhr.getResponseHeader('X-WP-Total');
-				commentsView.total_pages = options.xhr.getResponseHeader('X-WP-TotalPages');
+				rocketComments.commentsView.total_comments = options.xhr.getResponseHeader('X-WP-Total');
+				rocketComments.commentsView.total_pages = options.xhr.getResponseHeader('X-WP-TotalPages');
 
-				if (commentsView.total_comments == 1) {
+				if (rocketComments.commentsView.total_comments == 1) {
 					jQuery('.comments-area #comment-single').fadeIn();
 				} else {
-					jQuery('span#comment-count').html(commentsView.total_comments);
+					jQuery('span#comment-count').html(rocketComments.commentsView.total_comments);
 					jQuery('.comments-area #comment-multiple').fadeIn();
 				}
 
-				commentsView.updateNavigationLinks();
+				rocketComments.commentsView.updateNavigationLinks();
 			},
 			error: function () {
 				console.log('Error: Could not update collection!');
@@ -317,6 +320,18 @@ CommentsView = Backbone.View.extend({
 	},
 
 });
+
+rocketComments.shiftPage = function (delta) {
+	rocketComments.commentsView.comment_page += delta;
+	rocketComments.commentsView.fetchComments(rocketComments.commentsView.collection);
+};
+
+rocketComments.loadComments = function () {
+	if (undefined === rocketComments.commentsView) {
+		rocketComments.commentsView = new rocketComments.CommentsView();
+	}
+};
+
 
 addComment.setupForm = function (commentId, cancel, respond, action) {
 	var div, cancel_object;
@@ -404,9 +419,9 @@ addComment.editForm = function(commentId, respondId) {
 	comment.parentNode.insertBefore(respond, comment.nextSibling);
 	cancel.style.display = '';
 
-	model = commentsView.collection.get(commentId);
+	model = rocketComments.commentsView.collection.get(commentId);
 
-	if (model.get('author') != commentsView.collection.user_id) {
+	if (model.get('author') != rocketComments.commentsView.collection.user_id) {
 		jQuery('.comment-author-logged-in').hide();
 		jQuery('.comment-author-not-logged-in').show();
 
@@ -449,13 +464,6 @@ addComment.editForm = function(commentId, respondId) {
 	return false;
 };
 
-var rocketShiftPage = function (delta) {
-	commentsView.comment_page += delta;
-	commentsView.fetchComments(commentsView.collection);
-};
-
 jQuery('form#commentform').submit(function (e) {
 	e.preventDefault();
 });
-
-var commentsView = new CommentsView();

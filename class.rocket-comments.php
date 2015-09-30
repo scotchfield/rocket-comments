@@ -137,6 +137,11 @@ class RocketComments {
 <noscript>
   <meta http-equiv="refresh" content="0;url=<?php echo $redirect_url; ?>">
 </noscript>
+<script type="text/javascript">
+jQuery(function () {
+	rocketComments.loadComments();
+});
+</script>
 <?php
 	}
 
