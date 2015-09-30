@@ -12,7 +12,7 @@ class RocketComments {
 	}
 
 	public function init() {
-		if ( isset( $_GET[ 'rocket-disable-dev' ] ) ) {
+		if ( isset( $_GET[ 'rocket-nojs' ] ) ) {
 			return false;
 		}
 
@@ -37,6 +37,8 @@ class RocketComments {
 
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_styles' ) );
+
+		add_action( 'the_post', array( $this, 'check_js_redirect' ) );
 
 		add_filter( 'comments_template', array( $this, 'comments_template' ) );
 		add_filter( 'rest_avatar_sizes', array( $this, 'avatar_sizes' ) );
@@ -127,6 +129,15 @@ class RocketComments {
 		}
 
 		return $data;
+	}
+
+	public function check_js_redirect() {
+		$redirect_url = add_query_arg( 'rocket-nojs', '1' );
+?>
+<noscript>
+  <meta http-equiv="refresh" content="0;url=<?php echo $redirect_url; ?>">
+</noscript>
+<?php
 	}
 
 }
