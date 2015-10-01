@@ -471,3 +471,8 @@ addComment.editForm = function(commentId, respondId) {
 jQuery('form#commentform').submit(function (e) {
 	e.preventDefault();
 });
+
+jQuery(function () {
+	jQuery('#wp-loading').show();
+	rocketComments.loadComments();
+});

@@ -41,8 +41,6 @@ class RocketComments {
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_styles' ) );
 
-		add_action( 'the_post', array( $this, 'check_js_redirect' ) );
-
 		add_filter( 'comments_template', array( $this, 'comments_template' ) );
 		add_filter( 'rest_avatar_sizes', array( $this, 'avatar_sizes' ) );
 		add_filter( 'rest_pre_insert_comment', array( $this, 'pre_insert_comment' ), 10, 2 );
@@ -140,28 +138,6 @@ class RocketComments {
 		}
 
 		return $data;
-	}
-
-	/**
-	 * If our user doesn't have JavaScript enabled, they won't be able to see comments.
-	 * Rocket Comments includes a GET parameter that uses the default WordPress comment system.
-	 */
-	public function check_js_redirect() {
-		if ( ! is_single() ) {
-			return;
-		}
-
-		$redirect_url = add_query_arg( 'rocket-nojs', '1' );
-?>
-<noscript>
-  <meta http-equiv="refresh" content="0;url=<?php echo esc_url( $redirect_url ); ?>">
-</noscript>
-<script type="text/javascript">
-jQuery(function () {
-	rocketComments.loadComments();
-});
-</script>
-<?php
 	}
 
 }

@@ -1,4 +1,5 @@
 .comments-area div#wp-loading {
+	display: none;
 	margin: auto;
 	padding-bottom: 2em;
 	text-align: center;

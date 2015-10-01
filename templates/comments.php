@@ -47,7 +47,13 @@ $order_comments = ( $page_comments > 0 && 'newest' == get_option( 'default_comme
 
 $current_page = $page_comments ? 1 : 0;
 
+$redirect_no_js_url = add_query_arg( 'rocket-nojs', '1' );
+
 ?> data-post-id="<?php echo get_the_ID(); ?>" data-user-id="<?php echo $current_user->ID; ?>" data-user-name="<?php echo $current_user->display_name ?>" data-user-avatar="<?php echo get_avatar_url( $current_user->ID ); ?>" data-comment-title-edit="<?php echo __( 'Edit Comment', 'rocket-comments' ); ?>" data-comment-title-reply="<?php echo __( 'Leave a Reply', 'rocket-comments' ); ?>" data-comment-page="<?php echo $current_page; ?>" data-page-comments="<?php echo $page_comments; ?>" data-comments-per-page="<?php echo $comments_per_page; ?>" data-comment-order="<?php echo $order_comments; ?>">
+
+	<noscript>
+		<a href="<?php echo esc_url( $redirect_no_js_url ); ?>"><?php _e( 'Click here to view comments on this post.', 'rocket-comments' ); ?></a>
+	</noscript>
 
 	<div id="wp-loading">
 		<img src="<?php echo plugins_url(); ?>/rocket-comments/images/wp-loading.gif">
