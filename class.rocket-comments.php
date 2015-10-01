@@ -16,6 +16,9 @@ class RocketComments {
 			return false;
 		}
 
+		/**
+		 * Rocket Comments depends on the REST API. If it's not installed and active, we should deactivate.
+		 */
 		if ( function_exists( 'is_plugin_active' ) && ! is_plugin_active( 'rest-api/plugin.php' ) ) {
 			add_action( 'admin_init', array( $this, 'plugin_deactivate' ) );
 			add_action( 'admin_notices', array( $this, 'plugin_deactivate_notice' ) );
@@ -64,6 +67,10 @@ class RocketComments {
 		}
 	}
 
+	/**
+	 * Override the default comment template and substitute with our own.
+	 * This filter is only triggered when the user views a single post and has JavaScript enabled.
+	 */
 	public function comments_template( $comment_template ) {
 		return dirname( __FILE__ ) . '/templates/comments.php';
 	}
@@ -80,6 +87,10 @@ class RocketComments {
 		return $url . 'wp/v2';
 	}
 
+	/**
+	 * Ensure that we also retrieve avatars that are 56x56.
+	 * Why? Great question! Our goal is to copy the look and feel of the twenty* themes, which use avatars of this size.
+	 */
 	public function avatar_sizes( $sizes ) {
 		array_push( $sizes, 56 );
 		return $sizes;
@@ -131,6 +142,10 @@ class RocketComments {
 		return $data;
 	}
 
+	/**
+	 * If our user doesn't have JavaScript enabled, they won't be able to see comments.
+	 * Rocket Comments includes a GET parameter that uses the default WordPress comment system.
+	 */
 	public function check_js_redirect() {
 		if ( ! is_single() ) {
 			return;
