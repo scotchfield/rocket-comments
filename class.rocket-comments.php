@@ -154,7 +154,7 @@ class RocketComments {
 		$redirect_url = add_query_arg( 'rocket-nojs', '1' );
 ?>
 <noscript>
-  <meta http-equiv="refresh" content="0;url=<?php echo $redirect_url; ?>">
+  <meta http-equiv="refresh" content="0;url=<?php echo esc_url( $redirect_url ); ?>">
 </noscript>
 <script type="text/javascript">
 jQuery(function () {
