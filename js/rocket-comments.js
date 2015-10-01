@@ -140,6 +140,10 @@ rocketComments.CommentsView = Backbone.View.extend({
 		this.comment_page = this.$el.data('comment-page');
 		this.comments_per_page = this.$el.data('comments-per-page');
 
+		if (undefined === rocketComments.commentsView) {
+			return;
+		}
+
 		if (this.page_comments > 0) {
 			data = {
 				'page': this.comment_page,
