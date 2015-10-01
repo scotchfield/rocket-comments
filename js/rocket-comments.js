@@ -40,26 +40,26 @@ rocketComments.CommentModel = Backbone.Model.extend({
 	 * @param {{beforeSend}, *} options
 	 * @returns {*}
 	 */
-	sync: function( method, model, options ) {
+	sync: function(method, model, options) {
 		options = options || {};
 
-		if ( 'undefined' !== typeof WP_API_Settings.nonce ) {
+		if ('undefined' !== typeof WP_API_Settings.nonce) {
 			var beforeSend = options.beforeSend;
 
-			options.beforeSend = function( xhr ) {
-				xhr.setRequestHeader( 'X-WP-Nonce', WP_API_Settings.nonce );
+			options.beforeSend = function(xhr) {
+				xhr.setRequestHeader('X-WP-Nonce', WP_API_Settings.nonce);
 
-				if ( beforeSend ) {
-					return beforeSend.apply( this, arguments );
+				if (beforeSend) {
+					return beforeSend.apply(this, arguments);
 				}
 			};
 		}
 
-		return Backbone.sync( method, model, options );
+		return Backbone.sync(method, model, options);
 	},
 
 	url: function() {
-		var id = this.get( 'id' );
+		var id = this.get('id');
 		id = id || '';
 
 		return WP_API_Settings.root + '/comments/' + id;
@@ -68,13 +68,13 @@ rocketComments.CommentModel = Backbone.Model.extend({
 	initialize: function () {
 		var date = new Date(this.get('date'));
 
-		this.set({'iso_string': date.toISOString()});
+		this.set({iso_string: date.toISOString()});
 
-		this.set({'edit_class': 'hidden'});
+		this.set({edit_class: 'hidden'});
 		if (this.get('edit') == 1) {
-			this.set({'edit_class': ''});
+			this.set({edit_class: ''});
 		}
-	},
+	}
 
 });
 
@@ -110,7 +110,7 @@ rocketComments.CommentsCollection = wp.api.collections.Comments.extend({
 	commentDepth: function (item) {
 		var depth = 1;
 		while (item && item.get('parent') > 0) {
-			item = this.where({'id': item.get('parent')})[0];
+			item = this.where({id: item.get('parent')})[0];
 			depth += 1;
 		}
 		if (! this.threaded) {
@@ -297,15 +297,14 @@ rocketComments.CommentsView = Backbone.View.extend({
 
 		if (this.page_comments > 0) {
 			data = {
-				'page': this.comment_page,
-				'per_page': this.comments_per_page,
+				page: this.comment_page,
+				per_page: this.comments_per_page,
 			};
 		}
 
 		this.collection.fetch({
 			data: data,
 			success: _.bind(function (collection, response, options) {
-				console.log(this);
 				this.total_comments = options.xhr.getResponseHeader('X-WP-Total');
 				this.total_pages = options.xhr.getResponseHeader('X-WP-TotalPages');
 
