@@ -140,10 +140,6 @@ rocketComments.CommentsView = Backbone.View.extend({
 		this.comment_page = this.$el.data('comment-page');
 		this.comments_per_page = this.$el.data('comments-per-page');
 
-		if (undefined === rocketComments.commentsView) {
-			return;
-		}
-
 		if (this.page_comments > 0) {
 			data = {
 				'page': this.comment_page,
@@ -153,23 +149,23 @@ rocketComments.CommentsView = Backbone.View.extend({
 
 		this.collection.fetch({
 			data: data,
-			success: function (collection, response, options) {
-				rocketComments.commentsView.total_comments = parseInt(options.xhr.getResponseHeader('X-WP-Total'));
-				rocketComments.commentsView.total_pages = parseInt(options.xhr.getResponseHeader('X-WP-TotalPages'));
+			success: _.bind(function (collection, response, options) {
+				this.total_comments = parseInt(options.xhr.getResponseHeader('X-WP-Total'));
+				this.total_pages = parseInt(options.xhr.getResponseHeader('X-WP-TotalPages'));
 
-				if (rocketComments.commentsView.total_comments == 1) {
+				if (this.total_comments == 1) {
 					jQuery('.comments-area #comment-single').fadeIn();
 				} else {
-					jQuery('span#comment-count').html(rocketComments.commentsView.total_comments);
+					jQuery('span#comment-count').html(this.total_comments);
 					jQuery('.comments-area #comment-multiple').fadeIn();
 				}
 
-				rocketComments.commentsView.updateNavigationLinks();
-				if (undefined !== rocketComments.commentsView.interval) {
-					clearTimeout(rocketComments.commentsView.interval);
+				this.updateNavigationLinks();
+				if (undefined !== this.interval) {
+					clearTimeout(this.interval);
 				}
-				rocketComments.commentsView.interval = setInterval(rocketComments.commentsView.fetchComments, 5000, rocketComments.commentsView.collection);
-			},
+				this.interval = setInterval(this.fetchComments.bind(this), 5000);
+			}, this),
 			error: function () {
 				console.log('Error: Could not retrieve comments!');
 			}
@@ -292,31 +288,32 @@ rocketComments.CommentsView = Backbone.View.extend({
 		this.render();
 	},
 
-	fetchComments: function (collection) {
+	fetchComments: function () {
 		var data = {};
 
-		if (rocketComments.commentsView.page_comments > 0) {
+		if (this.page_comments > 0) {
 			data = {
-				'page': rocketComments.commentsView.comment_page,
-				'per_page': rocketComments.commentsView.comments_per_page,
+				'page': this.comment_page,
+				'per_page': this.comments_per_page,
 			};
 		}
 
-		collection.fetch({
+		this.collection.fetch({
 			data: data,
-			success: function (collection, response, options) {
-				rocketComments.commentsView.total_comments = options.xhr.getResponseHeader('X-WP-Total');
-				rocketComments.commentsView.total_pages = options.xhr.getResponseHeader('X-WP-TotalPages');
+			success: _.bind(function (collection, response, options) {
+				console.log(this);
+				this.total_comments = options.xhr.getResponseHeader('X-WP-Total');
+				this.total_pages = options.xhr.getResponseHeader('X-WP-TotalPages');
 
-				if (rocketComments.commentsView.total_comments == 1) {
+				if (this.total_comments == 1) {
 					jQuery('.comments-area #comment-single').fadeIn();
 				} else {
-					jQuery('span#comment-count').html(rocketComments.commentsView.total_comments);
+					jQuery('span#comment-count').html(this.total_comments);
 					jQuery('.comments-area #comment-multiple').fadeIn();
 				}
 
-				rocketComments.commentsView.updateNavigationLinks();
-			},
+				this.updateNavigationLinks();
+			}, this),
 			error: function () {
 				console.log('Error: Could not update collection!');
 			}
