@@ -19,7 +19,7 @@ class RocketComments {
 		/**
 		 * Rocket Comments depends on the REST API. If it's not installed and active, we should deactivate.
 		 */
-		if ( function_exists( 'is_plugin_active' ) && ! is_plugin_active( 'rest-api/plugin.php' ) ) {
+		if ( ! defined( 'REST_API_VERSION' ) ) {
 			add_action( 'admin_init', array( $this, 'plugin_deactivate' ) );
 			add_action( 'admin_notices', array( $this, 'plugin_deactivate_notice' ) );
 
