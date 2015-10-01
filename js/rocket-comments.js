@@ -83,6 +83,10 @@ rocketComments.CommentView = Backbone.View.extend({
 	template: jQuery('#comment-template').length ? _.template(jQuery('#comment-template').html()) : undefined,
 
 	render: function (class_list) {
+		if (undefined === this.template) {
+			return;
+		}
+
 		this.$el.html(this.template(this.model))
 			.attr('id', 'comment-' + this.model.get('id'))
 			.addClass(class_list)

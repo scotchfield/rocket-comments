@@ -132,6 +132,10 @@ class RocketComments {
 	}
 
 	public function check_js_redirect() {
+		if ( ! is_single() ) {
+			return;
+		}
+
 		$redirect_url = add_query_arg( 'rocket-nojs', '1' );
 ?>
 <noscript>
