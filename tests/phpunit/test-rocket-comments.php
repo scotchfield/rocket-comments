@@ -25,7 +25,7 @@ class Test_RocketComments extends WP_UnitTestCase {
 	 * @covers RocketComments::comments_template
 	 */
 	public function test_comments_template() {
-		$this->assertNotEmpty( $this->class->comments_template( '' ) );
+		$this->assertNotEmpty( $this->class->comments_template( dirname( __FILE__ ) . '../../templates/comments.php' ) );
 	}
 
 	/**
