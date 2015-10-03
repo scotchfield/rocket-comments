@@ -357,6 +357,23 @@ addComment.setupForm = function (commentId, cancel, respond, action) {
 	jQuery('#respond').data('action', action);
 };
 
+addComment.resetForm = function (el) {
+	var temp = addComment.I('wp-temp-form-div'),
+		respond = addComment.I(addComment.respondId);
+
+	if ( ! temp || ! respond )
+		return;
+
+	temp.parentNode.insertBefore(respond, temp);
+	temp.parentNode.removeChild(temp);
+	el.style.display = 'none';
+	el.onclick = null;
+
+	jQuery('#respond textarea#comment').val('');
+	jQuery('#respond').removeData('action');
+	jQuery('#respond').removeData('comment-id');
+};
+
 addComment.moveForm = function(commId, parentId, respondId, postId) {
 	var div,
 		comm = this.I(commId),
@@ -381,22 +398,9 @@ addComment.moveForm = function(commId, parentId, respondId, postId) {
 	cancel.style.display = '';
 
 	cancel.onclick = function() {
-		var temp = addComment.I('wp-temp-form-div'),
-			respond = addComment.I(addComment.respondId);
-
-		if ( ! temp || ! respond )
-			return;
+		addComment.resetForm(this);
 
 		addComment.I('comment_parent').value = '0';
-		temp.parentNode.insertBefore(respond, temp);
-		temp.parentNode.removeChild(temp);
-		this.style.display = 'none';
-		this.onclick = null;
-
-		jQuery('#respond textarea#comment').val('');
-		jQuery('#respond').removeData('action');
-		jQuery('#respond').removeData('comment-id');
-
 		return false;
 	};
 
@@ -440,22 +444,9 @@ addComment.editForm = function(commentId, respondId) {
 	jQuery('#div-comment-' + commentId).hide();
 
 	cancel.onclick = function() {
-		var temp = addComment.I('wp-temp-form-div');
-
-		if ( ! temp ) {
-			return;
-		}
-
-		temp.parentNode.insertBefore(respond, temp);
-		temp.parentNode.removeChild(temp);
-		this.style.display = 'none';
-		this.onclick = null;
+		addComment.resetForm(this);
 
 		jQuery('#div-comment-' + commentId).show();
-		jQuery('#respond textarea#comment').val('');
-		jQuery('#respond').removeData('action');
-		jQuery('#respond').removeData('comment-id');
-
 		jQuery('.comment-author-not-logged-in').hide();
 		jQuery('.comment-author-logged-in').show();
 
