@@ -116,6 +116,10 @@ class RocketComments {
 	}
 
 	public function get_comment_time( $comment ) {
+		if ( ! isset( $comment->comment_date ) ) {
+			return '';
+		}
+
 		$format = get_option( 'time_format' );
 		$date = mysql2date( $format, $comment->comment_date, true );
 
@@ -123,6 +127,10 @@ class RocketComments {
 	}
 
 	public function rest_prepare_comment( $data, $comment, $request ) {
+		if ( ! isset( $comment->comment_ID ) ) {
+			return $data;
+		}
+
 		$updates = array(
 			'comment_date' => get_comment_date( '', $comment->comment_ID ),
 			'comment_time' => $this->get_comment_time( $comment ),

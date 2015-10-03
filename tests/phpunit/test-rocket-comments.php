@@ -85,4 +85,17 @@ class Test_RocketComments extends WP_UnitTestCase {
 		wp_set_current_user( $old_user_id );
 	}
 
+	/**
+	 * @covers RocketComments::get_comment_time
+	 */
+	public function test_get_comment_time_empty() {
+		$this->assertEmpty( $this->class->get_comment_time( array() ) );
+	}
+
+	/**
+	 * @covers RocketComments::rest_prepare_comment
+	 */
+	public function test_rest_prepare_comment_empty() {
+		$this->assertEmpty( $this->class->rest_prepare_comment( array(), array(), array() ) );
+	}
 }
