@@ -1,19 +1,30 @@
 QUnit.test('Basic rocketComment object tests', function(assert) {
 	assert.ok(rocketComments);
+	assert.ok(rocketComments.CommentModel);
+	assert.ok(rocketComments.CommentView);
+	assert.ok(rocketComments.CommentsCollection);
+	assert.ok(rocketComments.CommentsView);
 });
 QUnit.test('Basic CommentModel testing', function(assert) {
-	assert.ok(rocketComments.CommentModel);
-	assert.ok(new rocketComments.CommentModel());
+	var model = new rocketComments.CommentModel();
+	assert.ok(model);
+
+	model.initialize();
+	assert.ok(model.get('iso_string'));
+	assert.notOk(model.get('edit'));
+	assert.strictEqual('hidden', model.get('edit_class'));
+
+	model = new rocketComments.CommentModel({edit: 1});
+	model.initialize();
+	assert.ok(model.get('edit'));
+	assert.notOk(model.get('edit_class'));
 });
 QUnit.test('Basic CommentView testing', function(assert) {
-	assert.ok(rocketComments.CommentView);
 	assert.ok(new rocketComments.CommentView());
 });
 QUnit.test('Basic CommentsCollection testing', function(assert) {
-	assert.ok(rocketComments.CommentsCollection);
 	assert.ok(new rocketComments.CommentsCollection());
 });
 QUnit.test('Basic CommentsView testing', function(assert) {
-	assert.ok(rocketComments.CommentsView);
 	assert.ok(new rocketComments.CommentsView());
 });
