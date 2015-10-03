@@ -22,6 +22,17 @@ class Test_RocketComments extends WP_UnitTestCase {
 	}
 
 	/**
+	 * @covers RocketComments::init
+	 */
+	public function test_init_false_on_nojs() {
+		$_GET['rocket-nojs'] = true;
+
+		$this->assertFalse( $this->class->init() );
+
+		unset( $_GET['rocket-nojs'] );
+	}
+
+	/**
 	 * @covers RocketComments::comments_template
 	 */
 	public function test_comments_template() {
