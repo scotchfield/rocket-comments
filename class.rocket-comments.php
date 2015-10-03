@@ -48,7 +48,7 @@ class RocketComments {
 
 		// TODO: Check with the WP-API team for the best way of getting the appropriate URL.
 		// This doesn't feel right.
-		add_filter( 'rest_url', array( $this, 'filter_rest_url' ), 10, 4 );
+		add_filter( 'rest_url', array( $this, 'filter_rest_url' ) );
 	}
 
 	public function plugin_deactivate() {
@@ -81,7 +81,7 @@ class RocketComments {
 		wp_enqueue_style( 'rocket-comments-style' );
 	}
 
-	public function filter_rest_url( $url, $path, $blog_id, $scheme ) {
+	public function filter_rest_url( $url ) {
 		return $url . 'wp/v2';
 	}
 

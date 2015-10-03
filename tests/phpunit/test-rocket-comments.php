@@ -29,6 +29,13 @@ class Test_RocketComments extends WP_UnitTestCase {
 	}
 
 	/**
+	 * @covers RocketComments::filter_rest_url
+	 */
+	public function test_filter_rest_url() {
+		$this->assertNotFalse( strpos( 'wp/v2', $this->class->filter_rest_url( '' ) ) );
+	}
+
+	/**
 	 * @covers RocketComments::avatar_sizes
 	 */
 	public function test_avatar_sizes() {
