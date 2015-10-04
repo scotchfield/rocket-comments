@@ -96,7 +96,7 @@ if ( get_option( 'comment_registration' ) && ! is_user_logged_in() ) {
 } else {
 ?>
 
-			<form action="http://localhost:8888/wp-comments-post.php" method="post" id="commentform" class="comment-form" novalidate>
+			<form action="<?php echo esc_url( site_url( '/wp-comments-post.php' ) ); ?>" method="post" id="commentform" class="comment-form" novalidate>
 <?php
 	if ( is_user_logged_in() ) {
 ?>
