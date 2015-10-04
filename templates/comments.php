@@ -29,6 +29,12 @@ function rocket_comments_comment_nav() {
 
 ?>
 
+<script type="text/javascript">
+jQuery(function () {
+	rocketComments.start();
+});
+</script>
+
 <div id="comments" class="comments-area"<?php
 
 $thread_comments = get_option( 'thread_comments', true );

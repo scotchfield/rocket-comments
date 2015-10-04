@@ -340,6 +340,17 @@ rocketComments.loadComments = function () {
 	}
 };
 
+rocketComments.start = function () {
+	jQuery('#wp-loading').show();
+	rocketComments.loadComments();
+
+	jQuery('.comment-navigation .nav-previous a').on('click', function () {
+		rocketComments.shiftPage(-1);
+	});
+	jQuery('.comment-navigation .nav-next a').on('click', function () {
+		rocketComments.shiftPage(1);
+	});
+};
 
 addComment.setupForm = function (commentId, cancel, respond, action) {
 	var div, cancel_object;
@@ -465,16 +476,4 @@ addComment.editForm = function(commentId, respondId) {
 
 jQuery('form#commentform').submit(function (e) {
 	e.preventDefault();
-});
-
-jQuery(function () {
-	jQuery('#wp-loading').show();
-	rocketComments.loadComments();
-
-	jQuery('.comment-navigation .nav-previous a').on('click', function () {
-		rocketComments.shiftPage(-1);
-	});
-	jQuery('.comment-navigation .nav-next a').on('click', function () {
-		rocketComments.shiftPage(1);
-	});
 });
