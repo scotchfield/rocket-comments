@@ -158,6 +158,10 @@ rocketComments.CommentsView = Backbone.View.extend({
 		this.collection.fetch({
 			data: data,
 			success: _.bind(function (collection, response, options) {
+				jQuery('div#wp-loading').fadeOut(400, function () {
+					jQuery('#wp-comment-content').fadeIn(400);
+				});
+
 				this.total_comments = parseInt(options.xhr.getResponseHeader('X-WP-Total'));
 				this.total_pages = parseInt(options.xhr.getResponseHeader('X-WP-TotalPages'));
 
@@ -207,10 +211,6 @@ rocketComments.CommentsView = Backbone.View.extend({
 	render: function () {
 		var $ol = this.$el.find('ol#comment-root');
 		$ol.empty();
-
-		jQuery('div#wp-loading').fadeOut(400, function () {
-			jQuery('#wp-comment-content').fadeIn(400);
-		});
 
 		if (!_.isEmpty(this.collection)) {
 			this.collection.each(function (item) {
