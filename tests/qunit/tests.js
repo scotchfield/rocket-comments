@@ -28,3 +28,11 @@ QUnit.test('Basic CommentsCollection testing', function(assert) {
 QUnit.test('Basic CommentsView testing', function(assert) {
 	assert.ok(new rocketComments.CommentsView());
 });
+QUnit.test('Shotgun testing', function(assert) {
+	var model = new rocketComments.CommentModel();
+	assert.ok(shotgun(_.bind(model.initialize, model)))
+	assert.ok(shotgun(_.bind(model.sync, model)))
+
+	var view = new rocketComments.CommentView();
+	assert.ok(shotgun(_.bind(view.render, view)));
+});

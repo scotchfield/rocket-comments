@@ -55,6 +55,10 @@ rocketComments.CommentModel = Backbone.Model.extend({
 			};
 		}
 
+		if (! model || typeof model !== 'object' || ! model.hasOwnProperty('url')) {
+			return;
+		}
+
 		return Backbone.sync(method, model, options);
 	},
 
@@ -83,7 +87,7 @@ rocketComments.CommentView = Backbone.View.extend({
 	template: jQuery('#comment-template').length ? _.template(jQuery('#comment-template').html()) : undefined,
 
 	render: function (class_list) {
-		if (undefined === this.template) {
+		if (undefined === this.template || undefined == this.model) {
 			return;
 		}
 
