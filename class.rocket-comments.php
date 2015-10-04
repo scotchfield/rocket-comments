@@ -108,7 +108,9 @@ class RocketComments {
 		if ( isset( $_POST[ 'comment-style' ] ) &&
 				isset( $_POST[ 'rocket-comments-nonce' ] ) &&
 				wp_verify_nonce( $_POST[ 'rocket-comments-nonce' ], 'rocket-comments-update' ) ) {
-			update_option( 'rocket-comments-commentstyle', $_POST[ 'comment-style' ] );
+
+			if ( isset( $comment_style_list[ $_POST[ 'comment-style' ] ] ) ) {
+				update_option( 'rocket-comments-commentstyle', $_POST[ 'comment-style' ] );
 ?>
 <div class="updated">
 	<p>
@@ -116,6 +118,7 @@ class RocketComments {
 	</p>
 </div>
 <?php
+			}
 		}
 
 		$comment_style = get_option( 'rocket-comments-commentstyle', 'default' );
