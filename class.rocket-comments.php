@@ -46,6 +46,8 @@ class RocketComments {
 		add_filter( 'rest_pre_insert_comment', array( $this, 'pre_insert_comment' ), 10, 2 );
 		add_filter( 'rest_prepare_comment', array( $this, 'rest_prepare_comment' ), 10, 3 );
 
+		add_action( 'admin_menu', array( $this, 'add_admin_menu' ) );
+
 		// TODO: Check with the WP-API team for the best way of getting the appropriate URL.
 		// This doesn't feel right.
 		add_filter( 'rest_url', array( $this, 'filter_rest_url' ) );
@@ -83,6 +85,75 @@ class RocketComments {
 
 	public function filter_rest_url( $url ) {
 		return $url . 'wp/v2';
+	}
+
+	public function add_admin_menu() {
+		$page = add_options_page(
+			esc_html__( 'Rocket Comments', 'rocket-comments' ),
+			esc_html__( 'Rocket Comments', 'rocket-comments' ),
+			'manage_options',
+			'rocket-comments',
+			array( $this, 'plugin_settings_page' )
+		);
+	}
+
+	public function plugin_settings_page() {
+		echo '<h1>' . __( 'Rocket Comments', 'rocket-comments' ) . '</h1>';
+
+		$comment_style_list = array(
+			'default' => 'Default (twentyfifteen, twentyfourteen, twentythirteen)',
+			'metadata-below' => 'Metadata below (writr)',
+		);
+
+		if ( isset( $_POST[ 'comment-style' ] ) &&
+				isset( $_POST[ 'rocket-comments-nonce' ] ) &&
+				wp_verify_nonce( $_POST[ 'rocket-comments-nonce' ], 'rocket-comments-update' ) ) {
+			update_option( 'rocket-comments-commentstyle', $_POST[ 'comment-style' ] );
+?>
+<div class="updated">
+	<p>
+		<strong><?php _e( 'Settings saved.', 'rocket-comments' ); ?></strong>
+	</p>
+</div>
+<?php
+		}
+
+		$comment_style = get_option( 'rocket-comments-commentstyle', 'default' );
+
+?>
+<form method="post" action="admin.php?page=rocket-comments">
+<?php
+		wp_nonce_field( 'rocket-comments-update', 'rocket-comments-nonce' );
+?>
+<table class="form-table">
+	<tbody>
+		<tr>
+			<th scope="row">Comment Style</th>
+			<td>
+				<fieldset>
+					<legend class="screen-reader-text"><span>Comment Style</span></legend>
+<?php
+		foreach ( $comment_style_list as $style => $description ) {
+			$checked = '';
+			if ( $style == $comment_style ) {
+				$checked = 'checked="checked"';
+			}
+?>
+					<label><input type="radio" <?php echo $checked; ?> value="<?php esc_attr_e( $style ); ?>" name="comment-style"><?php esc_html_e( $description ); ?></label>
+					<br>
+<?php
+		}
+?>
+				</fieldset>
+			</td>
+		</tr>
+	</tbody>
+</table>
+<p class="submit">
+	<input type="submit" name="submit" id="submit" class="button button-primary" value="Save Changes" />
+</p>
+</form>
+<?php
 	}
 
 	/**
