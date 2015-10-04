@@ -18,8 +18,8 @@ function rocket_comments_comment_nav() {
 		<?php _e( 'Comment navigation', 'rocket-comments' ); ?>
 	</h2>
 	<div class="nav-links">
-		<div class="nav-previous"><a onclick="rocketComments.shiftPage(-1);"><?php $newest_comments ? _e( 'Newer Comments', 'rocket-comments' ) : _e( 'Older Comments', 'rocket-comments' ); ?></a></div>
-		<div class="nav-next"><a onclick="rocketComments.shiftPage(1);"><?php $newest_comments ? _e( 'Older Comments', 'rocket-comments' ) : _e( 'Newer Comments', 'rocket-comments' ); ?></a>
+		<div class="nav-previous"><a><?php $newest_comments ? _e( 'Newer Comments', 'rocket-comments' ) : _e( 'Older Comments', 'rocket-comments' ); ?></a></div>
+		<div class="nav-next"><a><?php $newest_comments ? _e( 'Older Comments', 'rocket-comments' ) : _e( 'Newer Comments', 'rocket-comments' ); ?></a>
 		</div>
 	</div>
 </nav>

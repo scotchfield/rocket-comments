@@ -470,4 +470,11 @@ jQuery('form#commentform').submit(function (e) {
 jQuery(function () {
 	jQuery('#wp-loading').show();
 	rocketComments.loadComments();
+
+	jQuery('.comment-navigation .nav-previous a').on('click', function () {
+		rocketComments.shiftPage(-1);
+	});
+	jQuery('.comment-navigation .nav-next a').on('click', function () {
+		rocketComments.shiftPage(1);
+	});
 });
