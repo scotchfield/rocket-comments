@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2015-10-06 09:03-0400\n"
-"PO-Revision-Date: 2015-10-06 10:33-0400\n"
+"POT-Creation-Date: 2015-10-06 12:23-0400\n"
+"PO-Revision-Date: 2015-10-06 12:24-0400\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr_CA\n"
@@ -10,47 +10,41 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.8.5\n"
-"X-Poedit-Basepath: .\n"
+"X-Poedit-Basepath: ..\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-KeywordsList: __;_e\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: tests\n"
 
-#: class.rocket-comments.php:63
+#: class.rocket-comments.php:69
 msgid ""
-" <strong>Rocket Comments</strong> depends on <strong>WP-API</strong>. Please "
+"<strong>Rocket Comments</strong> depends on <strong>WP-API</strong>. Please "
 "install and activate it first! Thanks!"
 msgstr ""
 
-#: class.rocket-comments.php:104
+#: class.rocket-comments.php:110
 msgid "Default (twentyfifteen, twentyfourteen, twentythirteen)"
 msgstr ""
 
-#: class.rocket-comments.php:108
+#: class.rocket-comments.php:114
 msgid "Alternate 1 (writr)"
 msgstr ""
 
-#: class.rocket-comments.php:125
+#: class.rocket-comments.php:131
 msgid "Comment Style"
 msgstr ""
 
-#: class.rocket-comments.php:131
+#: class.rocket-comments.php:137
 msgid "Comment Template Style"
 msgstr ""
 
-#: class.rocket-comments.php:139
+#: class.rocket-comments.php:145
 msgid "Change the way your comments are displayed."
 msgstr ""
 
-#: class.rocket-comments.php:164
+#: class.rocket-comments.php:170
 msgid "Rocket Comments"
-msgstr "Fusée Commentaires"
-
-#: templates/comment-below.php:6
-msgid ""
-"<b class=\"fn\"><a href=\"<%= attributes.author_url %>\" rel=\"external "
-"nofollow\" class=\"url\"><%= attributes.author_name %></a></b>"
-msgstr ""
+msgstr "Commentaires en Rafale"
 
 #: templates/comment-below.php:9 templates/comment-default.php:21
 msgid "Your comment is awaiting moderation."
@@ -76,26 +70,19 @@ msgstr ""
 
 #: templates/comment-below.php:42 templates/comment-default.php:16
 msgid "Edit"
-msgstr ""
-
-#: templates/comment-default.php:6
-msgid ""
-"<b class=\"fn\"><a href=\"<%= attributes.author_url %>\" rel=\"external "
-"nofollow\" class=\"url\"><%= attributes.author_name %></a></b> <span class="
-"\"says\">says:</span>"
-msgstr ""
+msgstr "Éditer"
 
 #: templates/comments.php:18
 msgid "Comment navigation"
-msgstr ""
+msgstr "Navigation des commentaires"
 
 #: templates/comments.php:21 templates/comments.php:22
 msgid "Newer Comments"
-msgstr ""
+msgstr "Commentaires ultérieurs"
 
 #: templates/comments.php:21 templates/comments.php:22
 msgid "Older Comments"
-msgstr ""
+msgstr "Commentaires antérieurs"
 
 #: templates/comments.php:58
 msgid "Edit Comment"

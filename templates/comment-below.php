@@ -3,7 +3,7 @@
 		<footer class="comment-meta">
 			<div class="comment-author vcard">
 				<img alt src="<%= attributes.author_avatar_urls['56'] %>" class="avatar" height="56" width="56" />
-				<?php _e( '<b class="fn"><a href="<%= attributes.author_url %>" rel="external nofollow" class="url"><%= attributes.author_name %></a></b>', 'rocket-comments' ); ?>
+				<?php echo '<b class="fn"><a href="<%= attributes.author_url %>" rel="external nofollow" class="url"><%= attributes.author_name %></a></b>'; ?>
 			</div>
 			<% if (attributes.status == 'hold') { %>
 				<p class="comment-awaiting-moderation"><?php _e( 'Your comment is awaiting moderation.', 'rocket-comments' ); ?></p>

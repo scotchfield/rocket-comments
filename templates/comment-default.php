@@ -3,7 +3,7 @@
 		<footer class="comment-meta">
 			<div class="comment-author vcard">
 				<img alt src="<%= attributes.author_avatar_urls['56'] %>" class="avatar" height="56" width="56" />
-				<?php _e( '<b class="fn"><a href="<%= attributes.author_url %>" rel="external nofollow" class="url"><%= attributes.author_name %></a></b> <span class="says">says:</span>', 'rocket-comments' ); ?>
+				<?php _e( sprintf( '%s <span class="says">says:</span>', '<b class="fn"><a href="<%= attributes.author_url %>" rel="external nofollow" class="url"><%= attributes.author_name %></a></b>' ), 'rocket-comments' ); ?>
 			</div>
 			<div class="comment-metadata">
 				<a href="<%= attributes.link %>">
