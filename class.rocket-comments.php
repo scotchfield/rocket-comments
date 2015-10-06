@@ -150,7 +150,7 @@ class RocketComments {
 			}
 ?>
 			<label>
-				<input type="radio" <?php echo $checked; ?> value="<?php esc_attr_e( $style_id ); ?>" name="rocket-comments-commentstyle">
+				<input type="radio" <?php echo $checked; ?> value="<?php echo esc_attr( $style_id ); ?>" name="rocket-comments-commentstyle">
 				<?php esc_html_e( $style_data['description'] ); ?>
 			</label>
 			<br>
