@@ -124,7 +124,8 @@ class RocketComments {
 	public function my_admin_init() {
 		register_setting(
 			'rocket-comments-group',
-			'rocket-comments-commentstyle'
+			'rocket-comments-commentstyle',
+			array( $this, 'comment_style_validate' )
 		);
 		add_settings_section(
 			'rocket-comments-section-commentstyle',
@@ -162,6 +163,16 @@ class RocketComments {
 			<br>
 <?php
 		}
+	}
+
+	public function comment_style_validate( $input ) {
+		$comment_style_list = $this->get_comment_style_list();
+
+		if ( ! isset( $comment_style_list[ $input ] ) ) {
+			$input = 'default';
+		}
+
+		return $input;
 	}
 
 	public function plugin_settings_page() {
