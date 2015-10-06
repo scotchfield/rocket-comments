@@ -99,8 +99,14 @@ class RocketComments {
 
 	public function get_comment_style_list() {
 		$comment_style_list = array(
-			'default' => 'Default (twentyfifteen, twentyfourteen, twentythirteen)',
-			'metadata-below' => 'Metadata below (writr)',
+			'default' => array(
+				'description' => __( 'Default (twentyfifteen, twentyfourteen, twentythirteen)', 'rocket-comments' ),
+				'template' => plugin_dir_path( __FILE__ ) . 'templates/comment-default.php',
+			),
+			'metadata-below' => array(
+				'description' => __( 'Metadata below (writr)', 'rocket-comments' ),
+				'template' => plugin_dir_path( __FILE__ ) . 'templates/comment-below.php',
+			),
 		);
 
 		$comment_style_list = apply_filters( 'rocket-comments-commentstyle', $comment_style_list );
@@ -144,13 +150,16 @@ class RocketComments {
 				<fieldset>
 					<legend class="screen-reader-text"><span>Comment Style</span></legend>
 <?php
-		foreach ( $comment_style_list as $style => $description ) {
+		foreach ( $comment_style_list as $style_id => $style_data ) {
 			$checked = '';
-			if ( $style == $comment_style ) {
+			if ( $style_id == $comment_style ) {
 				$checked = 'checked="checked"';
 			}
 ?>
-					<label><input type="radio" <?php echo $checked; ?> value="<?php esc_attr_e( $style ); ?>" name="comment-style"><?php esc_html_e( $description ); ?></label>
+					<label>
+						<input type="radio" <?php echo $checked; ?> value="<?php esc_attr_e( $style_id ); ?>" name="comment-style">
+						<?php esc_html_e( $style_data['description'] ); ?>
+					</label>
 					<br>
 <?php
 		}
