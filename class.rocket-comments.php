@@ -38,6 +38,12 @@ class RocketComments {
 			plugins_url( '/css/rocket-comments.css', __FILE__ )
 		);
 
+		$result = load_plugin_textdomain(
+			'rocket-comments',
+			FALSE,
+			dirname( plugin_basename( __FILE__ ) ) . '/languages/'
+		);
+
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_styles' ) );
 
