@@ -104,8 +104,8 @@ class RocketComments {
 				'description' => __( 'Default (twentyfifteen, twentyfourteen, twentythirteen)', 'rocket-comments' ),
 				'template' => plugin_dir_path( __FILE__ ) . 'templates/comment-default.php',
 			),
-			'metadata-below' => array(
-				'description' => __( 'Metadata below (writr)', 'rocket-comments' ),
+			'alternate-1' => array(
+				'description' => __( 'Alternate 1 (writr)', 'rocket-comments' ),
 				'template' => plugin_dir_path( __FILE__ ) . 'templates/comment-below.php',
 			),
 		);
