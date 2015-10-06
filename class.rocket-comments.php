@@ -26,9 +26,11 @@ class RocketComments {
 			return false;
 		}
 
+		$rocket_comments_js = $this->development_enabled() ? '/js/rocket-comments.js' : '/js/rocket-comments.min.js';
+
 		wp_register_script(
 			'rocket-comments-script',
-			plugins_url( '/js/rocket-comments.min.js', __FILE__ ),
+			plugins_url( $rocket_comments_js, __FILE__ ),
 			array( 'jquery', 'backbone', 'wp-api' ),
 			'0.1.0',
 			true
@@ -140,6 +142,25 @@ class RocketComments {
 			'rocket-comments',
 			'rocket-comments-section-commentstyle'
 		);
+
+		register_setting(
+			'rocket-comments-group',
+			'rocket-comments-dev-js',
+			array( $this, 'development_enabled_validate' )
+		);
+		add_settings_section(
+			'rocket-comments-section-dev-js',
+			__( 'Development Mode Enabled', 'rocket-comments' ),
+			array( $this, 'development_enabled_callback' ),
+			'rocket-comments'
+		);
+		add_settings_field(
+			'rocket-comments-field-dev-js',
+			__( 'Development Mode Enabled', 'rocket-comments' ),
+			array( $this, 'development_enabled_checkbox_callback' ),
+			'rocket-comments',
+			'rocket-comments-section-dev-js'
+		);
 	}
 
 	public function comment_style_callback() {
@@ -170,6 +191,32 @@ class RocketComments {
 
 		if ( ! isset( $comment_style_list[ $input ] ) ) {
 			$input = 'default';
+		}
+
+		return $input;
+	}
+
+	public function development_enabled() {
+		$dev_js = get_option( 'rocket-comments-dev-js', '' );
+
+		return $dev_js == 'on';
+	}
+
+	public function development_enabled_callback() {
+		_e( 'Turn off minified JavaScript and use the regular version.', 'rocket-comments' );
+	}
+
+	public function development_enabled_checkbox_callback() {
+		$checked = $this->development_enabled() ? 'checked' : '';
+
+?>
+		<input type="checkbox" <?php echo $checked; ?> name="rocket-comments-dev-js">
+<?php
+	}
+
+	public function development_enabled_validate( $input ) {
+		if ( ! in_array( $input, array( 'on', '' ) ) ) {
+			$input = '';
 		}
 
 		return $input;
