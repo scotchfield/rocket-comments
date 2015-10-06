@@ -26,15 +26,33 @@ class RocketComments {
 			return false;
 		}
 
-		$rocket_comments_js = $this->development_enabled() ? '/js/rocket-comments.js' : '/js/rocket-comments.min.js';
+		if ( $this->development_enabled() ) {
 
-		wp_register_script(
-			'rocket-comments-script',
-			plugins_url( $rocket_comments_js, __FILE__ ),
-			array( 'jquery', 'backbone', 'wp-api' ),
-			'0.1.0',
-			true
-		);
+			wp_register_script( 'rocket-comments-commentmodel', plugins_url( '/js/models/CommentModel.js', __FILE__ ), array( 'jquery', 'backbone', 'wp-api' ), $in_footer = true );
+			wp_register_script( 'rocket-comments-commentview', plugins_url( '/js/views/CommentView.js', __FILE__ ), array( 'rocket-comments-commentmodel' ), $in_footer = true );
+			wp_register_script( 'rocket-comments-commentsview', plugins_url( '/js/views/CommentsView.js', __FILE__ ), array( 'rocket-comments-commentview' ), $in_footer = true );
+			wp_register_script( 'rocket-comments-commentscollection', plugins_url( '/js/collections/CommentsCollection.js', __FILE__ ), array( 'rocket-comments-commentsview' ), $in_footer = true );
+
+			wp_register_script(
+				'rocket-comments-script',
+				plugins_url( '/js/rocket-comments.js', __FILE__ ),
+				array( 'jquery', 'backbone', 'wp-api', 'rocket-comments-commentsview' ),
+				'0.1.0',
+				true
+			);
+
+		} else {
+
+			wp_register_script(
+				'rocket-comments-script',
+				plugins_url( '/js/rocket-comments.min.js', __FILE__ ),
+				array( 'jquery', 'backbone', 'wp-api' ),
+				'0.1.0',
+				true
+			);
+
+		}
+
 		wp_register_style(
 			'rocket-comments-style',
 			plugins_url( '/css/rocket-comments.css', __FILE__ )
@@ -85,6 +103,13 @@ class RocketComments {
 	}
 
 	public function enqueue_scripts() {
+		if ( $this->development_enabled() ) {
+			wp_enqueue_script( 'rocket-comments-commentmodel' );
+			wp_enqueue_script( 'rocket-comments-commentview' );
+			wp_enqueue_script( 'rocket-comments-commentsview' );
+			wp_enqueue_script( 'rocket-comments-commentscollection' );
+		}
+
 		wp_enqueue_script( 'rocket-comments-script' );
 	}
 

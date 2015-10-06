@@ -8,7 +8,13 @@ module.exports = function(grunt) {
         banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
       },
       build: {
-        src: 'js/rocket-comments.js',
+        src: [
+          'js/models/CommentModel.js',
+          'js/views/CommentView.js',
+          'js/views/CommentsView.js',
+          'js/collections/CommentsCollection.js',
+          'js/rocket-comments.js'
+        ],
         dest: 'js/rocket-comments.min.js'
       }
     }
