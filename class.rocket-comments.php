@@ -122,13 +122,13 @@ class RocketComments {
 		);
 		add_settings_section(
 			'rocket-comments-section-commentstyle',
-			'Comment Style',
+			__( 'Comment Style', 'rocket-comments' ),
 			array( $this, 'comment_style_callback' ),
 			'rocket-comments'
 		);
 		add_settings_field(
 			'rocket-comments-field-commentstyle',
-			'Comment Template Style',
+			__( 'Comment Template Style', 'rocket-comments' ),
 			array( $this, 'comment_style_radio_callback' ),
 			'rocket-comments',
 			'rocket-comments-section-commentstyle'
@@ -161,7 +161,7 @@ class RocketComments {
 	public function plugin_settings_page() {
 ?>
 	<div class="wrap">
-		<h1>Rocket Comments</h1>
+		<h1><?php _e( 'Rocket Comments', 'rocket-comments' ); ?></h1>
 		<form action="options.php" method="POST">
 			<?php settings_fields( 'rocket-comments-group' ); ?>
 			<?php do_settings_sections( 'rocket-comments' ); ?>
