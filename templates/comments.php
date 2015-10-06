@@ -119,19 +119,19 @@ if ( get_option( 'comment_registration' ) && ! is_user_logged_in() ) {
 ?>
 				<div class="comment-author-not-logged-in <?php if ( is_user_logged_in() ) { echo 'hidden'; } ?>">
 					<p class="comment-notes">
-						<span id="email-notes">Your email address will not be published.</span>
+						<span id="email-notes"><?php _e( 'Your email address will not be published.', 'rocket-comments' ); ?></span>
 						<?php if ( $require_name_email ) { _e( 'Required fields are marked <span class="required">*</span>', 'rocket-coments' ); } ?>
 					</p>
 					<p class="comment-form-author">
-						<label for="author">Name<?php if ( $require_name_email ) { echo '<span class="required">*</span>'; } ?></label>
+						<label for="author"><?php _e( 'Name', 'rocket-comments' ); ?><?php if ( $require_name_email ) { echo '<span class="required">*</span>'; } ?></label>
 						<input id="author" name="author" type="text" value="" size="30" aria-required='true' required='required' />
 					</p>
 					<p class="comment-form-email">
-						<label for="email">Email<?php if ( $require_name_email ) { echo '<span class="required">*</span>'; } ?></label>
+						<label for="email"><?php _e( 'Email', 'rocket-comments' ); ?><?php if ( $require_name_email ) { echo '<span class="required">*</span>'; } ?></label>
 						<input id="email" name="email" type="email" value="" size="30" aria-describedby="email-notes" aria-required='true' required='required' />
 					</p>
 					<p class="comment-form-url">
-						<label for="url">Website</label> <input id="url" name="url" type="url" value="" size="30" />
+						<label for="url"><?php _e( 'Website', 'rocket-comments' ); ?></label> <input id="url" name="url" type="url" value="" size="30" />
 					</p>
 				</div>
 				<p class="comment-form-comment">

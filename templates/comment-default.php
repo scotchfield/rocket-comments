@@ -18,7 +18,7 @@
 				</span>
 			</div>
 			<% if (attributes.status == 'hold') { %>
-				<p class="comment-awaiting-moderation">Your comment is awaiting moderation.</p>
+				<p class="comment-awaiting-moderation"><?php _e( 'Your comment is awaiting moderation.', 'rocket-comments' ); ?></p>
 			<% } %>
 		</footer>
 		<div class="comment-content">
