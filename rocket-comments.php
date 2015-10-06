@@ -10,4 +10,4 @@ Author URI: http://sgrant.ca/
 
 require_once 'class.rocket-comments.php';
 
-$wp_rocket_comment = new RocketComments();
+$wp_rocket_comments = new RocketComments();
