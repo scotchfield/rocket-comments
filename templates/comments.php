@@ -62,7 +62,7 @@ $redirect_no_js_url = add_query_arg( 'rocket-nojs', '1' );
 	</noscript>
 
 	<div id="wp-loading">
-		<img src="<?php echo plugins_url(); ?>/rocket-comments/images/wp-loading.gif">
+		<img src="<?php echo plugins_url( '../images/wp-loading.gif', __FILE__ ); ?>">
 	</div>
 
 	<div id="wp-comment-content">
