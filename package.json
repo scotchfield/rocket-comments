@@ -1,0 +1,17 @@
+{
+  "name": "rocket-comments",
+  "version": "0.1.0",
+  "description": "Responsive comments with WP-API",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/scotchfield/rocket-comments.git"
+  },
+  "author": "Scott Grant <scott@scootah.com>",
+  "main": "js/rocket-comments.js",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-jshint": "^0.11.1",
+    "grunt-contrib-nodeunit": "^0.4.1",
+    "grunt-contrib-uglify": "^0.9.1"
+  }
+}
