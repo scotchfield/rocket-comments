@@ -46,6 +46,7 @@ class RocketComments {
 		add_filter( 'rest_pre_insert_comment', array( $this, 'pre_insert_comment' ), 10, 2 );
 		add_filter( 'rest_prepare_comment', array( $this, 'rest_prepare_comment' ), 10, 3 );
 
+		add_action( 'admin_init', array( $this, 'my_admin_init' ) );
 		add_action( 'admin_menu', array( $this, 'add_admin_menu' ) );
 
 		// TODO: Check with the WP-API team for the best way of getting the appropriate URL.
@@ -114,65 +115,59 @@ class RocketComments {
 		return $comment_style_list;
 	}
 
-	public function plugin_settings_page() {
-		echo '<h1>' . __( 'Rocket Comments', 'rocket-comments' ) . '</h1>';
+	public function my_admin_init() {
+		register_setting(
+			'rocket-comments-group',
+			'rocket-comments-commentstyle'
+		);
+		add_settings_section(
+			'rocket-comments-section-commentstyle',
+			'Comment Style',
+			array( $this, 'comment_style_callback' ),
+			'rocket-comments'
+		);
+		add_settings_field(
+			'rocket-comments-field-commentstyle',
+			'Comment Template Style',
+			array( $this, 'comment_style_radio_callback' ),
+			'rocket-comments',
+			'rocket-comments-section-commentstyle'
+		);
+	}
 
+	public function comment_style_callback() {
+		_e( 'Change the way your comments are displayed.', 'rocket-comments' );
+	}
+
+	public function comment_style_radio_callback() {
 		$comment_style_list = $this->get_comment_style_list();
-
-		if ( isset( $_POST[ 'comment-style' ] ) &&
-				isset( $_POST[ 'rocket-comments-nonce' ] ) &&
-				wp_verify_nonce( $_POST[ 'rocket-comments-nonce' ], 'rocket-comments-update' ) ) {
-
-			if ( isset( $comment_style_list[ $_POST[ 'comment-style' ] ] ) ) {
-				update_option( 'rocket-comments-commentstyle', $_POST[ 'comment-style' ] );
-?>
-<div class="updated">
-	<p>
-		<strong><?php _e( 'Settings saved.', 'rocket-comments' ); ?></strong>
-	</p>
-</div>
-<?php
-			}
-		}
-
 		$comment_style = get_option( 'rocket-comments-commentstyle', 'default' );
 
-?>
-<form method="post" action="admin.php?page=rocket-comments">
-<?php
-		wp_nonce_field( 'rocket-comments-update', 'rocket-comments-nonce' );
-?>
-<table class="form-table">
-	<tbody>
-		<tr>
-			<th scope="row">Comment Style</th>
-			<td>
-				<fieldset>
-					<legend class="screen-reader-text"><span>Comment Style</span></legend>
-<?php
 		foreach ( $comment_style_list as $style_id => $style_data ) {
 			$checked = '';
 			if ( $style_id == $comment_style ) {
 				$checked = 'checked="checked"';
 			}
 ?>
-					<label>
-						<input type="radio" <?php echo $checked; ?> value="<?php esc_attr_e( $style_id ); ?>" name="comment-style">
-						<?php esc_html_e( $style_data['description'] ); ?>
-					</label>
-					<br>
+			<label>
+				<input type="radio" <?php echo $checked; ?> value="<?php esc_attr_e( $style_id ); ?>" name="rocket-comments-commentstyle">
+				<?php esc_html_e( $style_data['description'] ); ?>
+			</label>
+			<br>
 <?php
 		}
+	}
+
+	public function plugin_settings_page() {
 ?>
-				</fieldset>
-			</td>
-		</tr>
-	</tbody>
-</table>
-<p class="submit">
-	<input type="submit" name="submit" id="submit" class="button button-primary" value="Save Changes" />
-</p>
-</form>
+	<div class="wrap">
+		<h1>Rocket Comments</h1>
+		<form action="options.php" method="POST">
+			<?php settings_fields( 'rocket-comments-group' ); ?>
+			<?php do_settings_sections( 'rocket-comments' ); ?>
+			<?php submit_button(); ?>
+		</form>
+	</div>
 <?php
 	}
 
