@@ -97,13 +97,21 @@ class RocketComments {
 		);
 	}
 
-	public function plugin_settings_page() {
-		echo '<h1>' . __( 'Rocket Comments', 'rocket-comments' ) . '</h1>';
-
+	public function get_comment_style_list() {
 		$comment_style_list = array(
 			'default' => 'Default (twentyfifteen, twentyfourteen, twentythirteen)',
 			'metadata-below' => 'Metadata below (writr)',
 		);
+
+		$comment_style_list = apply_filters( 'rocket-comments-commentstyle', $comment_style_list );
+
+		return $comment_style_list;
+	}
+
+	public function plugin_settings_page() {
+		echo '<h1>' . __( 'Rocket Comments', 'rocket-comments' ) . '</h1>';
+
+		$comment_style_list = $this->get_comment_style_list();
 
 		if ( isset( $_POST[ 'comment-style' ] ) &&
 				isset( $_POST[ 'rocket-comments-nonce' ] ) &&
