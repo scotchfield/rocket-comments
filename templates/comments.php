@@ -87,7 +87,7 @@ if ( $page_comments ) {
 			<h3 id="reply-title" class="comment-reply-title">
 				<?php _e( 'Leave a Reply', 'rocket-comments' ); ?>
 				<small>
-					<a rel="nofollow" id="cancel-comment-reply-link" href="/2015/07/27/hello-world/#respond" style="display: none;">
+					<a rel="nofollow" id="cancel-comment-reply-link" href="<?php echo get_permalink( get_the_ID() ); ?>#respond" style="display: none;">
 						<?php _e( 'Cancel reply', 'rocket-comments' ); ?>
 					</a>
 				</small>
@@ -96,7 +96,9 @@ if ( $page_comments ) {
 <?php
 if ( get_option( 'comment_registration' ) && ! is_user_logged_in() ) {
 ?>
-			<p class="must-log-in"><?php printf( __( 'You must be <a href="%s">logged in</a> to post a comment.' ), wp_login_url( apply_filters( 'the_permalink', get_permalink( $post_id ) ) ) ); ?></p>
+			<p class="must-log-in">
+				<?php printf( __( 'You must be <a href="%s">logged in</a> to post a comment.' ), wp_login_url( apply_filters( 'the_permalink', get_permalink( get_the_ID() ) ) ) ); ?>
+			</p>
 <?php
 	do_action( 'comment_form_must_log_in_after' );
 } else {
