@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: 2015-10-06 12:23-0400\n"
-"PO-Revision-Date: 2015-10-06 12:24-0400\n"
+"PO-Revision-Date: 2015-10-06 18:41-0400\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr_CA\n"
@@ -48,7 +48,7 @@ msgstr "Commentaires en Rafale"
 
 #: templates/comment-below.php:9 templates/comment-default.php:21
 msgid "Your comment is awaiting moderation."
-msgstr ""
+msgstr "Votre commentaire est en attente de modération."
 
 #: templates/comment-below.php:21 templates/comment-default.php:11
 #, php-format
@@ -57,16 +57,16 @@ msgstr ""
 
 #: templates/comment-below.php:30 templates/comment-default.php:31
 msgid "Log in to Reply"
-msgstr ""
+msgstr "Connectez-vous pour répondre"
 
 #: templates/comment-below.php:34 templates/comment-default.php:35
 #: templates/comments.php:58 templates/comments.php:88
 msgid "Leave a Reply"
-msgstr ""
+msgstr "Laisser un commentaire"
 
 #: templates/comment-below.php:34 templates/comment-default.php:35
 msgid "Reply"
-msgstr ""
+msgstr "Répondre"
 
 #: templates/comment-below.php:42 templates/comment-default.php:16
 msgid "Edit"
@@ -104,12 +104,13 @@ msgstr ""
 
 #: templates/comments.php:91
 msgid "Cancel reply"
-msgstr ""
+msgstr "Annuler la réponse"
 
 #: templates/comments.php:100
 #, php-format
 msgid "You must be <a href=\"%s\">logged in</a> to post a comment."
 msgstr ""
+"Vous devez <a href=\"%s\">être connecté(e)</a> pour rédiger un commentaire."
 
 #: templates/comments.php:113
 #, php-format
@@ -118,7 +119,7 @@ msgstr ""
 
 #: templates/comments.php:114
 msgid "Log out of this account"
-msgstr ""
+msgstr "Se déconnecter"
 
 #: templates/comments.php:114
 msgid "Log out?"
@@ -134,11 +135,11 @@ msgstr ""
 
 #: templates/comments.php:126
 msgid "Name"
-msgstr ""
+msgstr "Nom"
 
 #: templates/comments.php:130
 msgid "Email"
-msgstr ""
+msgstr "Email"
 
 #: templates/comments.php:134
 msgid "Website"
@@ -146,8 +147,8 @@ msgstr ""
 
 #: templates/comments.php:138
 msgid "Comment"
-msgstr ""
+msgstr "Commentaire"
 
 #: templates/comments.php:142
 msgid "Post Comment"
-msgstr ""
+msgstr "Laisser un commentaire"
