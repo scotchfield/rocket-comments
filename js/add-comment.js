@@ -9,7 +9,7 @@ addComment.setupForm = function (commentId, cancel, respond, action) {
 
 	jQuery(cancel).trigger('click');
 
-	if ( 0 === jQuery('#wp-temp-form-div').length ) {
+	if ( ! jQuery('#wp-temp-form-div').length ) {
 		div = jQuery('<div id="wp-temp-form-div" style="display: none;"></div>');
 		jQuery(respond).parent().append(div);
 	}
@@ -22,20 +22,23 @@ addComment.setupForm = function (commentId, cancel, respond, action) {
 };
 
 addComment.resetForm = function (el) {
-	var temp = addComment.I('wp-temp-form-div'),
-		respond = addComment.I(addComment.respondId);
+	var temp = jQuery('#wp-temp-form-div'),
+		respond = jQuery('#' + addComment.respondId);
 
-	if ( ! temp || ! respond )
+	if ( ! temp.length || ! respond.length )
 		return;
 
-	temp.parentNode.insertBefore(respond, temp);
-	temp.parentNode.removeChild(temp);
-	el.style.display = 'none';
-	el.onclick = null;
+	temp.parent().append(respond);
+	temp.remove();
+
+	jQuery(el)
+		.css('display', 'none')
+		.prop('onclick', null);
 
 	jQuery('#respond textarea#comment').val('');
-	jQuery('#respond').removeData('action');
-	jQuery('#respond').removeData('comment-id');
+	jQuery('#respond')
+		.removeData('action')
+		.removeData('comment-id');
 };
 
 addComment.moveForm = function(commId, parentId, respondId, postId) {
