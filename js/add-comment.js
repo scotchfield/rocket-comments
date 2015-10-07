@@ -7,20 +7,23 @@ addComment.setupForm = function (options) {
 		cancel_object = jQuery('#cancel-comment-reply-link').parent(),
 		comment_title = jQuery('div#comments').data('comment-title-' + options.action);
 
-	jQuery(options.cancel).trigger('click');
-
 	if ( ! jQuery('#wp-temp-form-div').length ) {
 		div = jQuery('<div id="wp-temp-form-div" style="display: none;"></div>');
 		jQuery(options.respond).parent().append(div);
 	}
 
+	options.respond.data('comment-id', options.commentId);
+	options.respond.data('action', options.action);
+	options.respond.insertBefore(options.comment.next());
+	options.cancel.show();
+
+	this.respondId = options.respondId;
+
 	jQuery('h3#reply-title').html(comment_title)
 		.append(jQuery('<small>').append(cancel_object));
 
-	jQuery('#respond').data('comment-id', options.commentId);
-	jQuery('#respond').data('action', options.action);
-
-	this.respondId = options.respondId;
+	jQuery(options.cancel).trigger('click');
+	jQuery('#comment').focus();
 };
 
 addComment.resetForm = function (el) {
@@ -58,6 +61,7 @@ addComment.moveForm = function(commentId, parentId, respondId, postId) {
 	addComment.setupForm({
 		action: 'reply',
 		cancel: cancel,
+		comment: comment,
 		commentId: commentId,
 		respond: respond,
 		respondId: respondId,
@@ -65,13 +69,10 @@ addComment.moveForm = function(commentId, parentId, respondId, postId) {
 
 	postId = postId || false;
 
-	if ( post && postId ) {
+	if ( post.length && postId ) {
 		post.val(postId);
 	}
 	parent.val(parentId);
-
-	respond.insertBefore(comment.next());
-	cancel.show();
 
 	cancel.click(function () {
 		addComment.resetForm(this);
@@ -79,8 +80,6 @@ addComment.moveForm = function(commentId, parentId, respondId, postId) {
 		jQuery('#comment_parent').val('0');
 		return false;
 	});
-
-	jQuery('#comment').focus();
 
 	return false;
 };
@@ -98,13 +97,11 @@ addComment.editForm = function(commentId, respondId) {
 	addComment.setupForm({
 		action: 'edit',
 		cancel: cancel,
+		comment: comment,
 		commentId: commentId,
 		respond: respond,
 		respondId: respondId,
 	});
-
-	respond.insertBefore(comment.next());
-	cancel.show();
 
 	model = rocketComments.commentsView.collection.get(commentId);
 
@@ -131,8 +128,6 @@ addComment.editForm = function(commentId, respondId) {
 
 		return false;
 	});
-
-	jQuery('#comment').focus();
 
 	return false;
 };
