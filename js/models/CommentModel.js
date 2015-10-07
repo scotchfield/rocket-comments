@@ -54,7 +54,7 @@ rocketComments.CommentModel = Backbone.Model.extend({
 			};
 		}
 
-		if (! model || typeof model !== 'object' || ! 'url' in model) {
+		if (! model || typeof model !== 'object' || ! ('url' in model)) {
 			return;
 		}
 
