@@ -26,7 +26,7 @@ addComment.setupForm = function (options) {
 	jQuery('#comment').focus();
 };
 
-addComment.resetForm = function (el) {
+addComment.resetForm = function (cancel) {
 	var temp = jQuery('#wp-temp-form-div'),
 		respond = jQuery('#' + addComment.respondId);
 
@@ -36,7 +36,7 @@ addComment.resetForm = function (el) {
 	temp.parent().append(respond);
 	temp.remove();
 
-	jQuery(el)
+	jQuery(cancel)
 		.hide()
 		.prop('onclick', null);
 
