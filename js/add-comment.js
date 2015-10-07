@@ -2,23 +2,25 @@
 
 var addComment = addComment || {};
 
-addComment.setupForm = function (commentId, cancel, respond, action) {
+addComment.setupForm = function (options) {
 	var div,
 		cancel_object = jQuery('#cancel-comment-reply-link').parent(),
-		comment_title = jQuery('div#comments').data('comment-title-' + action);
+		comment_title = jQuery('div#comments').data('comment-title-' + options.action);
 
-	jQuery(cancel).trigger('click');
+	jQuery(options.cancel).trigger('click');
 
 	if ( ! jQuery('#wp-temp-form-div').length ) {
 		div = jQuery('<div id="wp-temp-form-div" style="display: none;"></div>');
-		jQuery(respond).parent().append(div);
+		jQuery(options.respond).parent().append(div);
 	}
 
 	jQuery('h3#reply-title').html(comment_title)
 		.append(jQuery('<small>').append(cancel_object));
 
-	jQuery('#respond').data('comment-id', commentId);
-	jQuery('#respond').data('action', action);
+	jQuery('#respond').data('comment-id', options.commentId);
+	jQuery('#respond').data('action', options.action);
+
+	this.respondId = options.respondId;
 };
 
 addComment.resetForm = function (el) {
@@ -53,9 +55,14 @@ addComment.moveForm = function(commentId, parentId, respondId, postId) {
 		return;
 	}
 
-	addComment.setupForm(commentId, cancel, respond, 'reply');
+	addComment.setupForm({
+		action: 'reply',
+		cancel: cancel,
+		commentId: commentId,
+		respond: respond,
+		respondId: respondId,
+	});
 
-	this.respondId = respondId;
 	postId = postId || false;
 
 	if ( post && postId ) {
@@ -88,9 +95,13 @@ addComment.editForm = function(commentId, respondId) {
 		return;
 	}
 
-	addComment.setupForm(commentId, cancel, respond, 'edit');
-
-	this.respondId = respondId;
+	addComment.setupForm({
+		action: 'edit',
+		cancel: cancel,
+		commentId: commentId,
+		respond: respond,
+		respondId: respondId,
+	});
 
 	respond.insertBefore(comment.next());
 	cancel.show();
