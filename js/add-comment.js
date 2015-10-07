@@ -32,7 +32,7 @@ addComment.resetForm = function (el) {
 	temp.remove();
 
 	jQuery(el)
-		.css('display', 'none')
+		.hide()
 		.prop('onclick', null);
 
 	jQuery('#respond textarea#comment').val('');
@@ -41,49 +41,50 @@ addComment.resetForm = function (el) {
 		.removeData('comment-id');
 };
 
-addComment.moveForm = function(commId, parentId, respondId, postId) {
+addComment.moveForm = function(commentId, parentId, respondId, postId) {
 	var div,
-		comm = this.I(commId),
-		respond = this.I(respondId),
-		cancel = this.I('cancel-comment-reply-link'),
-		parent = this.I('comment_parent'),
-		post = this.I('comment_post_ID');
+		comment = jQuery('#' + commentId),
+		respond = jQuery('#' + respondId),
+		cancel = jQuery('#cancel-comment-reply-link'),
+		parent = jQuery('#comment_parent'),
+		post = jQuery('#comment_post_ID');
 
-	if ( ! comm || ! respond || ! cancel || ! parent ) {
+	if ( ! comment.length || ! respond.length || ! cancel.length || ! parent.length ) {
 		return;
 	}
 
-	addComment.setupForm(commId, cancel, respond, 'reply');
+	addComment.setupForm(commentId, cancel, respond, 'reply');
 
 	this.respondId = respondId;
 	postId = postId || false;
 
-	comm.parentNode.insertBefore(respond, comm.nextSibling);
-	if ( post && postId )
-		post.value = postId;
-	parent.value = parentId;
-	cancel.style.display = '';
+	if ( post && postId ) {
+		post.val(postId);
+	}
+	parent.val(parentId);
 
-	cancel.onclick = function() {
+	respond.insertBefore(comment.next());
+	cancel.show();
+
+	cancel.click(function () {
 		addComment.resetForm(this);
 
-		addComment.I('comment_parent').value = '0';
+		jQuery('#comment_parent').val('0');
 		return false;
-	};
+	});
 
-	try { this.I('comment').focus(); }
-	catch(e) {}
+	jQuery('#comment').focus();
 
 	return false;
 };
 
 addComment.editForm = function(commentId, respondId) {
 	var div, cancel_object, model, content,
-		comment = this.I('div-comment-' + commentId),
-		respond = this.I(respondId),
-		cancel = this.I('cancel-comment-reply-link');
+		comment = jQuery('#div-comment-' + commentId),
+		respond = jQuery('#' + respondId),
+		cancel = jQuery('#cancel-comment-reply-link');
 
-	if ( ! comment || ! respond || ! cancel ) {
+	if ( ! comment.length || ! respond.length || ! cancel.length ) {
 		return;
 	}
 
@@ -91,8 +92,8 @@ addComment.editForm = function(commentId, respondId) {
 
 	this.respondId = respondId;
 
-	comment.parentNode.insertBefore(respond, comment.nextSibling);
-	cancel.style.display = '';
+	respond.insertBefore(comment.next());
+	cancel.show();
 
 	model = rocketComments.commentsView.collection.get(commentId);
 
@@ -110,7 +111,7 @@ addComment.editForm = function(commentId, respondId) {
 
 	jQuery('#div-comment-' + commentId).hide();
 
-	cancel.onclick = function() {
+	cancel.click(function () {
 		addComment.resetForm(this);
 
 		jQuery('#div-comment-' + commentId).show();
@@ -118,10 +119,9 @@ addComment.editForm = function(commentId, respondId) {
 		jQuery('.comment-author-logged-in').show();
 
 		return false;
-	};
+	});
 
-	try { addComment.I('comment').focus(); }
-	catch(e) {}
+	jQuery('#comment').focus();
 
 	return false;
 };
