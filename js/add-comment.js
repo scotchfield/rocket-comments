@@ -3,19 +3,18 @@
 var addComment = addComment || {};
 
 addComment.setupForm = function (commentId, cancel, respond, action) {
-	var div, cancel_object;
+	var div,
+		cancel_object = jQuery('#cancel-comment-reply-link').parent(),
+		comment_title = jQuery('div#comments').data('comment-title-' + action);
 
 	jQuery(cancel).trigger('click');
 
-	if ( ! this.I('wp-temp-form-div') ) {
-		div = document.createElement('div');
-		div.id = 'wp-temp-form-div';
-		div.style.display = 'none';
-		respond.parentNode.insertBefore(div, respond);
+	if ( 0 === jQuery('#wp-temp-form-div').length ) {
+		div = jQuery('<div id="wp-temp-form-div" style="display: none;"></div>');
+		jQuery(respond).parent().append(div);
 	}
 
-	cancel_object = jQuery('#cancel-comment-reply-link').parent();
-	jQuery('h3#reply-title').html(jQuery('div#comments').data('comment-title-' + action))
+	jQuery('h3#reply-title').html(comment_title)
 		.append(jQuery('<small>').append(cancel_object));
 
 	jQuery('#respond').data('comment-id', commentId);
