@@ -13,7 +13,8 @@ module.exports = function(grunt) {
           'js/views/CommentView.js',
           'js/views/CommentsView.js',
           'js/collections/CommentsCollection.js',
-          'js/rocket-comments.js'
+          'js/rocket-comments.js',
+          'js/add-comment.js'
         ],
         dest: 'js/rocket-comments.min.js'
       }

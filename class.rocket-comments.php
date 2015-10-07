@@ -41,6 +41,14 @@ class RocketComments {
 				true
 			);
 
+			wp_register_script(
+				'rocket-comments-add-comment-script',
+				plugins_url( '/js/add-comment.js', __FILE__ ),
+				array( 'rocket-comments-script' ),
+				'0.1.0',
+				true
+			);
+
 		} else {
 
 			wp_register_script(
@@ -108,6 +116,8 @@ class RocketComments {
 			wp_enqueue_script( 'rocket-comments-commentview' );
 			wp_enqueue_script( 'rocket-comments-commentsview' );
 			wp_enqueue_script( 'rocket-comments-commentscollection' );
+
+			wp_enqueue_script( 'rocket-comments-add-comment-script' );
 		}
 
 		wp_enqueue_script( 'rocket-comments-script' );
