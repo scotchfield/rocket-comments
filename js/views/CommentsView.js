@@ -37,8 +37,8 @@ rocketComments.CommentsView = Backbone.View.extend({
 		this.collection.fetch({
 			data: data,
 			success: _.bind(function (collection, response, options) {
-				jQuery('div#wp-loading').fadeOut(400, function () {
-					jQuery('#wp-comment-content').fadeIn(400);
+				jQuery('div#wp-loading').fadeOut(100, function () {
+					jQuery('#wp-comment-content').fadeIn(100);
 				});
 
 				this.total_comments = parseInt(options.xhr.getResponseHeader('X-WP-Total'));
