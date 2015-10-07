@@ -51,10 +51,9 @@ addComment.moveForm = function(commentId, parentId, respondId, postId) {
 		comment = jQuery('#' + commentId),
 		respond = jQuery('#' + respondId),
 		cancel = jQuery('#cancel-comment-reply-link'),
-		parent = jQuery('#comment_parent'),
 		post = jQuery('#comment_post_ID');
 
-	if ( ! comment.length || ! respond.length || ! cancel.length || ! parent.length ) {
+	if ( ! comment.length || ! respond.length || ! cancel.length ) {
 		return;
 	}
 
@@ -67,17 +66,16 @@ addComment.moveForm = function(commentId, parentId, respondId, postId) {
 		respondId: respondId,
 	});
 
+	addComment.setParentValue(parentId);
 	postId = postId || false;
-
 	if ( post.length && postId ) {
 		post.val(postId);
 	}
-	parent.val(parentId);
 
 	cancel.click(function () {
 		addComment.resetForm(this);
 
-		jQuery('#comment_parent').val('0');
+		addComment.setParentValue('0');
 		return false;
 	});
 
@@ -130,4 +128,12 @@ addComment.editForm = function(commentId, respondId) {
 	});
 
 	return false;
+};
+
+addComment.setParentValue = function(id) {
+	if (!addComment.hasOwnProperty('commentParent')) {
+		addComment.commentParent = jQuery('#comment_parent');
+	}
+
+	addComment.commentParent.val(id);
 };
