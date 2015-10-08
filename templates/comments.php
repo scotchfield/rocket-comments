@@ -27,22 +27,13 @@ function rocket_comments_comment_nav() {
 	}
 }
 
-?>
-
-<script type="text/javascript">
-jQuery(function () {
-	rocketComments.start();
-});
-</script>
-
-<div id="comments" class="comments-area"<?php
 
 $thread_comments = get_option( 'thread_comments', true );
 if ( ! $thread_comments ) {
-	echo ' data-threaded="1"';
+	$data_threaded = 'data-threaded="1"';
 } else {
 	$thread_depth = get_option( 'thread_comments_depth' );
-	echo ' data-threaded="' . $thread_depth . '"';
+	$data_threaded = 'data-threaded="' . $thread_depth . '"';
 }
 
 $current_user = wp_get_current_user();
@@ -55,7 +46,15 @@ $current_page = $page_comments ? 1 : 0;
 
 $redirect_no_js_url = add_query_arg( 'rocket-nojs', '1' );
 
-?> data-post-id="<?php echo get_the_ID(); ?>" data-user-id="<?php echo $current_user->ID; ?>" data-user-name="<?php echo $current_user->display_name ?>" data-user-avatar="<?php echo get_avatar_url( $current_user->ID ); ?>" data-comment-page="<?php echo $current_page; ?>" data-page-comments="<?php echo $page_comments; ?>" data-comments-per-page="<?php echo $comments_per_page; ?>" data-comment-order="<?php echo $order_comments; ?>">
+?>
+
+<script type="text/javascript">
+jQuery(function () {
+	rocketComments.start();
+});
+</script>
+
+<div id="comments" class="comments-area" <?php echo $data_threaded; ?> data-post-id="<?php echo get_the_ID(); ?>" data-user-id="<?php echo $current_user->ID; ?>" data-user-name="<?php echo $current_user->display_name ?>" data-user-avatar="<?php echo get_avatar_url( $current_user->ID ); ?>" data-comment-page="<?php echo $current_page; ?>" data-page-comments="<?php echo $page_comments; ?>" data-comments-per-page="<?php echo $comments_per_page; ?>" data-comment-order="<?php echo $order_comments; ?>">
 
 	<noscript>
 		<a href="<?php echo esc_url( $redirect_no_js_url ); ?>"><?php _e( 'Click here to view comments on this post.', 'rocket-comments' ); ?></a>
