@@ -144,11 +144,11 @@ class RocketComments {
 	public function get_comment_style_list() {
 		$comment_style_list = array(
 			'default' => array(
-				'description' => __( 'Default (twentyfifteen, twentyfourteen, twentythirteen)', 'rocket-comments' ),
+				'description' => __( 'Default', 'rocket-comments' ),
 				'template' => plugin_dir_path( __FILE__ ) . 'templates/comment-default.php',
 			),
 			'alternate-1' => array(
-				'description' => __( 'Alternate 1 (writr)', 'rocket-comments' ),
+				'description' => __( 'Alternate 1', 'rocket-comments' ),
 				'template' => plugin_dir_path( __FILE__ ) . 'templates/comment-below.php',
 			),
 		);
@@ -261,6 +261,21 @@ class RocketComments {
 ?>
 	<div class="wrap">
 		<h1><?php _e( 'Rocket Comments', 'rocket-comments' ); ?></h1>
+<?php
+		$suggest_obj = array(
+			'twentythirteen' => __( 'Default', 'rocket-comments' ),
+			'twentyfourteen' => __( 'Default', 'rocket-comments' ),
+			'twentyfifteen' => __( 'Default', 'rocket-comments' ),
+			'writr' => __( 'Alternate 1', 'rocket-comments' ),
+		);
+
+		$theme = wp_get_theme();
+		$suggest = ( isset( $suggest_obj[$theme->get( 'TextDomain' )] ) ) ? $suggest_obj[$theme->get( 'TextDomain' )] : __( 'Default', 'rocket-comments' );
+?>
+		<p><?php printf(
+			__( 'Your current theme is <strong>%s</strong>. We suggest using the <strong>%s</strong> style.', 'rocket-comments' ),
+			$theme, $suggest ); ?></p>
+
 		<form action="options.php" method="POST">
 			<?php settings_fields( 'rocket-comments-group' ); ?>
 			<?php do_settings_sections( 'rocket-comments' ); ?>
