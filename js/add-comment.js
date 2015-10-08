@@ -46,8 +46,7 @@ addComment.resetForm = function( cancel ) {
 };
 
 addComment.moveForm = function( commentId, parentId, respondId, postId ) {
-	var div,
-		comment = jQuery( '#' + commentId ),
+	var comment = jQuery( '#' + commentId ),
 		respond = jQuery( '#' + respondId ),
 		cancel = jQuery( '#cancel-comment-reply-link' ),
 		post = jQuery( '#comment_post_ID' );
@@ -62,7 +61,7 @@ addComment.moveForm = function( commentId, parentId, respondId, postId ) {
 		comment: comment,
 		commentId: commentId,
 		respond: respond,
-		respondId: respondId,
+		respondId: respondId
 	});
 
 	addComment.setParentValue( parentId );
@@ -82,7 +81,7 @@ addComment.moveForm = function( commentId, parentId, respondId, postId ) {
 };
 
 addComment.editForm = function( commentId, respondId ) {
-	var div, model, content,
+	var model, content,
 		comment = jQuery( '#div-comment-' + commentId ),
 		respond = jQuery( '#' + respondId ),
 		cancel = jQuery( '#cancel-comment-reply-link' );
@@ -97,7 +96,7 @@ addComment.editForm = function( commentId, respondId ) {
 		comment: comment,
 		commentId: commentId,
 		respond: respond,
-		respondId: respondId,
+		respondId: respondId
 	});
 
 	model = rocketComments.commentsView.collection.get( commentId );
