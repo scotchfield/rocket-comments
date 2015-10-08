@@ -2,56 +2,55 @@
 
 var addComment = addComment || {};
 
-addComment.setupForm = function (options) {
+addComment.setupForm = function( options ) {
 	var div,
-		cancel_object = jQuery('#cancel-comment-reply-link').parent(),
-		comment_title = jQuery('div#comments').data('comment-title-' + options.action);
+		cancel_object = options.cancel.parent(),
+		comment_title = jQuery( 'div#comments' ).data( 'comment-title-' + options.action );
 
-	if ( ! jQuery('#wp-temp-form-div').length ) {
-		div = jQuery('<div id="wp-temp-form-div" style="display: none;"></div>');
-		jQuery(options.respond).parent().append(div);
+	if ( !jQuery( '#wp-temp-form-div' ).length ) {
+		div = jQuery( '<div id="wp-temp-form-div" style="display: none;"></div>' );
+		jQuery( options.respond ).parent().append( div );
 	}
 
-	options.respond.data('comment-id', options.commentId);
-	options.respond.data('action', options.action);
-	options.respond.insertBefore(options.comment.next());
+	options.respond.data( 'comment-id', options.commentId );
+	options.respond.data( 'action', options.action );
+	options.respond.insertBefore( options.comment.next() );
 	options.cancel.show();
 
 	this.respondId = options.respondId;
 
-	jQuery('h3#reply-title').html(comment_title)
-		.append(jQuery('<small>').append(cancel_object));
+	jQuery( 'h3#reply-title' ).html( comment_title )
+		.append( jQuery( '<small>' ).append( cancel_object ) );
 
-	jQuery(options.cancel).trigger('click');
-	jQuery('#comment').focus();
+	jQuery( options.cancel ).trigger( 'click' );
+	jQuery( '#comment' ).focus();
 };
 
-addComment.resetForm = function (cancel) {
-	var temp = jQuery('#wp-temp-form-div'),
-		respond = jQuery('#' + addComment.respondId);
+addComment.resetForm = function( cancel ) {
+	var temp = jQuery( '#wp-temp-form-div' ),
+		respond = jQuery( '#' + addComment.respondId );
 
-	if ( ! temp.length || ! respond.length )
+	if ( !temp.length || !respond.length ) {
 		return;
+	}
 
-	temp.parent().append(respond);
+	temp.parent().append( respond );
 	temp.remove();
 
-	jQuery(cancel)
+	jQuery( cancel )
 		.hide()
-		.prop('onclick', null);
+		.prop( 'onclick', null );
 
-	jQuery('#respond textarea#comment').val('');
-	jQuery('#respond')
-		.removeData('action')
-		.removeData('comment-id');
+	respond.find( 'textarea#comment' ).val( '' );
+	respond.removeData( 'action' ).removeData( 'comment-id' );
 };
 
-addComment.moveForm = function(commentId, parentId, respondId, postId) {
+addComment.moveForm = function( commentId, parentId, respondId, postId ) {
 	var div,
-		comment = jQuery('#' + commentId),
-		respond = jQuery('#' + respondId),
-		cancel = jQuery('#cancel-comment-reply-link'),
-		post = jQuery('#comment_post_ID');
+		comment = jQuery( '#' + commentId ),
+		respond = jQuery( '#' + respondId ),
+		cancel = jQuery( '#cancel-comment-reply-link' ),
+		post = jQuery( '#comment_post_ID' );
 
 	if ( ! comment.length || ! respond.length || ! cancel.length ) {
 		return;
@@ -66,29 +65,29 @@ addComment.moveForm = function(commentId, parentId, respondId, postId) {
 		respondId: respondId,
 	});
 
-	addComment.setParentValue(parentId);
+	addComment.setParentValue( parentId );
 	postId = postId || false;
 	if ( post.length && postId ) {
 		post.val(postId);
 	}
 
 	cancel.click(function () {
-		addComment.resetForm(this);
+		addComment.resetForm( this );
+		addComment.setParentValue( '0' );
 
-		addComment.setParentValue('0');
 		return false;
 	});
 
 	return false;
 };
 
-addComment.editForm = function(commentId, respondId) {
-	var div, cancel_object, model, content,
-		comment = jQuery('#div-comment-' + commentId),
-		respond = jQuery('#' + respondId),
-		cancel = jQuery('#cancel-comment-reply-link');
+addComment.editForm = function( commentId, respondId ) {
+	var div, model, content,
+		comment = jQuery( '#div-comment-' + commentId ),
+		respond = jQuery( '#' + respondId ),
+		cancel = jQuery( '#cancel-comment-reply-link' );
 
-	if ( ! comment.length || ! respond.length || ! cancel.length ) {
+	if ( !comment.length || !respond.length || !cancel.length ) {
 		return;
 	}
 
@@ -101,28 +100,27 @@ addComment.editForm = function(commentId, respondId) {
 		respondId: respondId,
 	});
 
-	model = rocketComments.commentsView.collection.get(commentId);
+	model = rocketComments.commentsView.collection.get( commentId );
 
-	if (model.get('author') != rocketComments.commentsView.collection.user_id) {
-		jQuery('.comment-author-logged-in').hide();
-		jQuery('.comment-author-not-logged-in').show();
+	if ( model.get( 'author' ) != rocketComments.commentsView.collection.user_id ) {
+		jQuery( '.comment-author-logged-in' ).hide();
+		jQuery( '.comment-author-not-logged-in' ).show();
 
-		jQuery('.comment-respond #author').val(model.get('author_name'));
-		jQuery('.comment-respond #email').val(model.get('author_email'));
-		jQuery('.comment-respond #url').val(model.get('author_url'));
+		respond.find( '#author' ).val( model.get( 'author_name' ) );
+		respond.find( '#email' ).val( model.get( 'author_email' ) );
+		respond.find( '#url' ).val( model.get( 'author_url' ) );
 	}
 
-	content = jQuery('#div-comment-' + commentId + ' .comment-content').text();
-	jQuery('#respond textarea#comment').val(content.trim());
+	content = comment.children( '.comment-content' ).text();
+	respond.find( 'textarea#comment' ).val( content.trim() );
 
-	jQuery('#div-comment-' + commentId).hide();
+	comment.hide();
 
 	cancel.click(function () {
-		addComment.resetForm(this);
-
-		jQuery('#div-comment-' + commentId).show();
-		jQuery('.comment-author-not-logged-in').hide();
-		jQuery('.comment-author-logged-in').show();
+		addComment.resetForm( this );
+		comment.show();
+		jQuery( '.comment-author-not-logged-in' ).hide();
+		jQuery( '.comment-author-logged-in' ).show();
 
 		return false;
 	});
@@ -130,10 +128,10 @@ addComment.editForm = function(commentId, respondId) {
 	return false;
 };
 
-addComment.setParentValue = function(id) {
-	if (!addComment.hasOwnProperty('commentParent')) {
-		addComment.commentParent = jQuery('#comment_parent');
+addComment.setParentValue = function( id ) {
+	if ( !addComment.hasOwnProperty( 'commentParent' ) ) {
+		addComment.commentParent = jQuery( '#comment_parent' );
 	}
 
-	addComment.commentParent.val(id);
+	addComment.commentParent.val( id );
 };
