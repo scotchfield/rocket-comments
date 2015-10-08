@@ -4,13 +4,14 @@ var addComment = addComment || {};
 
 addComment.setupForm = function( options ) {
 	var div,
-		cancel_object = options.cancel.parent(),
-		comment_title = jQuery( 'div#comments' ).data( 'comment-title-' + options.action );
+		cancel_object = options.cancel.parent();
 
 	if ( !jQuery( '#wp-temp-form-div' ).length ) {
 		div = jQuery( '<div id="wp-temp-form-div" style="display: none;"></div>' );
 		jQuery( options.respond ).parent().append( div );
 	}
+
+	jQuery( options.cancel ).trigger( 'click' );
 
 	options.respond.data( 'comment-id', options.commentId );
 	options.respond.data( 'action', options.action );
@@ -19,10 +20,10 @@ addComment.setupForm = function( options ) {
 
 	this.respondId = options.respondId;
 
-	jQuery( 'h3#reply-title' ).html( comment_title )
-		.append( jQuery( '<small>' ).append( cancel_object ) );
+	jQuery( '.comment-reply-title' ).hide();
+	jQuery( '.title-' + options.action ).show();
+	jQuery( 'a#cancel-comment-reply-link' ).show();
 
-	jQuery( options.cancel ).trigger( 'click' );
 	jQuery( '#comment' ).focus();
 };
 
@@ -48,7 +49,7 @@ addComment.resetForm = function( cancel ) {
 addComment.moveForm = function( commentId, parentId, respondId, postId ) {
 	var comment = jQuery( '#' + commentId ),
 		respond = jQuery( '#' + respondId ),
-		cancel = jQuery( '#cancel-comment-reply-link' ),
+		cancel = jQuery( '.title-reply #cancel-comment-reply-link' ),
 		post = jQuery( '#comment_post_ID' );
 
 	if ( ! comment.length || ! respond.length || ! cancel.length ) {
@@ -84,7 +85,7 @@ addComment.editForm = function( commentId, respondId ) {
 	var model, content,
 		comment = jQuery( '#div-comment-' + commentId ),
 		respond = jQuery( '#' + respondId ),
-		cancel = jQuery( '#cancel-comment-reply-link' );
+		cancel = jQuery( '.title-edit #cancel-comment-reply-link' );
 
 	if ( !comment.length || !respond.length || !cancel.length ) {
 		return;

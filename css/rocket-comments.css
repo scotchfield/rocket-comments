@@ -19,3 +19,12 @@
 .comment-navigation {
 	display: none;
 }
+.comment-reply-title {
+	display: none;
+}
+.comment-reply-title.title-reply {
+	display: block;
+}
+a#cancel-comment-reply-link {
+	display: none;
+}
