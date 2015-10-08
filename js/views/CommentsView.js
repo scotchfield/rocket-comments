@@ -97,7 +97,7 @@ rocketComments.CommentsView = Backbone.View.extend({
 					bypostauthor = '';
 
 				if (item.get('parent') > 0 && depth > 1) {
-					var $parent_ol = jQuery('ol#ol-comment-' + item.get('parent'));
+					var $parent_ol = jQuery('#ol-comment-' + item.get('parent'));
 					if ($parent_ol.length !== 0) {
 						$ol = $parent_ol;
 					}

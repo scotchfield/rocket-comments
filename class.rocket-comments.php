@@ -151,6 +151,10 @@ class RocketComments {
 				'description' => __( 'Alternate 1', 'rocket-comments' ),
 				'template' => plugin_dir_path( __FILE__ ) . 'templates/comment-below.php',
 			),
+			'alternate-2' => array(
+				'description' => __( 'Alternate 2', 'rocket-comments' ),
+				'template' => plugin_dir_path( __FILE__ ) . 'templates/comment-cite.php',
+			),
 		);
 
 		$comment_style_list = apply_filters( 'rocket-comments-commentstyle', $comment_style_list );
@@ -267,6 +271,7 @@ class RocketComments {
 			'twentyfourteen' => __( 'Default', 'rocket-comments' ),
 			'twentyfifteen' => __( 'Default', 'rocket-comments' ),
 			'writr' => __( 'Alternate 1', 'rocket-comments' ),
+			'swift' => __( 'Alternate 2', 'rocket-comments' ),
 		);
 
 		$theme = wp_get_theme();
