@@ -27,24 +27,18 @@ function rocket_comments_comment_nav() {
 	}
 }
 
+function rocket_comments_implode_comment_options( $options ) {
+	$option_strings = array();
 
-$thread_comments = get_option( 'thread_comments', true );
-if ( ! $thread_comments ) {
-	$data_threaded = 'data-threaded="1"';
-} else {
-	$thread_depth = get_option( 'thread_comments_depth' );
-	$data_threaded = 'data-threaded="' . $thread_depth . '"';
+	foreach ( $options['data'] as $k => $v ) {
+		array_push( $option_strings, 'data-' . $k . '="' . $v . '"' );
+	}
+
+	return implode( ' ', $option_strings );
 }
 
-$current_user = wp_get_current_user();
-$require_name_email = get_option( 'require_name_email' );
-$page_comments = intval( get_option( 'page_comments' ) );
-$comments_per_page = intval( get_option( 'comments_per_page' ) );
-$order_comments = ( $page_comments > 0 && 'newest' == get_option( 'default_comments_page' ) ) ? 'DESC' : 'ASC';
-
-$current_page = $page_comments ? 1 : 0;
-
-$redirect_no_js_url = add_query_arg( 'rocket-nojs', '1' );
+global $wp_rocket_comments;
+$wp_rocket_comments_options = $wp_rocket_comments->get_comment_options();
 
 ?>
 
@@ -54,10 +48,10 @@ jQuery(function () {
 });
 </script>
 
-<div id="comments" class="comments-area" <?php echo $data_threaded; ?> data-post-id="<?php echo get_the_ID(); ?>" data-user-id="<?php echo $current_user->ID; ?>" data-user-name="<?php echo $current_user->display_name ?>" data-user-avatar="<?php echo get_avatar_url( $current_user->ID ); ?>" data-comment-page="<?php echo $current_page; ?>" data-page-comments="<?php echo $page_comments; ?>" data-comments-per-page="<?php echo $comments_per_page; ?>" data-comment-order="<?php echo $order_comments; ?>">
+<div id="comments" class="comments-area" <?php echo rocket_comments_implode_comment_options( $wp_rocket_comments_options ); ?>>
 
 	<noscript>
-		<a href="<?php echo esc_url( $redirect_no_js_url ); ?>"><?php _e( 'Click here to view comments on this post.', 'rocket-comments' ); ?></a>
+		<a href="<?php echo esc_url( $wp_rocket_comments_options['redirect_no_js_url'] ); ?>"><?php _e( 'Click here to view comments on this post.', 'rocket-comments' ); ?></a>
 	</noscript>
 
 	<div id="wp-loading">
@@ -75,7 +69,7 @@ jQuery(function () {
 		</h2>
 
 <?php
-if ( $page_comments ) {
+if ( $wp_rocket_comments_options['data']['page-comments'] ) {
 	rocket_comments_comment_nav();
 }
 ?>
@@ -118,7 +112,7 @@ if ( get_option( 'comment_registration' ) && ! is_user_logged_in() ) {
 ?>
 				<div class="comment-author-logged-in">
 					<p class="logged-in-as">
-						<?php printf( __( 'Logged in as <a href="%sprofile.php">%s</a>.', 'rocket-comments' ), get_admin_url(), $current_user->display_name ); ?>
+						<?php printf( __( 'Logged in as <a href="%sprofile.php">%s</a>.', 'rocket-comments' ), get_admin_url(), $wp_rocket_comments_options['current_user']->display_name ); ?>
 						<a href="<?php echo wp_logout_url( get_permalink() ); ?>" title="<?php _e( 'Log out of this account', 'rocket-comments' ); ?>"><?php _e( 'Log out?', 'rocket-comments' ); ?></a>
 					</p>
 				</div>
@@ -128,14 +122,14 @@ if ( get_option( 'comment_registration' ) && ! is_user_logged_in() ) {
 				<div class="comment-author-not-logged-in <?php if ( is_user_logged_in() ) { echo 'hidden'; } ?>">
 					<p class="comment-notes">
 						<span id="email-notes"><?php _e( 'Your email address will not be published.', 'rocket-comments' ); ?></span>
-						<?php if ( $require_name_email ) { _e( 'Required fields are marked <span class="required">*</span>', 'rocket-coments' ); } ?>
+						<?php if ( $wp_rocket_comments_options['require_name_email'] ) { _e( 'Required fields are marked <span class="required">*</span>', 'rocket-coments' ); } ?>
 					</p>
 					<p class="comment-form-author">
-						<label for="author"><?php _e( 'Name', 'rocket-comments' ); ?><?php if ( $require_name_email ) { echo '<span class="required">*</span>'; } ?></label>
+						<label for="author"><?php _e( 'Name', 'rocket-comments' ); ?><?php if ( $wp_rocket_comments_options['require_name_email'] ) { echo '<span class="required">*</span>'; } ?></label>
 						<input id="author" name="author" type="text" value="" size="30" aria-required='true' required='required' />
 					</p>
 					<p class="comment-form-email">
-						<label for="email"><?php _e( 'Email', 'rocket-comments' ); ?><?php if ( $require_name_email ) { echo '<span class="required">*</span>'; } ?></label>
+						<label for="email"><?php _e( 'Email', 'rocket-comments' ); ?><?php if ( $wp_rocket_comments_options['require_name_email'] ) { echo '<span class="required">*</span>'; } ?></label>
 						<input id="email" name="email" type="email" value="" size="30" aria-describedby="email-notes" aria-required='true' required='required' />
 					</p>
 					<p class="comment-form-url">
