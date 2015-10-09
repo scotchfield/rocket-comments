@@ -6,7 +6,7 @@ rocketComments.start = function () {
 	jQuery('#wp-loading').show();
 
 	if (undefined === rocketComments.commentsView) {
-		rocketComments.commentsView = new rocketComments.CommentsView();
+		rocketComments.commentsView = new rocketComments.views.Comments();
 	}
 
 	jQuery('.comment-navigation .nav-previous a').on('click', function () {
