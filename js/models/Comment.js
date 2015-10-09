@@ -41,43 +41,43 @@ rocketComments.models.Comment = (function () {
 		 * @param {{beforeSend}, *} options
 		 * @returns {*}
 		 */
-		sync: function(method, model, options) {
+		sync: function( method, model, options ) {
 			options = options || {};
 
-			if ('undefined' !== typeof WP_API_Settings.nonce) {
+			if ( 'undefined' !== typeof WP_API_Settings.nonce ) {
 				var beforeSend = options.beforeSend;
 
-				options.beforeSend = function(xhr) {
-					xhr.setRequestHeader('X-WP-Nonce', WP_API_Settings.nonce);
+				options.beforeSend = function( xhr ) {
+					xhr.setRequestHeader( 'X-WP-Nonce', WP_API_Settings.nonce );
 
-					if (beforeSend) {
-						return beforeSend.apply(this, arguments);
+					if ( beforeSend ) {
+						return beforeSend.apply( this, arguments );
 					}
 				};
 			}
 
-			if (! model || typeof model !== 'object' || ! ('url' in model)) {
+			if ( ! model || typeof model !== 'object' || ! ( 'url' in model ) ) {
 				return;
 			}
 
-			return Backbone.sync(method, model, options);
+			return Backbone.sync( method, model, options );
 		},
 
 		url: function() {
-			var id = this.get('id');
+			var id = this.get( 'id' );
 			id = id || '';
 
 			return WP_API_Settings.root + '/comments/' + id;
 		},
 
 		initialize: function () {
-			var date = new Date(this.get('date'));
+			var date = new Date( this.get( 'date' ) );
 
-			this.set({iso_string: date.toISOString()});
+			this.set({ iso_string: date.toISOString() });
 
-			this.set({edit_class: 'hidden'});
-			if (this.get('edit') == 1) {
-				this.set({edit_class: ''});
+			this.set({ edit_class: 'hidden' });
+			if ( this.get( 'edit' ) == 1 ) {
+				this.set({ edit_class: '' });
 			}
 		}
 
