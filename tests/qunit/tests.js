@@ -1,9 +1,9 @@
 QUnit.test('Basic rocketComment object tests', function(assert) {
 	assert.ok(rocketComments);
-	assert.ok(rocketComments.CommentModel);
-	assert.ok(rocketComments.CommentView);
-	assert.ok(rocketComments.CommentsCollection);
-	assert.ok(rocketComments.CommentsView);
+	assert.ok(rocketComments.models.Comment);
+	assert.ok(rocketComments.views.Comment);
+	assert.ok(rocketComments.views.Comments);
+	assert.ok(rocketComments.collections.Comments);
 });
 QUnit.test('Basic addComment object tests', function(assert) {
 	assert.ok(addComment);
@@ -13,7 +13,7 @@ QUnit.test('Basic addComment object tests', function(assert) {
 	assert.ok(addComment.editForm);
 });
 QUnit.test('Basic CommentModel testing', function(assert) {
-	var model = new rocketComments.CommentModel();
+	var model = new rocketComments.models.Comment();
 	assert.ok(model);
 
 	model.initialize();
@@ -21,7 +21,7 @@ QUnit.test('Basic CommentModel testing', function(assert) {
 	assert.notOk(model.get('edit'));
 	assert.strictEqual('hidden', model.get('edit_class'));
 
-	model = new rocketComments.CommentModel({edit: 1});
+	model = new rocketComments.models.Comment({edit: 1});
 	model.initialize();
 	assert.ok(model.get('edit'));
 	assert.notOk(model.get('edit_class'));
@@ -30,27 +30,22 @@ QUnit.test('Basic CommentModel testing', function(assert) {
 	assert.ok(model.url().indexOf('/comments/') > -1);
 });
 QUnit.test('Basic CommentView testing', function(assert) {
-	assert.ok(new rocketComments.CommentView());
+	assert.ok(new rocketComments.views.Comment());
 });
 QUnit.test('Basic CommentsCollection testing', function(assert) {
-	assert.ok(new rocketComments.CommentsCollection());
+	assert.ok(new rocketComments.collections.Comments());
 });
 QUnit.test('Basic CommentsView testing', function(assert) {
-	assert.ok(new rocketComments.CommentsView());
+	assert.ok(new rocketComments.views.Comments());
 });
 QUnit.test('Shotgun testing', function(assert) {
 	assert.ok(shotgun(rocketComments.start))
 	assert.ok(shotgun(rocketComments.shiftPage))
 
-	assert.ok(shotgun(addComment.setupForm));
-	assert.ok(shotgun(addComment.resetForm));
-	assert.ok(shotgun(addComment.moveForm));
-	assert.ok(shotgun(addComment.editForm));
-
-	var model = new rocketComments.CommentModel();
+	var model = new rocketComments.models.Comment();
 	assert.ok(shotgun(_.bind(model.initialize, model)))
 	assert.ok(shotgun(_.bind(model.sync, model)))
 
-	var view = new rocketComments.CommentView();
+	var view = new rocketComments.views.Comment();
 	assert.ok(shotgun(_.bind(view.render, view)));
 });

@@ -28,10 +28,10 @@ class RocketComments {
 
 		if ( $this->development_enabled() ) {
 
-			wp_register_script( 'rocket-comments-commentmodel', plugins_url( '/js/models/CommentModel.js', __FILE__ ), array( 'jquery', 'backbone', 'wp-api' ), $in_footer = true );
-			wp_register_script( 'rocket-comments-commentview', plugins_url( '/js/views/CommentView.js', __FILE__ ), array( 'rocket-comments-commentmodel' ), $in_footer = true );
-			wp_register_script( 'rocket-comments-commentsview', plugins_url( '/js/views/CommentsView.js', __FILE__ ), array( 'rocket-comments-commentview' ), $in_footer = true );
-			wp_register_script( 'rocket-comments-commentscollection', plugins_url( '/js/collections/CommentsCollection.js', __FILE__ ), array( 'rocket-comments-commentsview' ), $in_footer = true );
+			wp_register_script( 'rocket-comments-commentmodel', plugins_url( '/js/models/Comment.js', __FILE__ ), array( 'jquery', 'backbone', 'wp-api' ), $in_footer = true );
+			wp_register_script( 'rocket-comments-commentview', plugins_url( '/js/views/Comment.js', __FILE__ ), array( 'rocket-comments-commentmodel' ), $in_footer = true );
+			wp_register_script( 'rocket-comments-commentsview', plugins_url( '/js/views/Comments.js', __FILE__ ), array( 'rocket-comments-commentview' ), $in_footer = true );
+			wp_register_script( 'rocket-comments-commentscollection', plugins_url( '/js/collections/Comments.js', __FILE__ ), array( 'rocket-comments-commentsview' ), $in_footer = true );
 
 			wp_register_script(
 				'rocket-comments-script',

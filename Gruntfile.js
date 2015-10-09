@@ -9,10 +9,10 @@ module.exports = function(grunt) {
       },
       build: {
         src: [
-          'js/models/CommentModel.js',
-          'js/views/CommentView.js',
-          'js/views/CommentsView.js',
-          'js/collections/CommentsCollection.js',
+          'js/models/Comment.js',
+          'js/views/Comment.js',
+          'js/views/Comments.js',
+          'js/collections/Comments.js',
           'js/rocket-comments.js',
           'js/add-comment.js'
         ],
