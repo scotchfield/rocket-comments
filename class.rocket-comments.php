@@ -277,9 +277,12 @@ class RocketComments {
 		$theme = wp_get_theme();
 		$suggest = ( isset( $suggest_obj[$theme->get( 'TextDomain' )] ) ) ? $suggest_obj[$theme->get( 'TextDomain' )] : __( 'Default', 'rocket-comments' );
 ?>
-		<p><?php printf(
-			__( 'Your current theme is <strong>%s</strong>. We suggest using the <strong>%s</strong> style.', 'rocket-comments' ),
-			$theme, $suggest ); ?></p>
+		<p><?php
+			printf(
+				__( 'Your current theme is <strong>%1$s</strong>. We suggest using the <strong>%2$s</strong> style.', 'rocket-comments' ),
+				$theme, $suggest
+			);
+		?></p>
 
 		<form action="options.php" method="POST">
 			<?php settings_fields( 'rocket-comments-group' ); ?>

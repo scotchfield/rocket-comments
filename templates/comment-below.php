@@ -18,7 +18,10 @@
 					<div class="genericon genericon-month"></div>
 					<a href="<%= attributes.link %>">
 						<time datetime="<%= attributes.iso_string %>">
-							<?php printf( __( '%1$s at %2$s' ), '<%= attributes.comment_date %>', '<%= attributes.comment_time %>' ); ?>
+							<?php
+							/* translators: The first string is the comment date, and the second string is the comment time. */
+							printf( __( '%1$s at %2$s' ), '<%= attributes.comment_date %>', '<%= attributes.comment_time %>' );
+							?>
 						</time>
 					</a>
 				</li>

@@ -112,7 +112,10 @@ if ( get_option( 'comment_registration' ) && ! is_user_logged_in() ) {
 ?>
 				<div class="comment-author-logged-in">
 					<p class="logged-in-as">
-						<?php printf( __( 'Logged in as <a href="%sprofile.php">%s</a>.', 'rocket-comments' ), get_admin_url(), $wp_rocket_comments_options['current_user']->display_name ); ?>
+<?php
+		$profile_url = '<a href="' . get_admin_url( null, 'profile.php' ) . '">' . $wp_rocket_comments_options['current_user']->display_name . '</a>';
+		printf( __( 'Logged in as %s.', 'rocket-comments' ), $profile_url );
+?>
 						<a href="<?php echo wp_logout_url( get_permalink() ); ?>" title="<?php _e( 'Log out of this account', 'rocket-comments' ); ?>"><?php _e( 'Log out?', 'rocket-comments' ); ?></a>
 					</p>
 				</div>
