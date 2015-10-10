@@ -29,40 +29,8 @@ rocketComments.views.Comments = (function () {
 			this.comment_page = this.$el.data( 'comment-page' );
 			this.comments_per_page = this.$el.data( 'comments-per-page' );
 
-			if ( this.page_comments > 0 ) {
-				data = {
-					'page': this.comment_page,
-					'per_page': this.comments_per_page,
-				};
-			}
-
-			this.collection.fetch({
-				data: data,
-				success: _.bind( function ( collection, response, options ) {
-					jQuery( 'div#wp-loading' ).fadeOut( 100, function () {
-						jQuery( '#wp-comment-content' ).fadeIn( 100 );
-					});
-
-					this.total_comments = parseInt( options.xhr.getResponseHeader( 'X-WP-Total' ) );
-					this.total_pages = parseInt( options.xhr.getResponseHeader( 'X-WP-TotalPages' ) );
-
-					if ( this.total_comments == 1 ) {
-						jQuery( '.comments-area #comment-single' ).fadeIn();
-					} else {
-						jQuery( 'span#comment-count' ).html( this.total_comments );
-						jQuery( '.comments-area #comment-multiple' ).fadeIn();
-					}
-
-					this.updateNavigationLinks();
-					if ( undefined !== this.interval ) {
-						clearTimeout( this.interval );
-					}
-					this.interval = setInterval( this.fetchComments.bind( this ), 10000 );
-				}, this ),
-				error: function () {
-					console.log('Error: Could not retrieve comments!');
-				}
-			});
+			this.loading = true;
+			this.fetchComments();
 		},
 
 		updateNavigationLinks: function () {
@@ -180,6 +148,13 @@ rocketComments.views.Comments = (function () {
 		fetchComments: function () {
 			var data = {};
 
+			if ( this.loading ) {
+				this.loading = false;
+				jQuery( 'div#wp-loading' ).fadeOut( 100, function () {
+					jQuery( '#wp-comment-content' ).fadeIn( 100 );
+				});
+			}
+
 			if ( this.page_comments > 0 ) {
 				data = {
 					page: this.comment_page,
@@ -206,6 +181,8 @@ rocketComments.views.Comments = (function () {
 					console.log( 'Error: Could not update collection!' );
 				}
 			});
+
+			this.timeout = setTimeout( this.fetchComments.bind( this ), 10000 );
 		},
 
 	});
