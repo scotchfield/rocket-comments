@@ -22,6 +22,6 @@ rocketComments.start = function () {
 };
 
 rocketComments.shiftPage = function ( delta ) {
-	rocketComments.commentsView.comment_page += delta;
-	rocketComments.commentsView.fetchComments( rocketComments.commentsView.collection );
+	this.commentsView.comment_page += delta;
+	this.commentsView.fetchComments( this.commentsView.collection );
 };
