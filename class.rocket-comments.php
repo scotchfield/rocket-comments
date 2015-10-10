@@ -349,8 +349,10 @@ class RocketComments {
 			$updates['edit'] = 1;
 		}
 
-		foreach ( $updates as $k => $v ) {
-			$data->data[ $k ] = $v;
+		if ( is_object( $data ) && property_exists( $data, 'data' ) ) {
+			foreach ( $updates as $k => $v ) {
+				$data->data[ $k ] = $v;
+			}
 		}
 
 		return $data;

@@ -104,9 +104,53 @@ class Test_RocketComments extends WP_UnitTestCase {
 	}
 
 	/**
+	 * @covers RocketComments::get_comment_time
+	 */
+	public function test_get_comment_time() {
+		$post_id = $this->factory->post->create();
+		$comment = $this->factory->comment->create_and_get(
+			array( 'comment_post_ID' => $post_id )
+		);
+
+		$this->assertNotEmpty( $this->class->get_comment_time( $comment ) );
+	}
+
+	/**
 	 * @covers RocketComments::rest_prepare_comment
 	 */
 	public function test_rest_prepare_comment_empty() {
-		$this->assertEmpty( $this->class->rest_prepare_comment( array(), array(), array() ) );
+		$this->assertEmpty( $this->class->rest_prepare_comment(
+			array(), array(), array() )
+		);
 	}
+
+	/**
+	 * @covers RocketComments::rest_prepare_comment
+	 */
+	public function test_rest_prepare_comment_data_as_array() {
+		$post_id = $this->factory->post->create();
+		$comment = $this->factory->comment->create_and_get(
+			array( 'comment_post_ID' => $post_id )
+		);
+
+		$data = array();
+
+		$this->assertEquals(
+			$data,
+			$this->class->rest_prepare_comment( $data, $comment, array() )
+		);
+	}
+
+	/**
+	 * @covers RocketComments::get_comment_options
+	 */
+	public function test_get_comment_options_basic() {
+		$result = $this->class->get_comment_options();
+
+		$this->assertTrue( isset( $result[ 'current_user' ] ) );
+		$this->assertTrue( isset( $result[ 'data' ] ) );
+		$this->assertTrue( isset( $result[ 'require_name_email' ] ) );
+		$this->assertTrue( isset( $result[ 'redirect_no_js_url' ] ) );
+	}
+
 }
