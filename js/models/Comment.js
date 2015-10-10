@@ -48,7 +48,10 @@ rocketComments.models.Comment = (function () {
 				var beforeSend = options.beforeSend;
 
 				options.beforeSend = function( xhr ) {
-					xhr.setRequestHeader( 'X-WP-Nonce', WP_API_Settings.nonce );
+					xhr.setRequestHeader(
+						'X-WP-Nonce',
+						WP_API_Settings.nonce
+					);
 
 					if ( beforeSend ) {
 						return beforeSend.apply( this, arguments );
@@ -56,7 +59,9 @@ rocketComments.models.Comment = (function () {
 				};
 			}
 
-			if ( ! model || typeof model !== 'object' || ! ( 'url' in model ) ) {
+			if ( ! model ||
+					typeof model !== 'object' ||
+					! ( 'url' in model ) ) {
 				return;
 			}
 

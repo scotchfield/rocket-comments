@@ -13,7 +13,8 @@ rocketComments.collections.Comments = (function () {
 
 		url: function () {
 			if ( this.post_id ) {
-				return WP_API_Settings.root + '/comments/?orderby=id&order=' + this.order + '&post=' + this.post_id;
+				return WP_API_Settings.root + '/comments/?orderby=id&order=' +
+					this.order + '&post=' + this.post_id;
 			}
 			return WP_API_Settings.root + '/comments/';
 		},

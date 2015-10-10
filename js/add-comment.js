@@ -7,7 +7,10 @@ addComment.setupForm = function( options ) {
 		cancel_object = options.cancel.parent();
 
 	if ( ! jQuery( '#wp-temp-form-div' ).length ) {
-		div = jQuery( '<div id="wp-temp-form-div" style="display: none;"></div>' );
+		div = jQuery(
+			'<div id="wp-temp-form-div" style="display: none;"></div>'
+		);
+
 		jQuery( options.respond ).parent().append( div );
 	}
 
@@ -102,7 +105,8 @@ addComment.editForm = function( commentId, respondId ) {
 
 	model = rocketComments.commentsView.collection.get( commentId );
 
-	if ( model.get( 'author' ) != rocketComments.commentsView.collection.user_id ) {
+	if ( model.get( 'author' ) !=
+			rocketComments.commentsView.collection.user_id ) {
 		jQuery( '.comment-author-logged-in' ).hide();
 		jQuery( '.comment-author-not-logged-in' ).show();
 
