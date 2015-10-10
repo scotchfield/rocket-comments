@@ -89,11 +89,12 @@ rocketComments.views.Comments = (function () {
 
 			var $el = jQuery( e.currentTarget ).closest( 'li' ),
 				parent_id = $el.data( 'comment-id' ),
-				author_name = jQuery( '.comment-respond input#author' ).val(),
-				author_email = jQuery( '.comment-respond input#email' ).val(),
-				author_url = jQuery( '.comment-respond input#url' ).val(),
-				content = jQuery( '.comment-respond textarea#comment' ).val(),
-				action = jQuery( '#respond' ).data( 'action' ),
+				respond = jQuery( '.comment-respond' ),
+				author_name = respond.find( 'input#author' ).val(),
+				author_email = respond.find( 'input#email' ).val(),
+				author_url = respond.find( 'input#url' ).val(),
+				content = respond.find( 'textarea#comment' ).val(),
+				action = respond.data( 'action' ),
 				attributes, item;
 
 			if ( action == 'edit' ) {
@@ -140,7 +141,7 @@ rocketComments.views.Comments = (function () {
 			}
 
 			jQuery( '#cancel-comment-reply-link' ).trigger( 'click' );
-			jQuery( '#respond textarea#comment' ).val( '' );
+			respond.find( 'textarea#comment' ).val( '' );
 
 			this.render();
 		},
