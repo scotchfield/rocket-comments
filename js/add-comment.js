@@ -6,7 +6,7 @@ addComment.setupForm = function( options ) {
 	var div,
 		cancel_object = options.cancel.parent();
 
-	if ( !jQuery( '#wp-temp-form-div' ).length ) {
+	if ( ! jQuery( '#wp-temp-form-div' ).length ) {
 		div = jQuery( '<div id="wp-temp-form-div" style="display: none;"></div>' );
 		jQuery( options.respond ).parent().append( div );
 	}
@@ -31,7 +31,7 @@ addComment.resetForm = function( cancel ) {
 	var temp = jQuery( '#wp-temp-form-div' ),
 		respond = jQuery( '#' + addComment.respondId );
 
-	if ( !temp.length || !respond.length ) {
+	if ( ! temp.length || ! respond.length ) {
 		return;
 	}
 
@@ -87,7 +87,7 @@ addComment.editForm = function( commentId, respondId ) {
 		respond = jQuery( '#' + respondId ),
 		cancel = jQuery( '.title-edit #cancel-comment-reply-link' );
 
-	if ( !comment.length || !respond.length || !cancel.length ) {
+	if ( ! comment.length || ! respond.length || ! cancel.length ) {
 		return;
 	}
 
@@ -129,7 +129,7 @@ addComment.editForm = function( commentId, respondId ) {
 };
 
 addComment.setParentValue = function( id ) {
-	if ( !addComment.hasOwnProperty( 'commentParent' ) ) {
+	if ( ! addComment.hasOwnProperty( 'commentParent' ) ) {
 		addComment.commentParent = jQuery( '#comment_parent' );
 	}
 
