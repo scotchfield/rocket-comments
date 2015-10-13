@@ -26,6 +26,9 @@ class RocketComments {
 			return false;
 		}
 
+		/**
+		 * Don't load minified JS if we're in development mode. Otherwise, minify-load!
+		 */
 		if ( $this->development_enabled() ) {
 
 			wp_register_script( 'rocket-comments-commentmodel', plugins_url( '/js/models/Comment.js', __FILE__ ), array( 'jquery', 'backbone', 'wp-api' ), $in_footer = true );
@@ -141,6 +144,10 @@ class RocketComments {
 		);
 	}
 
+	/**
+	 * Ship with a default set of supported styles.
+	 * Also enable a filter so custom theme support can be added when necessary.
+	 */
 	public function get_comment_style_list() {
 		$comment_style_list = array(
 			'default' => array(
@@ -162,6 +169,9 @@ class RocketComments {
 		return $comment_style_list;
 	}
 
+	/**
+	 * Use the Settings API to show our admin panel.
+	 */
 	public function my_admin_init() {
 		register_setting(
 			'rocket-comments-group',
@@ -225,6 +235,9 @@ class RocketComments {
 		}
 	}
 
+	/**
+	 * We expect that a valid input is one of the keys in our comment style list object.
+	 */
 	public function comment_style_validate( $input ) {
 		$comment_style_list = $this->get_comment_style_list();
 
@@ -253,6 +266,9 @@ class RocketComments {
 <?php
 	}
 
+	/**
+	 * A validated input is a checkbox that is either on or off.
+	 */
 	public function development_enabled_validate( $input ) {
 		if ( ! in_array( $input, array( 'on', '' ) ) ) {
 			$input = '';
@@ -302,6 +318,9 @@ class RocketComments {
 		return $sizes;
 	}
 
+	/**
+	 * Ensure that the comment has some default attributes in place.
+	 */
 	public function pre_insert_comment( $prepared_comment, $request ) {
 		if ( is_user_logged_in() ) {
 			$user = wp_get_current_user();
@@ -323,6 +342,9 @@ class RocketComments {
 		return $prepared_comment;
 	}
 
+	/**
+	 * Use existing functionality to get the correct comment time.
+	 */
 	public function get_comment_time( $comment ) {
 		if ( ! isset( $comment->comment_date ) ) {
 			return '';
@@ -358,6 +380,9 @@ class RocketComments {
 		return $data;
 	}
 
+	/**
+	 * Aggregate data for the comment template.
+	 */
 	public function get_comment_options() {
 		$options = array( 'data' => array() );
 
