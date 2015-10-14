@@ -39,12 +39,12 @@ QUnit.test('Basic CommentsView testing', function(assert) {
 	assert.ok(new rocketComments.views.Comments());
 });
 QUnit.test('Shotgun testing', function(assert) {
-	assert.ok(shotgun(rocketComments.start))
-	assert.ok(shotgun(rocketComments.shiftPage))
+	assert.ok(shotgun(_.bind(rocketComments.start, rocketComments)));
+	assert.ok(shotgun(_.bind(rocketComments.shiftPage, rocketComments)));
 
 	var model = new rocketComments.models.Comment();
-	assert.ok(shotgun(_.bind(model.initialize, model)))
-	assert.ok(shotgun(_.bind(model.sync, model)))
+	assert.ok(shotgun(_.bind(model.initialize, model)));
+	assert.ok(shotgun(_.bind(model.sync, model)));
 
 	var view = new rocketComments.views.Comment();
 	assert.ok(shotgun(_.bind(view.render, view)));
