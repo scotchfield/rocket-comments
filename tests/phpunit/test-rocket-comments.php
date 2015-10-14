@@ -33,6 +33,13 @@ class Test_RocketComments extends WP_UnitTestCase {
 	}
 
 	/**
+	 * @covers RocketComments::init
+	 */
+	public function test_init_false_on_no_rest_api() {
+		$this->assertFalse( $this->class->init() );
+	}
+
+	/**
 	 * @covers RocketComments::comments_template
 	 */
 	public function test_comments_template() {
@@ -44,6 +51,38 @@ class Test_RocketComments extends WP_UnitTestCase {
 	 */
 	public function test_filter_rest_url() {
 		$this->assertNotFalse( strpos( 'wp/v2', $this->class->filter_rest_url( '' ) ) );
+	}
+
+	/**
+	 * @covers RocketComments::get_comment_style_list
+	 */
+	public function test_get_comment_style_list_default() {
+		$comment_style_list = $this->class->get_comment_style_list();
+
+		$this->assertTrue( isset( $comment_style_list['default'] ) );
+	}
+
+	public function filter_comment_style_list( $comment_style_list ) {
+		$comment_style_list['test_key'] = array();
+
+		return $comment_style_list;
+	}
+
+	/**
+	 * @covers RocketComments::get_comment_style_list
+	 */
+	public function test_get_comment_style_list_filter() {
+		$test_key = 'test_key';
+
+		$comment_style_list = $this->class->get_comment_style_list();
+		$this->assertFalse( isset( $comment_style_list[$test_key] ) );
+
+		add_filter( 'rocket-comments-commentstyle', array( $this, 'filter_comment_style_list' ) );
+
+		$comment_style_list = $this->class->get_comment_style_list();
+		$this->assertTrue( isset( $comment_style_list[$test_key] ) );
+
+		remove_filter( 'rocket-comments-commentstyle', array( $this, 'filter_comment_style_list' ) );
 	}
 
 	/**
