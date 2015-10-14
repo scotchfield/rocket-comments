@@ -107,6 +107,17 @@ install_db() {
 	mysqladmin create $DB_NAME --user="$DB_USER" --password="$DB_PASS"$EXTRA
 }
 
+install_wp_api() {
+	local cloneOutput=$(git clone --recursive https://github.com/WP-API/WP-API.git $WP_TESTS_DIR/vendor/wp-api 2>&1)
+
+	cd $WP_TESTS_DIR/vendor/wp-api
+	git reset --hard &>/dev/null
+	git checkout develop &>/dev/null
+	git reset --hard &>/dev/null
+	git pull origin develop &>/dev/null
+}
+
 install_wp
 install_test_suite
 install_db
+install_wp_api

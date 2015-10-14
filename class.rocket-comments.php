@@ -89,6 +89,8 @@ class RocketComments {
 		// TODO: Check with the WP-API team for the best way of getting the appropriate URL.
 		// This doesn't feel right.
 		add_filter( 'rest_url', array( $this, 'filter_rest_url' ) );
+
+		return true;
 	}
 
 	public function plugin_deactivate() {

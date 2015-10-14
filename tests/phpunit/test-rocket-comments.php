@@ -35,8 +35,8 @@ class Test_RocketComments extends WP_UnitTestCase {
 	/**
 	 * @covers RocketComments::init
 	 */
-	public function test_init_false_on_no_rest_api() {
-		$this->assertFalse( $this->class->init() );
+	public function test_init_true() {
+		$this->assertTrue( $this->class->init() );
 	}
 
 	/**
