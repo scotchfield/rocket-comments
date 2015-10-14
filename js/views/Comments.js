@@ -35,16 +35,18 @@ rocketComments.views.Comments = (function () {
 
 		updateNavigationLinks: function () {
 			if ( this.total_pages > 1 ) {
-				jQuery( '.comment-navigation' ).show();
+				var nav = jQuery( '.comment-navigation' );
+
+				nav.show();
 
 				if ( this.comment_page > 1 ) {
 					if ( undefined !== this.$nav_previous_children ) {
-						jQuery( '.nav-previous' )
+						nav.find( '.nav-previous' )
 							.append( this.$nav_previous_children );
 						this.$nav_previous_children = undefined;
 					}
 				} else {
-					var $children = jQuery( '.nav-previous' )
+					var $children = nav.find( '.nav-previous' )
 						.children().detach();
 
 					if ( $children.length > 0 ) {
@@ -161,7 +163,10 @@ rocketComments.views.Comments = (function () {
 		},
 
 		fetchComments: function () {
-			var data = {};
+			var data = {
+				page: this.comment_page,
+				per_page: this.comments_per_page,
+			};
 
 			if ( this.loading ) {
 				this.loading = false;
@@ -170,20 +175,13 @@ rocketComments.views.Comments = (function () {
 				});
 			}
 
-			if ( this.page_comments > 0 ) {
-				data = {
-					page: this.comment_page,
-					per_page: this.comments_per_page,
-				};
-			}
-
 			this.collection.fetch({
 				data: data,
 				success: _.bind( function ( collection, response, options ) {
-					this.total_comments = options.xhr
-						.getResponseHeader( 'X-WP-Total' );
-					this.total_pages = options.xhr
-						.getResponseHeader( 'X-WP-TotalPages' );
+					this.total_comments = parseInt(
+						options.xhr.getResponseHeader( 'X-WP-Total' ) );
+					this.total_pages = parseInt(
+						options.xhr.getResponseHeader( 'X-WP-TotalPages' ) );
 
 					if ( this.total_comments == 1 ) {
 						jQuery( '.comments-area #comment-single' )
@@ -204,7 +202,7 @@ rocketComments.views.Comments = (function () {
 
 			this.timeout = setTimeout(
 				this.fetchComments.bind( this ),
-				10000
+				30000
 			);
 		},
 

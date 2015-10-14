@@ -397,8 +397,8 @@ class RocketComments {
 		$options['data']['threaded'] = get_option( 'thread_comments', true ) ? get_option( 'thread_comments_depth' ) : 1;
 
 		$options['data']['page-comments'] = intval( get_option( 'page_comments' ) );
-		$options['data']['comment-page'] = $options['data']['page-comments'] ? 1 : 0;
-		$options['data']['comments-per-page'] = intval( get_option( 'comments_per_page' ) );
+		$options['data']['comment-page'] = 1;
+		$options['data']['comments-per-page'] = $options['data']['page-comments'] ? intval( get_option( 'comments_per_page' ) ) : 10;
 		$options['data']['comment-order'] = ( $options['data']['page-comments'] > 0 && 'newest' == get_option( 'default_comments_page' ) ) ? 'DESC' : 'ASC';
 
 		$options['require_name_email'] = get_option( 'require_name_email' );

@@ -10,8 +10,7 @@ if ( post_password_required() ) {
 }
 
 function rocket_comments_comment_nav() {
-	if ( get_option( 'page_comments' ) ) {
-		$newest_comments = 'newest' == get_option( 'default_comments_page' ) ? true : false;
+	$newest_comments = 'newest' == get_option( 'default_comments_page' ) ? true : false;
 ?>
 <nav class="navigation comment-navigation" role="navigation">
 	<h2 class="screen-reader-text">
@@ -24,7 +23,6 @@ function rocket_comments_comment_nav() {
 	</div>
 </nav>
 <?php
-	}
 }
 
 function rocket_comments_implode_comment_options( $options ) {
@@ -69,9 +67,7 @@ jQuery(function () {
 		</h2>
 
 <?php
-if ( $wp_rocket_comments_options['data']['page-comments'] ) {
 	rocket_comments_comment_nav();
-}
 ?>
 
 		<ol id="comment-root" class="comment-list"></ol>
