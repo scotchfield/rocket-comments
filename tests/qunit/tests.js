@@ -26,7 +26,7 @@ QUnit.test('Basic CommentModel testing', function(assert) {
 	assert.ok(model.get('edit'));
 	assert.notOk(model.get('edit_class'));
 
-	assert.ok('url' in model);
+	assert.ok(undefined !== model['url']);
 	assert.ok(model.url().indexOf('/comments/') > -1);
 });
 QUnit.test('Basic CommentView testing', function(assert) {
