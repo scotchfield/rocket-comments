@@ -1,22 +1,55 @@
 QUnit.test( 'Basic rocketComment object tests', function( assert ) {
-	assert.ok( rocketComments );
-	assert.ok( rocketComments.models.Comment );
-	assert.ok( rocketComments.views.Comment );
-	assert.ok( rocketComments.views.Comments );
-	assert.ok( rocketComments.collections.Comments );
+	assert.ok(
+		rocketComments,
+		'rocketComments exists'
+	);
+	assert.ok(
+		rocketComments.models.Comment,
+		'Comment model exists'
+	);
+	assert.ok(
+		rocketComments.views.Comment,
+		'Comment view exists'
+	);
+	assert.ok(
+		rocketComments.views.Comments,
+		'Comments view exists'
+	);
+	assert.ok(
+		rocketComments.collections.Comments,
+		'Comments collection exists'
+	);
 });
 
 QUnit.test( 'Basic addComment object tests', function( assert ) {
-	assert.ok( addComment );
-	assert.ok( addComment.setupForm );
-	assert.ok( addComment.resetForm );
-	assert.ok( addComment.moveForm );
-	assert.ok( addComment.editForm );
+	assert.ok(
+		addComment,
+		'addComment exists'
+	);
+	assert.ok(
+		addComment.setupForm,
+		'setupForm exists'
+	);
+	assert.ok(
+		addComment.resetForm,
+		'resetForm exists'
+	);
+	assert.ok(
+		addComment.moveForm,
+		'moveForm exists'
+	);
+	assert.ok(
+		addComment.editForm,
+		'editForm exists'
+	);
 });
 
 QUnit.test( 'Basic CommentModel testing', function( assert ) {
 	var model = new rocketComments.models.Comment();
-	assert.ok( model );
+	assert.ok(
+		model,
+		'New model creation'
+	);
 
 	model.initialize();
 	assert.ok( model.get( 'iso_string' ) );
