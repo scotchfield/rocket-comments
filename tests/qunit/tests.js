@@ -33,7 +33,17 @@ QUnit.test('Basic CommentView testing', function(assert) {
 	assert.ok(new rocketComments.views.Comment());
 });
 QUnit.test('Basic CommentsCollection testing', function(assert) {
-	assert.ok(new rocketComments.collections.Comments());
+	var collection = new rocketComments.collections.Comments();
+	assert.ok(collection);
+
+	assert.ok(collection.url().indexOf('/comments/') > -1);
+	assert.ok(collection.url().indexOf('&post=') === -1);
+
+	collection.post_id = 1;
+	assert.ok(collection.url().indexOf('/comments/') > -1);
+	assert.ok(collection.url().indexOf('&post=1') > -1);
+
+	assert.ok(collection.commentDepth());
 });
 QUnit.test('Basic CommentsView testing', function(assert) {
 	assert.ok(new rocketComments.views.Comments());

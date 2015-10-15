@@ -16,18 +16,22 @@ rocketComments.collections.Comments = (function () {
 				return WP_API_Settings.root + '/comments/?orderby=id&order=' +
 					this.order + '&post=' + this.post_id;
 			}
+
 			return WP_API_Settings.root + '/comments/';
 		},
 
 		commentDepth: function ( item ) {
 			var depth = 1;
+
 			while ( item && item.get( 'parent' ) > 0 ) {
 				item = this.where({ id: item.get( 'parent' ) })[0];
 				depth += 1;
 			}
-			if ( ! this.threaded ) {
-				this.threaded = jQuery( 'div#comments' ).data( 'threaded' );
+
+			if ( undefined === this.threaded ) {
+				this.threaded = jQuery( 'div#comments' ).data( 'threaded' ) || 1;
 			}
+
 			return depth < this.threaded ? depth : this.threaded;
 		}
 	});
