@@ -52,14 +52,21 @@ QUnit.test( 'Basic CommentModel testing', function( assert ) {
 	);
 
 	model.initialize();
-	assert.ok( model.get( 'iso_string' ) );
-	assert.notOk( model.get( 'edit' ) );
-	assert.strictEqual( 'hidden', model.get( 'edit_class' ) );
+	assert.ok(
+		model.get( 'iso_string' ),
+		'Models should have an ISO-formatted string attribute'
+	);
+	assert.notOk(
+		model.get( 'edit' ),
+		'Models should not be editable by default'
+	);
 
 	model = new rocketComments.models.Comment( { edit: 1 } );
 	model.initialize();
-	assert.ok( model.get( 'edit' ) );
-	assert.notOk( model.get( 'edit_class' ) );
+	assert.ok(
+		model.get( 'edit' ),
+		'If edit is 1 when the model is created, edit should be set'
+	);
 
 	assert.ok( undefined !== model['url'] );
 	assert.ok( model.url().indexOf( '/comments/' ) > -1 );

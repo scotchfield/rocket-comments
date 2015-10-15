@@ -79,11 +79,6 @@ rocketComments.models.Comment = (function () {
 			var date = new Date( this.get( 'date' ) );
 
 			this.set({ iso_string: date.toISOString() });
-
-			this.set({ edit_class: 'hidden' });
-			if ( this.get( 'edit' ) == 1 ) {
-				this.set({ edit_class: '' });
-			}
 		}
 
 	});

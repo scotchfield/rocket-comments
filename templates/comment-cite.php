@@ -14,7 +14,7 @@
 						</time>
 					</a>
 					&nbsp;&nbsp;
-					<span class="edit-link <%= attributes.edit_class %>">
+					<span class="edit-link <%= attributes.edit === 0 ? 'hidden' : '' %>">
 						<a class="comment-edit-link" href="<?php echo get_admin_url() ?>comment.php?action=editcomment&amp;c=<%= attributes.id %>" onclick='return addComment.editForm(<%= attributes.id %>, "respond");'>
 							(<?php _e( 'Edit', 'rocket-comments' ); ?>)
 						</a>
