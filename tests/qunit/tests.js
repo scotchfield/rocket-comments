@@ -48,7 +48,7 @@ QUnit.test( 'Basic CommentModel testing', function( assert ) {
 	var model = new rocketComments.models.Comment();
 	assert.ok(
 		model,
-		'New model creation'
+		'New comment model creation'
 	);
 
 	model.initialize();
@@ -68,40 +68,85 @@ QUnit.test( 'Basic CommentModel testing', function( assert ) {
 		'If edit is 1 when the model is created, edit should be set'
 	);
 
-	assert.ok( undefined !== model['url'] );
-	assert.ok( model.url().indexOf( '/comments/' ) > -1 );
+	assert.ok(
+		undefined !== model['url'],
+		'The url attribute exists'
+	);
+	assert.ok(
+		model.url().indexOf( '/comments/' ) > -1,
+		'URL must reference comments'
+	);
 });
 
 QUnit.test( 'Basic CommentView testing', function( assert ) {
-	assert.ok( new rocketComments.views.Comment() );
+	assert.ok(
+		new rocketComments.views.Comment(),
+		'New comment view creation'
+	);
 });
 
 QUnit.test( 'Basic CommentsCollection testing', function( assert ) {
 	var collection = new rocketComments.collections.Comments();
-	assert.ok( collection );
+	assert.ok(
+		collection,
+		'New comment collection creation'
+	);
 
-	assert.ok( collection.url().indexOf( '/comments/' ) > -1 );
-	assert.ok( collection.url().indexOf( '&post=' ) === -1 );
+	assert.ok(
+		collection.url().indexOf( '/comments/' ) > -1,
+		'Default collection must reference comments'
+	);
+	assert.ok(
+		collection.url().indexOf( '&post=' ) === -1,
+		'Default collection must not reference a post'
+	);
 
 	collection.post_id = 1;
-	assert.ok( collection.url().indexOf( '/comments/' ) > -1 );
-	assert.ok( collection.url().indexOf( '&post=1' ) > -1 );
+	assert.ok(
+		collection.url().indexOf( '/comments/' ) > -1,
+		'Collection URL must reference comments with post id'
+	);
+	assert.ok(
+		collection.url().indexOf( '&post=1' ) > -1,
+		'Collection with post id must reference the post in URL'
+	);
 
-	assert.ok( collection.commentDepth() );
+	assert.ok(
+		1 === collection.commentDepth(),
+		'Default commentDepth must be 1'
+	);
 });
 
 QUnit.test( 'Basic CommentsView testing', function( assert ) {
-	assert.ok( new rocketComments.views.Comments() );
+	assert.ok(
+		new rocketComments.views.Comments(),
+		'New comments view creation'
+	);
 });
 
 QUnit.test( 'Shotgun testing', function( assert ) {
-	assert.ok( shotgun( _.bind( rocketComments.start, rocketComments ) ) );
-	assert.ok( shotgun( _.bind( rocketComments.shiftPage, rocketComments ) ) );
+	assert.ok(
+		shotgun( _.bind( rocketComments.start, rocketComments ) ),
+		'Shotgun tests for rocketComments.start'
+	);
+	assert.ok(
+		shotgun( _.bind( rocketComments.shiftPage, rocketComments ) ),
+		'Shotgun tests for rocketComments.shiftPage'
+	);
 
 	var model = new rocketComments.models.Comment();
-	assert.ok( shotgun( _.bind( model.initialize, model ) ) );
-	assert.ok( shotgun( _.bind( model.sync, model ) ) );
+	assert.ok(
+		shotgun( _.bind( model.initialize, model ) ),
+		'Shotgun tests for Comment model initialize'
+	);
+	assert.ok(
+		shotgun( _.bind( model.sync, model ) ),
+		'Shotgun tests for Comment model sync'
+	);
 
 	var view = new rocketComments.views.Comment();
-	assert.ok( shotgun( _.bind( view.render, view ) ) );
+	assert.ok(
+		shotgun( _.bind( view.render, view ) ),
+		'Shotgun tests for Comment view render'
+	);
 });
