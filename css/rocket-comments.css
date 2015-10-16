@@ -28,3 +28,13 @@
 a#cancel-comment-reply-link {
 	display: none;
 }
+#comment-notify {
+	background-color: #ffffcc;
+	border: 1px solid black;
+	border-radius: 16px;
+	display: none;
+	padding: 8px 16px 8px 16px;
+	position: fixed;
+	right: 20px;
+	top: 60px;
+}

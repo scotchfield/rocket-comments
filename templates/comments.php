@@ -56,6 +56,8 @@ jQuery(function () {
 		<img src="<?php echo plugins_url( '../images/wp-loading.gif', __FILE__ ); ?>">
 	</div>
 
+	<div id="comment-notify"></div>
+
 	<div id="wp-comment-content">
 
 		<h2 id="comment-single" class="comments-title">

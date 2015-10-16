@@ -130,10 +130,7 @@ rocketComments.views.Comments = (function () {
 							);
 						}
 					},
-					error: function( model, response ) {
-						console.log( 'Error!' );
-						console.log( response );
-					}
+					error: rocketComments.commentsView.handleError
 				} );
 			} else {
 				attributes = {
@@ -155,10 +152,7 @@ rocketComments.views.Comments = (function () {
 							rocketComments.commentsView.collection.add( item );
 						}
 					},
-					error: function( model, response ) {
-						console.log( 'Error!' );
-						console.log( response );
-					}
+					error: rocketComments.commentsView.handleError
 				} );
 			}
 
@@ -166,6 +160,17 @@ rocketComments.views.Comments = (function () {
 			respond.find( 'textarea#comment' ).val( '' );
 
 			this.render();
+		},
+
+		handleError: function( model, response ) {
+			var notify = jQuery( '#comment-notify' ),
+				responseText = jQuery.parseJSON( response.responseText );
+
+			notify
+				.text( responseText[0].message )
+				.fadeIn();
+
+			setTimeout( function () { notify.fadeOut(); }, 5000 );
 		},
 
 		fetchComments: function () {
