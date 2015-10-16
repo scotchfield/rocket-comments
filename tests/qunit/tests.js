@@ -118,9 +118,21 @@ QUnit.test( 'Basic CommentsCollection testing', function( assert ) {
 });
 
 QUnit.test( 'Basic CommentsView testing', function( assert ) {
+	var view = new rocketComments.views.Comments();
 	assert.ok(
-		new rocketComments.views.Comments(),
+		view,
 		'New comments view creation'
+	);
+
+	assert.notOk(
+		view.updateNavigationLinks(),
+		'No navigation menu visible by default'
+	);
+
+	view.total_pages = 2;
+	assert.ok(
+		view.updateNavigationLinks(),
+		'Try to show navigation menu with multiple comment pages'
 	);
 });
 

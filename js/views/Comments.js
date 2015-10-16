@@ -59,7 +59,11 @@ rocketComments.views.Comments = (function () {
 				} else {
 					jQuery( '.nav-next' ).hide();
 				}
+
+				return true;
 			}
+
+			return false;
 		},
 
 		render: function () {
