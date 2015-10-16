@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2015-10-09 09:49-0400\n"
-"PO-Revision-Date: 2015-10-09 09:50-0400\n"
+"POT-Creation-Date: 2015-10-16 19:34-0400\n"
+"PO-Revision-Date: 2015-10-16 19:42-0400\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr_CA\n"
@@ -17,51 +17,65 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-0: tests\n"
 "X-Poedit-SearchPathExcluded-1: node_modules\n"
 
-#: class.rocket-comments.php:97
+#: class.rocket-comments.php:102
 msgid ""
 "<strong>Rocket Comments</strong> depends on <strong>WP-API</strong>. Please "
 "install and activate it first! Thanks!"
 msgstr ""
 
-#: class.rocket-comments.php:147 class.rocket-comments.php:270
-#: class.rocket-comments.php:271 class.rocket-comments.php:272
-#: class.rocket-comments.php:278
+#: class.rocket-comments.php:156 class.rocket-comments.php:336
+#: class.rocket-comments.php:337 class.rocket-comments.php:338
+#: class.rocket-comments.php:344
 msgid "Default"
-msgstr ""
+msgstr "Par défaut"
 
-#: class.rocket-comments.php:151 class.rocket-comments.php:273
+#: class.rocket-comments.php:160 class.rocket-comments.php:339
 msgid "Alternate 1"
 msgstr ""
 
-#: class.rocket-comments.php:155 class.rocket-comments.php:274
+#: class.rocket-comments.php:164 class.rocket-comments.php:340
 msgid "Alternate 2"
 msgstr ""
 
-#: class.rocket-comments.php:173
+#: class.rocket-comments.php:185
 msgid "Comment Style"
 msgstr ""
 
-#: class.rocket-comments.php:179
+#: class.rocket-comments.php:191
 msgid "Comment Template Style"
 msgstr ""
 
-#: class.rocket-comments.php:192 class.rocket-comments.php:198
+#: class.rocket-comments.php:204 class.rocket-comments.php:210
 msgid "Development Mode Enabled"
 msgstr ""
 
-#: class.rocket-comments.php:206
+#: class.rocket-comments.php:223
+msgid "Seconds between comment fetch"
+msgstr ""
+
+#: class.rocket-comments.php:229
+msgid "Number of seconds"
+msgstr ""
+
+#: class.rocket-comments.php:237
 msgid "Change the way your comments are displayed."
 msgstr ""
 
-#: class.rocket-comments.php:245
+#: class.rocket-comments.php:279
 msgid "Turn off minified JavaScript and use the regular version."
 msgstr ""
 
-#: class.rocket-comments.php:267
+#: class.rocket-comments.php:306
+msgid ""
+"Rocket Comments will periodically refresh the post comments. You can change "
+"the number of seconds between each asynchronous request. (Default: 30)"
+msgstr ""
+
+#: class.rocket-comments.php:333
 msgid "Rocket Comments"
 msgstr "Commentaires en Rafale"
 
-#: class.rocket-comments.php:282
+#: class.rocket-comments.php:348
 #, php-format
 msgid ""
 "Your current theme is <strong>%1$s</strong>. We suggest using the <strong>"
@@ -77,7 +91,7 @@ msgstr "Votre commentaire est en attente de modération."
 #: templates/comment-default.php:13
 #, php-format
 msgid "%1$s at %2$s"
-msgstr ""
+msgstr "%1$s à %2$s"
 
 #: templates/comment-below.php:33 templates/comment-cite.php:35
 #: templates/comment-default.php:34
@@ -85,7 +99,7 @@ msgid "Log in to Reply"
 msgstr "Connectez-vous pour répondre"
 
 #: templates/comment-below.php:37 templates/comment-cite.php:39
-#: templates/comment-default.php:38 templates/comments.php:81
+#: templates/comment-default.php:38 templates/comments.php:79
 msgid "Leave a Reply"
 msgstr "Laisser un commentaire"
 
@@ -99,19 +113,19 @@ msgstr "Répondre"
 msgid "Edit"
 msgstr "Éditer"
 
-#: templates/comments.php:18
+#: templates/comments.php:17
 msgid "Comment navigation"
 msgstr "Navigation des commentaires"
 
-#: templates/comments.php:21 templates/comments.php:22
+#: templates/comments.php:20 templates/comments.php:21
 msgid "Newer Comments"
 msgstr "Commentaires ultérieurs"
 
-#: templates/comments.php:21 templates/comments.php:22
+#: templates/comments.php:20 templates/comments.php:21
 msgid "Older Comments"
 msgstr "Commentaires antérieurs"
 
-#: templates/comments.php:54
+#: templates/comments.php:52
 msgid "Click here to view comments on this post."
 msgstr ""
 
@@ -125,61 +139,61 @@ msgstr ""
 msgid "<span id=\"comment-count\"></span> thoughts on &ldquo;%s&rdquo;"
 msgstr ""
 
-#: templates/comments.php:84
+#: templates/comments.php:82
 msgid "Cancel reply"
 msgstr "Annuler la réponse"
 
-#: templates/comments.php:90
+#: templates/comments.php:88
 msgid "Edit Comment"
 msgstr ""
 
-#: templates/comments.php:93
+#: templates/comments.php:91
 msgid "Cancel"
-msgstr ""
+msgstr "Annuler"
 
-#: templates/comments.php:102
+#: templates/comments.php:100
 #, php-format
 msgid "You must be <a href=\"%s\">logged in</a> to post a comment."
 msgstr ""
 "Vous devez <a href=\"%s\">être connecté(e)</a> pour rédiger un commentaire."
 
-#: templates/comments.php:117
+#: templates/comments.php:115
 #, php-format
 msgid "Logged in as %s."
 msgstr ""
 
-#: templates/comments.php:119
+#: templates/comments.php:117
 msgid "Log out of this account"
 msgstr "Se déconnecter"
 
-#: templates/comments.php:119
+#: templates/comments.php:117
 msgid "Log out?"
-msgstr ""
+msgstr "Se déconnecter&nbsp;?"
 
-#: templates/comments.php:127
+#: templates/comments.php:125
 msgid "Your email address will not be published."
 msgstr ""
 
-#: templates/comments.php:128
+#: templates/comments.php:126
 msgid "Required fields are marked <span class=\"required\">*</span>"
 msgstr ""
 
-#: templates/comments.php:131
+#: templates/comments.php:129
 msgid "Name"
 msgstr "Nom"
 
-#: templates/comments.php:135
+#: templates/comments.php:133
 msgid "Email"
 msgstr "Email"
 
-#: templates/comments.php:139
+#: templates/comments.php:137
 msgid "Website"
-msgstr ""
+msgstr "Site web"
 
-#: templates/comments.php:143
+#: templates/comments.php:141
 msgid "Comment"
 msgstr "Commentaire"
 
-#: templates/comments.php:147
+#: templates/comments.php:145
 msgid "Post Comment"
 msgstr "Laisser un commentaire"
