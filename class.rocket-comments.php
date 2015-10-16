@@ -212,6 +212,25 @@ class RocketComments {
 			'rocket-comments',
 			'rocket-comments-section-dev-js'
 		);
+
+		register_setting(
+			'rocket-comments-group',
+			'rocket-comments-fetch-time',
+			array( $this, 'fetch_time_validate' )
+		);
+		add_settings_section(
+			'rocket-comments-section-fetch-time',
+			__( 'Seconds between comment fetch', 'rocket-comments' ),
+			array( $this, 'fetch_time_callback' ),
+			'rocket-comments'
+		);
+		add_settings_field(
+			'rocket-comments-field-fetch-time',
+			__( 'Number of seconds', 'rocket-comments' ),
+			array( $this, 'fetch_time_checkbox_callback' ),
+			'rocket-comments',
+			'rocket-comments-section-fetch-time'
+		);
 	}
 
 	public function comment_style_callback() {
@@ -274,6 +293,35 @@ class RocketComments {
 	public function development_enabled_validate( $input ) {
 		if ( ! in_array( $input, array( 'on', '' ) ) ) {
 			$input = '';
+		}
+
+		return $input;
+	}
+
+	public function fetch_time() {
+		return intval( get_option( 'rocket-comments-fetch-time', 30 ) );
+	}
+
+	public function fetch_time_callback() {
+		_e( 'Rocket Comments will periodically refresh the post comments. You can change the number of seconds between each asynchronous request. (Default: 30)', 'rocket-comments' );
+	}
+
+	public function fetch_time_checkbox_callback() {
+		$seconds = $this->fetch_time();
+
+?>
+		<input type="text" name="rocket-comments-fetch-time" value="<?php echo $seconds; ?>">
+<?php
+	}
+
+	/**
+	 * A validated input is a checkbox that is either on or off.
+	 */
+	public function fetch_time_validate( $input ) {
+		$input = intval( $input );
+
+		if ( $input < 0 ) {
+			$input = 0;
 		}
 
 		return $input;
@@ -402,6 +450,8 @@ class RocketComments {
 		$options['data']['comment-page'] = 1;
 		$options['data']['comments-per-page'] = $options['data']['page-comments'] ? intval( get_option( 'comments_per_page' ) ) : 10;
 		$options['data']['comment-order'] = ( $options['data']['page-comments'] > 0 && 'newest' == get_option( 'default_comments_page' ) ) ? 'DESC' : 'ASC';
+
+		$options['data']['fetch-time'] = $this->fetch_time();
 
 		$options['require_name_email'] = get_option( 'require_name_email' );
 		$options['redirect_no_js_url'] = add_query_arg( 'rocket-nojs', '1' );

@@ -29,6 +29,8 @@ rocketComments.views.Comments = (function () {
 			this.comment_page = this.$el.data( 'comment-page' );
 			this.comments_per_page = this.$el.data( 'comments-per-page' );
 
+			this.fetch_time = parseInt( this.$el.data( 'fetch-time' ) ) * 1000;
+
 			this.loading = true;
 			this.fetchComments();
 		},
@@ -206,7 +208,7 @@ rocketComments.views.Comments = (function () {
 
 			this.timeout = setTimeout(
 				this.fetchComments.bind( this ),
-				30000
+				this.fetch_time
 			);
 		},
 
