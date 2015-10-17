@@ -69,10 +69,28 @@ jQuery(function () {
 		</h2>
 
 <?php
-	rocket_comments_comment_nav();
+
+rocket_comments_comment_nav();
+
 ?>
 
 		<ol id="comment-root" class="comment-list"></ol>
+
+<?php
+
+if ( ! comments_open() &&
+		get_comments_number() &&
+		post_type_supports( get_post_type(), 'comments' ) ) {
+
+?>
+		<p class="no-comments">
+			<?php _e( 'Comments are closed.', 'rocket-comments' ); ?>
+		</p>
+<?php
+
+} else {
+
+?>
 
 		<div id="respond" class="comment-respond">
 			<h3 id="reply-title" class="comment-reply-title title-reply">
@@ -94,31 +112,40 @@ jQuery(function () {
 			</h3>
 
 <?php
-if ( get_option( 'comment_registration' ) && ! is_user_logged_in() ) {
+
+	if ( get_option( 'comment_registration' ) && ! is_user_logged_in() ) {
+
 ?>
 			<p class="must-log-in">
 				<?php printf( __( 'You must be <a href="%s">logged in</a> to post a comment.' ), wp_login_url( apply_filters( 'the_permalink', get_permalink( get_the_ID() ) ) ) ); ?>
 			</p>
 <?php
-	do_action( 'comment_form_must_log_in_after' );
-} else {
+
+		do_action( 'comment_form_must_log_in_after' );
+
+	} else {
+
 ?>
 
 			<form action="<?php echo esc_url( site_url( '/wp-comments-post.php' ) ); ?>" method="post" id="commentform" class="comment-form" novalidate>
 <?php
-	if ( is_user_logged_in() ) {
+
+		if ( is_user_logged_in() ) {
+
 ?>
 				<div class="comment-author-logged-in">
 					<p class="logged-in-as">
 <?php
-		$profile_url = '<a href="' . get_admin_url( null, 'profile.php' ) . '">' . $wp_rocket_comments_options['current_user']->display_name . '</a>';
-		printf( __( 'Logged in as %s.', 'rocket-comments' ), $profile_url );
+			$profile_url = '<a href="' . get_admin_url( null, 'profile.php' ) . '">' . $wp_rocket_comments_options['current_user']->display_name . '</a>';
+			printf( __( 'Logged in as %s.', 'rocket-comments' ), $profile_url );
 ?>
 						<a href="<?php echo wp_logout_url( get_permalink() ); ?>" title="<?php _e( 'Log out of this account', 'rocket-comments' ); ?>"><?php _e( 'Log out?', 'rocket-comments' ); ?></a>
 					</p>
 				</div>
 <?php
-	}
+
+		}
+
 ?>
 				<div class="comment-author-not-logged-in <?php if ( is_user_logged_in() ) { echo 'hidden'; } ?>">
 					<p class="comment-notes">
@@ -149,11 +176,16 @@ if ( get_option( 'comment_registration' ) && ! is_user_logged_in() ) {
 				<?php wp_nonce_field( 'unfiltered-html-comment_' . get_the_ID(), '_wp_unfiltered_html_comment_disabled', false ); ?>
 				<script>(function(){if(window===window.parent){document.getElementById('_wp_unfiltered_html_comment_disabled').name='_wp_unfiltered_html_comment';}})();</script>
 			</form>
+
 <?php
+
+	}
+
 }
+
 ?>
 		</div>
-	<div>
+	</div>
 
 </div>
 
