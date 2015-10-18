@@ -192,4 +192,70 @@ class Test_RocketComments extends WP_UnitTestCase {
 		$this->assertTrue( isset( $result[ 'redirect_no_js_url' ] ) );
 	}
 
+	/**
+	 * @covers RocketComments::comment_style_validate
+	 */
+	public function test_comment_style_validate_valid() {
+		$values = array_keys( $this->class->get_comment_style_list() );
+
+		foreach ( $values as $value ) {
+			$this->assertEquals( $value, $this->class->comment_style_validate( $value ) );
+		}
+	}
+
+	/**
+	 * @covers RocketComments::comment_style_validate
+	 */
+	public function test_comment_style_validate_invalid() {
+		$values = array( false, null, '', 'test' );
+
+		foreach ( $values as $value ) {
+			$this->assertEquals( 'default', $this->class->comment_style_validate( $value ) );
+		}
+	}
+
+	/**
+	 * @covers RocketComments::development_enabled_validate
+	 */
+	public function test_development_enabled_validate_valid() {
+		$values = array( 'on', '' );
+
+		foreach ( $values as $value ) {
+			$this->assertEquals( $value, $this->class->development_enabled_validate( $value ) );
+		}
+	}
+
+	/**
+	 * @covers RocketComments::development_enabled_validate
+	 */
+	public function test_development_enabled_validate_invalid() {
+		$values = array( false, null, 'test' );
+
+		foreach ( $values as $value ) {
+			$this->assertEquals( '', $this->class->development_enabled_validate( $value ) );
+		}
+	}
+
+	/**
+	 * @covers RocketComments::fetch_time_validate
+	 */
+	public function test_fetch_time_validate_valid() {
+		$values = array( 0, 1, 2, 1000, 10000000, time() );
+
+		foreach ( $values as $value ) {
+			$this->assertEquals( $value, $this->class->fetch_time_validate( $value ) );
+		}
+	}
+
+	/**
+	 * @covers RocketComments::fetch_time_validate
+	 */
+	public function test_fetch_time_validate_invalid() {
+		$values = array( false, null, 'test', -1, -time() );
+
+		foreach ( $values as $value ) {
+			$this->assertEquals( 0, $this->class->fetch_time_validate( $value ) );
+		}
+	}
+
 }
