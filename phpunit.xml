@@ -16,6 +16,7 @@
 			<directory suffix=".php">.</directory>
 			<exclude>
 				<directory suffix=".php">tests/phpunit</directory>
+				<directory suffix=".php">templates</directory>
 			</exclude>
 		</whitelist>
 	</filter>
