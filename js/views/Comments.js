@@ -165,6 +165,10 @@ rocketComments.views.Comments = (function () {
 		showNotify: function ( message, time ) {
 			var notify = jQuery( '#comment-notify' );
 
+			if ( undefined === message ) {
+				message = notify.data( 'default' );
+			}
+
 			notify.text( message ).fadeIn();
 
 			if ( undefined !== time ) {
@@ -198,6 +202,8 @@ rocketComments.views.Comments = (function () {
 				});
 			}
 
+			this.showNotify();
+
 			this.collection.fetch({
 				data: data,
 				success: _.bind( function ( collection, response, options ) {
@@ -217,6 +223,7 @@ rocketComments.views.Comments = (function () {
 					}
 
 					this.updateNavigationLinks();
+					this.fadeNotify();
 				}, this ),
 				error: function () {
 					console.log( 'Error: Could not update collection!' );

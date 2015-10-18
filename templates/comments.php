@@ -56,7 +56,7 @@ jQuery(function () {
 		<img src="<?php echo plugins_url( '../images/wp-loading.gif', __FILE__ ); ?>">
 	</div>
 
-	<div id="comment-notify"></div>
+	<div id="comment-notify" data-default="<?php _e( 'Loading...', 'rocket-comments' ); ?>"></div>
 
 	<div id="wp-comment-content">
 
