@@ -14,8 +14,6 @@ addComment.setupForm = function( options ) {
 		jQuery( options.respond ).parent().append( div );
 	}
 
-	jQuery( options.cancel ).trigger( 'click' );
-
 	options.respond.data( 'comment-id', options.commentId );
 	options.respond.data( 'action', options.action );
 	options.respond.insertBefore( options.comment.next() );
