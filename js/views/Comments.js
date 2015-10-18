@@ -162,15 +162,27 @@ rocketComments.views.Comments = (function () {
 			this.render();
 		},
 
+		showNotify: function ( message, time ) {
+			var notify = jQuery( '#comment-notify' );
+
+			notify.text( message ).fadeIn();
+
+			if ( undefined !== time ) {
+				setTimeout( rocketComments.commentsView.fadeNotify, time );
+			};
+		},
+
+		fadeNotify: function () {
+			jQuery( '#comment-notify' ).fadeOut();
+		},
+
 		handleError: function( model, response ) {
-			var notify = jQuery( '#comment-notify' ),
-				responseText = jQuery.parseJSON( response.responseText );
+			var responseText = jQuery.parseJSON( response.responseText );
 
-			notify
-				.text( responseText[0].message )
-				.fadeIn();
-
-			setTimeout( function () { notify.fadeOut(); }, 5000 );
+			rocketComments.commentsView.showNotify(
+				responseText[0].message,
+				5000
+			);
 		},
 
 		fetchComments: function () {
