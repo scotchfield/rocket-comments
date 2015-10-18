@@ -130,7 +130,7 @@ rocketComments.views.Comments = (function () {
 							);
 						}
 					},
-					error: rocketComments.commentsView.handleError
+					error: _.bind( this.handleError, this )
 				} );
 			} else {
 				attributes = {
@@ -152,7 +152,7 @@ rocketComments.views.Comments = (function () {
 							rocketComments.commentsView.collection.add( item );
 						}
 					},
-					error: rocketComments.commentsView.handleError
+					error: _.bind( this.handleError, this )
 				} );
 			}
 
@@ -168,7 +168,7 @@ rocketComments.views.Comments = (function () {
 			notify.text( message ).fadeIn();
 
 			if ( undefined !== time ) {
-				setTimeout( rocketComments.commentsView.fadeNotify, time );
+				setTimeout( this.fadeNotify, time );
 			};
 		},
 
@@ -179,7 +179,7 @@ rocketComments.views.Comments = (function () {
 		handleError: function( model, response ) {
 			var responseText = jQuery.parseJSON( response.responseText );
 
-			rocketComments.commentsView.showNotify(
+			this.showNotify(
 				responseText[0].message,
 				5000
 			);
