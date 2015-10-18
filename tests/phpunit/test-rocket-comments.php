@@ -258,4 +258,23 @@ class Test_RocketComments extends WP_UnitTestCase {
 		}
 	}
 
+	/**
+	 * @covers RocketComments::development_enabled
+	 */
+	public function test_development_enabled_off() {
+		$this->assertFalse( $this->class->development_enabled() );
+	}
+
+	/**
+	 * @covers RocketComments::development_enabled
+	 */
+	public function test_development_enabled_on() {
+		update_option( 'rocket-comments-dev-js', 'on' );
+
+		$this->assertTrue( $this->class->development_enabled() );
+
+		delete_option( 'rocket-comments-dev-js' );
+	}
+
+
 }
