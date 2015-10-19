@@ -28,6 +28,7 @@ rocketComments.start = function () {
 
 /**
  * Increase or decrease the current page via navigation bar click events.
+ *
  * @param {number} delta - Number of pages to shift, may be negative.
  */
 rocketComments.shiftPage = function ( delta ) {

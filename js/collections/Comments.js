@@ -3,6 +3,11 @@
 var rocketComments = rocketComments || {};
 rocketComments.collections = rocketComments.collections || {};
 
+/**
+ * Creates a new collection of post comments.
+ *
+ * @class
+ */
 rocketComments.collections.Comments = (function () {
 	var collection = wp.api.collections.Comments.extend({
 		initialize: function () {

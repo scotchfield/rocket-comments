@@ -3,6 +3,11 @@
 var rocketComments = rocketComments || {};
 rocketComments.views = rocketComments.views || {};
 
+/**
+ * Creates a new view for the set of post comments.
+ *
+ * @class
+ */
 rocketComments.views.Comments = (function () {
 	var view = Backbone.View.extend({
 		el: '.comments-area',

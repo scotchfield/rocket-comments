@@ -3,6 +3,11 @@
 var rocketComments = rocketComments || {};
 rocketComments.models = rocketComments.models || {};
 
+/**
+ * Creates a new single comment model.
+ *
+ * @class
+ */
 rocketComments.models.Comment = (function () {
 	var model = Backbone.Model.extend({
 		children: [],
@@ -68,6 +73,9 @@ rocketComments.models.Comment = (function () {
 			return Backbone.sync( method, model, options );
 		},
 
+		/**
+		 * Return the WP-API URL for this comment.
+		 */
 		url: function() {
 			var id = this.get( 'id' );
 			id = id || '';
@@ -75,6 +83,9 @@ rocketComments.models.Comment = (function () {
 			return WP_API_Settings.root + '/comments/' + id;
 		},
 
+		/**
+		 * Set up any additional attributes for the model.
+		 */
 		initialize: function () {
 			var date = new Date( this.get( 'date' ) );
 
