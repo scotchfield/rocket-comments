@@ -80,14 +80,15 @@ rocketComments.views.Comments = (function () {
 			if ( ! _.isEmpty( this.collection ) ) {
 				this.collection.each( function ( item ) {
 					var depth = this.collection.commentDepth( item ),
-						bypostauthor = '';
+						bypostauthor = '',
+						$my_ol = $ol;
 
 					if ( item.get( 'parent' ) > 0 && depth > 1 ) {
 						var $parent_ol = jQuery( '#ol-comment-' +
 							item.get( 'parent' ) );
 
 						if ( 0 !== $parent_ol.length ) {
-							$ol = $parent_ol;
+							$my_ol = $parent_ol;
 						}
 					}
 
@@ -98,7 +99,7 @@ rocketComments.views.Comments = (function () {
 					var item_view = new rocketComments.views.Comment(
 						{ model: item }
 					);
-					$ol.append( item_view.render(
+					$my_ol.append( item_view.render(
 						'comment depth-' + depth + bypostauthor
 					).el );
 				}, this );
