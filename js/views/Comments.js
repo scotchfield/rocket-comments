@@ -16,6 +16,9 @@ rocketComments.views.Comments = (function () {
 			'click .comment-respond .submit': 'submitComment'
 		},
 
+		/**
+		 * Instantiate the collection and collect default values from DOM data.
+		 */
 		initialize: function () {
 			var data = {};
 
@@ -40,6 +43,9 @@ rocketComments.views.Comments = (function () {
 			this.fetchComments();
 		},
 
+		/**
+		 * Show the previous/next links, if necessary.
+		 */
 		updateNavigationLinks: function () {
 			if ( this.total_pages > 1 ) {
 				var nav = jQuery( '.comment-navigation' );
@@ -73,6 +79,9 @@ rocketComments.views.Comments = (function () {
 			return false;
 		},
 
+		/**
+		 * Render the full list of comments.
+		 */
 		render: function () {
 			var $ol = this.$el.find( 'ol#comment-root' );
 			$ol.empty();
