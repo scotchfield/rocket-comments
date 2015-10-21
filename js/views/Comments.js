@@ -240,9 +240,7 @@ rocketComments.views.Comments = (function () {
 					this.updateNavigationLinks();
 					this.fadeNotify();
 				}, this ),
-				error: function () {
-					console.log( 'Error: Could not update collection!' );
-				}
+				error: _.bind( this.handleError, this )
 			});
 
 			this.timeout = setTimeout(
