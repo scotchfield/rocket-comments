@@ -239,14 +239,16 @@ rocketComments.views.Comments = (function () {
 
 					this.updateNavigationLinks();
 					this.fadeNotify();
+
+					clearTimeout( this.timeout );
+
+					this.timeout = setTimeout(
+						this.fetchComments.bind( this ),
+						this.fetch_time
+					);
 				}, this ),
 				error: _.bind( this.handleError, this )
 			});
-
-			this.timeout = setTimeout(
-				this.fetchComments.bind( this ),
-				this.fetch_time
-			);
 		},
 
 	});
