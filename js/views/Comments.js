@@ -137,14 +137,14 @@ rocketComments.views.Comments = (function () {
 				item.set({ content: content, type: '' });
 
 				item.save( {}, {
-					success: function( model, response ) {
+					success: _.bind( function( model, response ) {
 						if ( null !== response ) {
-							rocketComments.commentsView.collection.set(
+							this.collection.set(
 								item,
 								{ remove: false }
 							);
 						}
-					},
+					}, this ),
 					error: _.bind( this.handleError, this )
 				} );
 			} else {
@@ -162,11 +162,11 @@ rocketComments.views.Comments = (function () {
 				item = new rocketComments.models.Comment( attributes );
 
 				item.save( {}, {
-					success: function( model, response ) {
+					success: _.bind( function( model, response ) {
 						if ( null !== response ) {
-							rocketComments.commentsView.collection.add( item );
+							this.collection.add( item );
 						}
-					},
+					}, this ),
 					error: _.bind( this.handleError, this )
 				} );
 			}
