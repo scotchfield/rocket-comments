@@ -108,13 +108,13 @@ install_db() {
 }
 
 install_wp_api() {
-	local cloneOutput=$(git clone --recursive https://github.com/WP-API/WP-API.git $WP_TESTS_DIR/vendor/wp-api 2>&1)
+	download https://downloads.wordpress.org/plugin/rest-api.2.0-beta4.zip /tmp/rest-api.zip
 
-	cd $WP_TESTS_DIR/vendor/wp-api
-	git reset --hard &>/dev/null
-	git checkout develop &>/dev/null
-	git reset --hard &>/dev/null
-	git pull origin develop &>/dev/null
+	cd $WP_TESTS_DIR
+	rm -rf vendor
+	mkdir vendor
+	cd vendor
+	unzip /tmp/rest-api.zip
 }
 
 install_wp

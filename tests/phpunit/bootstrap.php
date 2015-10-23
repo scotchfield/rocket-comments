@@ -11,7 +11,7 @@ function get_tests_dir() {
 }
 
 function _manually_load_plugin() {
-	require get_tests_dir() . '/vendor/wp-api/plugin.php';
+	require get_tests_dir() . '/vendor/rest-api/plugin.php';
 
 	require dirname( __FILE__ ) . '/../../rocket-comments.php';
 }
