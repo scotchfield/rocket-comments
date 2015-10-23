@@ -259,7 +259,7 @@ class RocketComments {
 	}
 
 	public function fetch_time_callback() {
-		_e( 'Rocket Comments will periodically refresh the post comments. You can change the number of seconds between each asynchronous request. (Default: 30)', 'rocket-comments' );
+		_e( 'Rocket Comments will periodically refresh the post comments. You can change the number of seconds between each asynchronous request. (Default: 30, No Refresh: 0)', 'rocket-comments' );
 	}
 
 	public function fetch_time_checkbox_callback() {

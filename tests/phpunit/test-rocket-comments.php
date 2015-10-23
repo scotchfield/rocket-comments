@@ -82,6 +82,44 @@ class Test_RocketComments extends WP_UnitTestCase {
 	}
 
 	/**
+	 * @covers RocketComments::comment_style_callback
+	 */
+	public function test_comment_style_callback() {
+		ob_start();
+		$this->class->comment_style_callback();
+		$result = ob_get_clean();
+
+		$this->assertNotEmpty( $result );
+	}
+
+	/**
+	 * @covers RocketComments::comment_style_radio_callback
+	 */
+	public function test_comment_style_radio_callback() {
+		ob_start();
+		$this->class->comment_style_radio_callback();
+		$result = ob_get_clean();
+
+		$comment_style_list = $this->class->get_comment_style_list();
+
+		foreach ( $comment_style_list as $style_id => $style_data ) {
+			$this->assertContains( $style_id, $result );
+			$this->assertContains( $style_data['description'], $result );
+		}
+	}
+
+	/**
+	 * @covers RocketComments::fetch_time_callback
+	 */
+	public function test_fetch_time_callback() {
+		ob_start();
+		$this->class->fetch_time_callback();
+		$result = ob_get_clean();
+
+		$this->assertNotEmpty( $result );
+	}
+
+	/**
 	 * @covers RocketComments::comments_template
 	 */
 	public function test_comments_template() {

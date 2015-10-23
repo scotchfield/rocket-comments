@@ -242,10 +242,12 @@ rocketComments.views.Comments = (function () {
 
 					clearTimeout( this.timeout );
 
-					this.timeout = setTimeout(
-						this.fetchComments.bind( this ),
-						this.fetch_time
-					);
+					if ( this.fetch_time > 0 ) {
+						this.timeout = setTimeout(
+							this.fetchComments.bind( this ),
+							this.fetch_time
+						);
+					}
 				}, this ),
 				error: _.bind( this.handleError, this )
 			});
