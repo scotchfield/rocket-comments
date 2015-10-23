@@ -138,8 +138,8 @@ class RocketComments {
 
 	public function add_admin_menu() {
 		$page = add_options_page(
-			esc_html__( 'Rocket Comments', 'rocket-comments' ),
-			esc_html__( 'Rocket Comments', 'rocket-comments' ),
+			'Rocket Comments',
+			'Rocket Comments',
 			'manage_options',
 			'rocket-comments',
 			array( $this, 'plugin_settings_page' )
@@ -286,7 +286,7 @@ class RocketComments {
 	public function plugin_settings_page() {
 ?>
 	<div class="wrap">
-		<h1><?php _e( 'Rocket Comments', 'rocket-comments' ); ?></h1>
+		<h1>Rocket Comments</h1>
 <?php
 		$suggest_obj = array(
 			'twentythirteen' => __( 'Default', 'rocket-comments' ),
