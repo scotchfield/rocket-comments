@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2015-10-16 19:34-0400\n"
-"PO-Revision-Date: 2015-10-16 19:42-0400\n"
+"POT-Creation-Date: 2015-10-23 12:10-0400\n"
+"PO-Revision-Date: 2015-10-23 12:20-0400\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr_CA\n"
@@ -23,17 +23,17 @@ msgid ""
 "install and activate it first! Thanks!"
 msgstr ""
 
-#: class.rocket-comments.php:156 class.rocket-comments.php:336
-#: class.rocket-comments.php:337 class.rocket-comments.php:338
-#: class.rocket-comments.php:344
+#: class.rocket-comments.php:156 class.rocket-comments.php:292
+#: class.rocket-comments.php:293 class.rocket-comments.php:294
+#: class.rocket-comments.php:300
 msgid "Default"
 msgstr "Par défaut"
 
-#: class.rocket-comments.php:160 class.rocket-comments.php:339
+#: class.rocket-comments.php:160 class.rocket-comments.php:295
 msgid "Alternate 1"
 msgstr ""
 
-#: class.rocket-comments.php:164 class.rocket-comments.php:340
+#: class.rocket-comments.php:164 class.rocket-comments.php:296
 msgid "Alternate 2"
 msgstr ""
 
@@ -45,41 +45,38 @@ msgstr ""
 msgid "Comment Template Style"
 msgstr ""
 
-#: class.rocket-comments.php:204 class.rocket-comments.php:210
-msgid "Development Mode Enabled"
-msgstr ""
-
-#: class.rocket-comments.php:223
+#: class.rocket-comments.php:204
 msgid "Seconds between comment fetch"
 msgstr ""
 
-#: class.rocket-comments.php:229
+#: class.rocket-comments.php:210
 msgid "Number of seconds"
 msgstr ""
 
-#: class.rocket-comments.php:237
+#: class.rocket-comments.php:222
 msgid "Change the way your comments are displayed."
 msgstr ""
 
-#: class.rocket-comments.php:279
-msgid "Turn off minified JavaScript and use the regular version."
-msgstr ""
-
-#: class.rocket-comments.php:306
+#: class.rocket-comments.php:262
 msgid ""
 "Rocket Comments will periodically refresh the post comments. You can change "
-"the number of seconds between each asynchronous request. (Default: 30)"
+"the number of seconds between each asynchronous request. (Default: 30, No "
+"Refresh: 0)"
 msgstr ""
 
-#: class.rocket-comments.php:333
-msgid "Rocket Comments"
-msgstr "Commentaires en Rafale"
-
-#: class.rocket-comments.php:348
+#: class.rocket-comments.php:304
 #, php-format
 msgid ""
 "Your current theme is <strong>%1$s</strong>. We suggest using the <strong>"
 "%2$s</strong> style."
+msgstr ""
+
+#: class.rocket-comments.php:317
+msgid "Using non-minified scripts."
+msgstr ""
+
+#: class.rocket-comments.php:319
+msgid "Using minified scripts."
 msgstr ""
 
 #: templates/comment-below.php:9 templates/comment-cite.php:25
@@ -99,7 +96,7 @@ msgid "Log in to Reply"
 msgstr "Connectez-vous pour répondre"
 
 #: templates/comment-below.php:37 templates/comment-cite.php:39
-#: templates/comment-default.php:38 templates/comments.php:79
+#: templates/comment-default.php:38 templates/comments.php:97
 msgid "Leave a Reply"
 msgstr "Laisser un commentaire"
 
@@ -129,6 +126,10 @@ msgstr "Commentaires antérieurs"
 msgid "Click here to view comments on this post."
 msgstr ""
 
+#: templates/comments.php:59
+msgid "Loading..."
+msgstr "Chargement..."
+
 #: templates/comments.php:64
 #, php-format
 msgid "One thought on &ldquo;%s&rdquo;"
@@ -139,61 +140,68 @@ msgstr ""
 msgid "<span id=\"comment-count\"></span> thoughts on &ldquo;%s&rdquo;"
 msgstr ""
 
-#: templates/comments.php:82
+#: templates/comments.php:87
+msgid "Comments are closed."
+msgstr "Les commentaires sont fermés."
+
+#: templates/comments.php:100
 msgid "Cancel reply"
 msgstr "Annuler la réponse"
 
-#: templates/comments.php:88
+#: templates/comments.php:106
 msgid "Edit Comment"
 msgstr ""
 
-#: templates/comments.php:91
+#: templates/comments.php:109
 msgid "Cancel"
 msgstr "Annuler"
 
-#: templates/comments.php:100
+#: templates/comments.php:120
 #, php-format
 msgid "You must be <a href=\"%s\">logged in</a> to post a comment."
 msgstr ""
 "Vous devez <a href=\"%s\">être connecté(e)</a> pour rédiger un commentaire."
 
-#: templates/comments.php:115
+#: templates/comments.php:140
 #, php-format
 msgid "Logged in as %s."
-msgstr ""
+msgstr "Connecté en tant que %s."
 
-#: templates/comments.php:117
+#: templates/comments.php:142
 msgid "Log out of this account"
 msgstr "Se déconnecter"
 
-#: templates/comments.php:117
+#: templates/comments.php:142
 msgid "Log out?"
 msgstr "Se déconnecter&nbsp;?"
 
-#: templates/comments.php:125
+#: templates/comments.php:152
 msgid "Your email address will not be published."
 msgstr ""
 
-#: templates/comments.php:126
+#: templates/comments.php:153
 msgid "Required fields are marked <span class=\"required\">*</span>"
 msgstr ""
 
-#: templates/comments.php:129
+#: templates/comments.php:156
 msgid "Name"
 msgstr "Nom"
 
-#: templates/comments.php:133
+#: templates/comments.php:160
 msgid "Email"
 msgstr "Email"
 
-#: templates/comments.php:137
+#: templates/comments.php:164
 msgid "Website"
 msgstr "Site web"
 
-#: templates/comments.php:141
+#: templates/comments.php:168
 msgid "Comment"
 msgstr "Commentaire"
 
-#: templates/comments.php:145
+#: templates/comments.php:172
 msgid "Post Comment"
 msgstr "Laisser un commentaire"
+
+#~ msgid "Rocket Comments"
+#~ msgstr "Commentaires en Rafale"
