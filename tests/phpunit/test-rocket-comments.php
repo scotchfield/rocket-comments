@@ -40,6 +40,48 @@ class Test_RocketComments extends WP_UnitTestCase {
 	}
 
 	/**
+	 * @covers RocketComments::plugin_deactivate_notice
+	 */
+	public function test_plugin_deactivate_notice() {
+		$_GET['activate'] = true;
+
+		ob_start();
+		$this->class->plugin_deactivate_notice();
+		$result = ob_get_clean();
+
+		$this->assertNotEmpty( $result );
+		$this->assertFalse( isset( $_GET['activate'] ) );
+	}
+
+	/**
+	 * @covers RocketComments::enqueue_scripts
+	 */
+	public function test_enqueue_scripts() {
+		$this->class->enqueue_scripts();
+
+		$this->assertTrue( wp_script_is( 'rocket-comments-script' ) );
+	}
+
+	/**
+	 * @covers RocketComments::enqueue_styles
+	 */
+	public function test_enqueue_styles() {
+		$this->class->enqueue_styles();
+
+		$this->assertTrue( wp_style_is( 'rocket-comments-style' ) );
+	}
+
+	/**
+	 * @covers RocketComments::my_admin_init
+	 */
+	public function test_my_admin_init() {
+		$this->class->my_admin_init();
+
+		$this->assertTrue( has_filter( 'sanitize_option_rocket-comments-commentstyle' ) );
+		$this->assertTrue( has_filter( 'sanitize_option_rocket-comments-fetch-time' ) );
+	}
+
+	/**
 	 * @covers RocketComments::comments_template
 	 */
 	public function test_comments_template() {
