@@ -196,25 +196,6 @@ class RocketComments {
 
 		register_setting(
 			'rocket-comments-group',
-			'rocket-comments-dev-js',
-			array( $this, 'development_enabled_validate' )
-		);
-		add_settings_section(
-			'rocket-comments-section-dev-js',
-			__( 'Development Mode Enabled', 'rocket-comments' ),
-			array( $this, 'development_enabled_callback' ),
-			'rocket-comments'
-		);
-		add_settings_field(
-			'rocket-comments-field-dev-js',
-			__( 'Development Mode Enabled', 'rocket-comments' ),
-			array( $this, 'development_enabled_checkbox_callback' ),
-			'rocket-comments',
-			'rocket-comments-section-dev-js'
-		);
-
-		register_setting(
-			'rocket-comments-group',
 			'rocket-comments-fetch-time',
 			array( $this, 'fetch_time_validate' )
 		);
@@ -231,6 +212,10 @@ class RocketComments {
 			'rocket-comments',
 			'rocket-comments-section-fetch-time'
 		);
+	}
+
+	public function development_enabled() {
+		return defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG;
 	}
 
 	public function comment_style_callback() {
@@ -264,35 +249,6 @@ class RocketComments {
 
 		if ( ! isset( $comment_style_list[ $input ] ) ) {
 			$input = 'default';
-		}
-
-		return $input;
-	}
-
-	public function development_enabled() {
-		$dev_js = get_option( 'rocket-comments-dev-js', '' );
-
-		return $dev_js == 'on';
-	}
-
-	public function development_enabled_callback() {
-		_e( 'Turn off minified JavaScript and use the regular version.', 'rocket-comments' );
-	}
-
-	public function development_enabled_checkbox_callback() {
-		$checked = $this->development_enabled() ? 'checked' : '';
-
-?>
-		<input type="checkbox" <?php echo $checked; ?> name="rocket-comments-dev-js">
-<?php
-	}
-
-	/**
-	 * A validated input is a checkbox that is either on or off.
-	 */
-	public function development_enabled_validate( $input ) {
-		if ( ! in_array( $input, array( 'on', '' ) ) ) {
-			$input = '';
 		}
 
 		return $input;
@@ -344,10 +300,10 @@ class RocketComments {
 		$suggest = ( isset( $suggest_obj[$theme->get( 'TextDomain' )] ) ) ? $suggest_obj[$theme->get( 'TextDomain' )] : __( 'Default', 'rocket-comments' );
 ?>
 		<p><?php
-			printf(
-				__( 'Your current theme is <strong>%1$s</strong>. We suggest using the <strong>%2$s</strong> style.', 'rocket-comments' ),
-				$theme, $suggest
-			);
+		printf(
+			__( 'Your current theme is <strong>%1$s</strong>. We suggest using the <strong>%2$s</strong> style.', 'rocket-comments' ),
+			$theme, $suggest
+		);
 		?></p>
 
 		<form action="options.php" method="POST">
@@ -355,6 +311,14 @@ class RocketComments {
 			<?php do_settings_sections( 'rocket-comments' ); ?>
 			<?php submit_button(); ?>
 		</form>
+
+		<p><?php
+		if ( $this->development_enabled() ) {
+			_e( 'Using non-minified scripts.', 'rocket-comments' );
+		} else {
+			_e( 'Using minified scripts.', 'rocket-comments' );
+		}
+		?></p>
 	</div>
 <?php
 	}

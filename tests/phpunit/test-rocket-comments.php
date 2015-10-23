@@ -215,28 +215,6 @@ class Test_RocketComments extends WP_UnitTestCase {
 	}
 
 	/**
-	 * @covers RocketComments::development_enabled_validate
-	 */
-	public function test_development_enabled_validate_valid() {
-		$values = array( 'on', '' );
-
-		foreach ( $values as $value ) {
-			$this->assertEquals( $value, $this->class->development_enabled_validate( $value ) );
-		}
-	}
-
-	/**
-	 * @covers RocketComments::development_enabled_validate
-	 */
-	public function test_development_enabled_validate_invalid() {
-		$values = array( false, null, 'test' );
-
-		foreach ( $values as $value ) {
-			$this->assertEquals( '', $this->class->development_enabled_validate( $value ) );
-		}
-	}
-
-	/**
 	 * @covers RocketComments::fetch_time_validate
 	 */
 	public function test_fetch_time_validate_valid() {
@@ -257,24 +235,5 @@ class Test_RocketComments extends WP_UnitTestCase {
 			$this->assertEquals( 0, $this->class->fetch_time_validate( $value ) );
 		}
 	}
-
-	/**
-	 * @covers RocketComments::development_enabled
-	 */
-	public function test_development_enabled_off() {
-		$this->assertFalse( $this->class->development_enabled() );
-	}
-
-	/**
-	 * @covers RocketComments::development_enabled
-	 */
-	public function test_development_enabled_on() {
-		update_option( 'rocket-comments-dev-js', 'on' );
-
-		$this->assertTrue( $this->class->development_enabled() );
-
-		delete_option( 'rocket-comments-dev-js' );
-	}
-
 
 }
