@@ -109,6 +109,16 @@ class Test_RocketComments extends WP_UnitTestCase {
 	}
 
 	/**
+	 * @covers RocketComments::fetch_time
+	 */
+	public function test_fetch_time() {
+		$result = $this->class->fetch_time();
+
+		$this->assertInternalType( 'int', $result );
+		$this->assertGreaterThanOrEqual( 0, $result );
+	}
+
+	/**
 	 * @covers RocketComments::fetch_time_callback
 	 */
 	public function test_fetch_time_callback() {
@@ -117,6 +127,17 @@ class Test_RocketComments extends WP_UnitTestCase {
 		$result = ob_get_clean();
 
 		$this->assertNotEmpty( $result );
+	}
+
+	/**
+	 * @covers RocketComments::fetch_time_checkbox_callback
+	 */
+	public function test_fetch_time_checkbox_callback() {
+		ob_start();
+		$this->class->fetch_time_checkbox_callback();
+		$result = ob_get_clean();
+
+		$this->assertContains( 'rocket-comments-fetch-time', $result );
 	}
 
 	/**
@@ -314,6 +335,17 @@ class Test_RocketComments extends WP_UnitTestCase {
 		foreach ( $values as $value ) {
 			$this->assertEquals( 0, $this->class->fetch_time_validate( $value ) );
 		}
+	}
+
+	/**
+	 * @covers RocketComments::plugin_settings_page
+	 */
+	public function test_plugin_settings_page() {
+		ob_start();
+		$result = $this->class->plugin_settings_page();
+		$result = ob_get_clean();
+
+		$this->assertNotEmpty( $result );
 	}
 
 }
