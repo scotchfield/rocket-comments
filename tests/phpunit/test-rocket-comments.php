@@ -282,6 +282,31 @@ class Test_RocketComments extends WP_UnitTestCase {
 	}
 
 	/**
+	 * @covers RocketComments::rest_prepare_comment
+	 */
+	public function test_rest_prepare_comment_can_edit() {
+		$user = new WP_User( $this->factory->user->create( array( 'role' => 'administrator' ) ) );
+		$old_user_id = get_current_user_id();
+		wp_set_current_user( $user->ID );
+
+		$post_id = $this->factory->post->create();
+		$comment = $this->factory->comment->create_and_get(
+			array( 'comment_post_ID' => $post_id )
+		);
+
+		$data = new stdClass();
+		$data->data = array();
+
+		$result = $this->class->rest_prepare_comment( $data, $comment, array() );
+
+		$this->assertEquals( $result->data['edit'], 1 );
+		$this->assertTrue( isset( $result->data['comment_date'] ) );
+		$this->assertTrue( isset( $result->data['comment_time'] ) );
+
+		wp_set_current_user( $old_user_id );
+	}
+
+	/**
 	 * @covers RocketComments::get_comment_options
 	 */
 	public function test_get_comment_options_basic() {
