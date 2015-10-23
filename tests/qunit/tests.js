@@ -136,6 +136,25 @@ QUnit.test( 'Basic CommentsView testing', function( assert ) {
 	);
 });
 
+QUnit.test( 'Basic addComment testing', function( assert ) {
+	assert.notOk(
+		addComment.setupForm(),
+		'Return false for setupForm with undefined options'
+	);
+	assert.notOk(
+		addComment.resetForm(),
+		'Return false for setupForm with undefined options'
+	);
+	assert.notOk(
+		addComment.moveForm(),
+		'Return false for setupForm with undefined options'
+	);
+	assert.notOk(
+		addComment.editForm(),
+		'Return false for setupForm with undefined options'
+	);
+});
+
 QUnit.test( 'Shotgun testing', function( assert ) {
 	assert.ok(
 		shotgun( _.bind( rocketComments.start, rocketComments ) ),

@@ -3,8 +3,13 @@
 var addComment = addComment || {};
 
 addComment.setupForm = function( options ) {
-	var div,
-		cancel_object = options.cancel.parent();
+	var div, cancel_object;
+
+	if ( ! options || ! options.cancel || ! options.respond ) {
+		return false;
+	}
+
+	cancel_object = options.cancel.parent();
 
 	if ( ! jQuery( '#wp-temp-form-div' ).length ) {
 		div = jQuery(
@@ -26,6 +31,8 @@ addComment.setupForm = function( options ) {
 	jQuery( 'a#cancel-comment-reply-link' ).show();
 
 	jQuery( '#comment' ).focus();
+
+	return true;
 };
 
 addComment.resetForm = function( cancel ) {
@@ -33,7 +40,7 @@ addComment.resetForm = function( cancel ) {
 		respond = jQuery( '#' + addComment.respondId );
 
 	if ( ! temp.length || ! respond.length ) {
-		return;
+		return false;
 	}
 
 	temp.parent().append( respond );
@@ -45,6 +52,8 @@ addComment.resetForm = function( cancel ) {
 
 	respond.find( 'textarea#comment' ).val( '' );
 	respond.removeData( 'action' ).removeData( 'comment-id' );
+
+	return true;
 };
 
 addComment.moveForm = function( commentId, parentId, respondId, postId ) {
@@ -54,7 +63,7 @@ addComment.moveForm = function( commentId, parentId, respondId, postId ) {
 		post = jQuery( '#comment_post_ID' );
 
 	if ( ! comment.length || ! respond.length || ! cancel.length ) {
-		return;
+		return false;
 	}
 
 	addComment.setupForm({
@@ -79,7 +88,7 @@ addComment.moveForm = function( commentId, parentId, respondId, postId ) {
 		return false;
 	});
 
-	return false;
+	return true;
 };
 
 addComment.editForm = function( commentId, respondId ) {
@@ -89,7 +98,7 @@ addComment.editForm = function( commentId, respondId ) {
 		cancel = jQuery( '.title-edit #cancel-comment-reply-link' );
 
 	if ( ! comment.length || ! respond.length || ! cancel.length ) {
-		return;
+		return false;
 	}
 
 	addComment.setupForm({
@@ -127,7 +136,7 @@ addComment.editForm = function( commentId, respondId ) {
 		return false;
 	});
 
-	return false;
+	return true;
 };
 
 addComment.setParentValue = function( id ) {
