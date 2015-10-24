@@ -118,6 +118,10 @@ rocketComments.views.Comments = (function () {
 		},
 
 		submitComment: function ( e ) {
+			if ( ! e || ! e.hasOwnProperty( 'preventDefault' ) ) {
+				return false;
+			}
+
 			e.preventDefault();
 
 			var $el = jQuery( e.currentTarget ).closest( 'li' ),
@@ -196,6 +200,10 @@ rocketComments.views.Comments = (function () {
 		},
 
 		handleError: function( model, response ) {
+			if ( ! response ) {
+				return false;
+			}
+
 			var responseText = jQuery.parseJSON( response.responseText );
 
 			this.showNotify(

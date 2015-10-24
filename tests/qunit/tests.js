@@ -134,6 +134,36 @@ QUnit.test( 'Basic CommentsView testing', function( assert ) {
 		view.updateNavigationLinks(),
 		'Try to show navigation menu with multiple comment pages'
 	);
+
+	assert.ok(
+		undefined === view.render(),
+		'Render completes with no errors'
+	);
+
+	assert.notOk(
+		view.submitComment(),
+		'Get false from submitComment with undefined event'
+	);
+
+	assert.ok(
+		undefined === view.showNotify(),
+		'No errors on showNotify'
+	);
+
+	assert.ok(
+		undefined === view.fadeNotify(),
+		'No errors on fadeNotify'
+	);
+
+	assert.notOk(
+		view.handleError(),
+		'handleError returns false with undefined arguments'
+	);
+
+	assert.ok(
+		undefined === view.fetchComments(),
+		'No errors on fetchComments'
+	);
 });
 
 QUnit.test( 'Basic addComment testing', function( assert ) {
