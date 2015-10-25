@@ -112,8 +112,16 @@ rocketComments.views.Comments = (function () {
 						'comment depth-' + depth + bypostauthor
 					).el );
 				}, this );
+
 				jQuery( '.comments-area .comments-title' )
 					.css( 'display', 'none' );
+
+				jQuery( '.comment-edit-link' ).click(
+					_.bind( this.populateEditForm, this ) );
+
+				jQuery( '.comment-reply-link' ).click(function ( event ) {
+					event.preventDefault();
+				});
 			}
 		},
 
@@ -259,6 +267,25 @@ rocketComments.views.Comments = (function () {
 				}, this ),
 				error: _.bind( this.handleError, this )
 			});
+		},
+
+		populateEditForm: function ( event ) {
+			var model, commentId,
+				respond = jQuery( '#respond' );
+
+			event.preventDefault();
+
+			commentId = jQuery( event.target ).data( 'id' );
+			model = this.collection.get( commentId );
+
+			if ( model.get( 'author' ) != this.collection.user_id ) {
+				jQuery( '.comment-author-logged-in' ).hide();
+				jQuery( '.comment-author-not-logged-in' ).show();
+
+				respond.find( '#author' ).val( model.get( 'author_name' ) );
+				respond.find( '#email' ).val( model.get( 'author_email' ) );
+				respond.find( '#url' ).val( model.get( 'author_url' ) );
+			}
 		},
 
 	});

@@ -41,7 +41,7 @@ if ( get_option( 'comment_registration' ) && ! is_user_logged_in() ) {
 				</li>
 				<li class="edit-link">
 					<div class="genericon genericon-edit"></div>
-					<a class="comment-edit-link" href="<?php echo get_admin_url() ?>comment.php?action=editcomment&amp;c=<%= attributes.id %>" onclick='return addComment.editForm(<%= attributes.id %>, "respond");'>
+					<a class="comment-edit-link" href="<?php echo get_admin_url() ?>comment.php?action=editcomment&amp;c=<%= attributes.id %>" onclick='return addComment.editForm(<%= attributes.id %>, "respond");' data-id="<%= attributes.id %>">
 						<?php _e( 'Edit', 'rocket-comments' ); ?>
 					</a>
 				</li>

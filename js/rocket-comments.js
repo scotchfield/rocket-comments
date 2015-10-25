@@ -8,17 +8,19 @@ var rocketComments = rocketComments || {};
 rocketComments.start = function () {
 	jQuery( '#wp-loading' ).show();
 
-	if ( undefined === rocketComments.commentsView ) {
-		rocketComments.commentsView = new rocketComments.views.Comments();
-	}
+	if ( undefined === rocketComments.started ) {
+		var rc = new rocketComments.views.Comments();
 
-	// Attach click handlers to the previous and next page elements.
-	jQuery( '.comment-navigation .nav-previous a' ).on( 'click', function () {
-		rocketComments.shiftPage( -1 );
-	} );
-	jQuery( '.comment-navigation .nav-next a' ).on( 'click', function () {
-		rocketComments.shiftPage( 1 );
-	} );
+		rocketComments.started = true;
+
+		// Attach click handlers to the previous and next page elements.
+		jQuery( '.comment-navigation .nav-previous a' ).on( 'click', function () {
+			rocketComments.shiftPage( -1, rc );
+		} );
+		jQuery( '.comment-navigation .nav-next a' ).on( 'click', function () {
+			rocketComments.shiftPage( 1, rc );
+		} );
+	}
 
 	// Don't use the standard form submit; we'll trigger this using JS.
 	jQuery( 'form#commentform' ).submit(function ( e ) {
@@ -31,7 +33,11 @@ rocketComments.start = function () {
  *
  * @param {number} delta - Number of pages to shift, may be negative.
  */
-rocketComments.shiftPage = function ( delta ) {
-	this.commentsView.comment_page += delta;
-	this.commentsView.fetchComments( this.commentsView.collection );
+rocketComments.shiftPage = function ( delta, rc ) {
+	if ( ! rc || ! rc.hasOwnProperty( 'fetchComments' ) ) {
+		return false;
+	}
+
+	rc.comment_page += delta;
+	rc.fetchComments( rc.collection );
 };

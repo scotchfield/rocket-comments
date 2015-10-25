@@ -110,18 +110,6 @@ addComment.editForm = function( commentId, respondId ) {
 		respondId: respondId
 	});
 
-	model = rocketComments.commentsView.collection.get( commentId );
-
-	if ( model.get( 'author' ) !=
-			rocketComments.commentsView.collection.user_id ) {
-		jQuery( '.comment-author-logged-in' ).hide();
-		jQuery( '.comment-author-not-logged-in' ).show();
-
-		respond.find( '#author' ).val( model.get( 'author_name' ) );
-		respond.find( '#email' ).val( model.get( 'author_email' ) );
-		respond.find( '#url' ).val( model.get( 'author_url' ) );
-	}
-
 	content = comment.children( '.comment-content' ).text();
 	respond.find( 'textarea#comment' ).val( content.trim() );
 
