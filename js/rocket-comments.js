@@ -34,7 +34,7 @@ rocketComments.start = function () {
  * @param {number} delta - Number of pages to shift, may be negative.
  */
 rocketComments.shiftPage = function ( delta, rc ) {
-	if ( ! rc || ! rc.hasOwnProperty( 'fetchComments' ) ) {
+	if ( ! _.isObject( rc ) || ! ( 'fetchComments' in rc ) ) {
 		return false;
 	}
 
