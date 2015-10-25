@@ -200,7 +200,7 @@ rocketComments.views.Comments = (function () {
 		},
 
 		handleError: function( model, response ) {
-			if ( ! response ) {
+			if ( ! response || ! response.hasOwnProperty( 'responseText' ) ) {
 				return false;
 			}
 

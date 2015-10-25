@@ -41,6 +41,10 @@ rocketComments.collections.Comments = (function () {
 		commentDepth: function ( item ) {
 			var depth = 1;
 
+			if ( ! _.isObject( item ) || ! ( 'get' in item ) ) {
+				return depth;
+			}
+
 			while ( item && item.get( 'parent' ) > 0 ) {
 				item = this.where({ id: item.get( 'parent' ) })[0];
 				depth += 1;
