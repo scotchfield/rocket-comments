@@ -412,7 +412,7 @@ class RocketComments {
 
 		$options['data']['page-comments'] = intval( get_option( 'page_comments' ) );
 		$options['data']['comment-page'] = 1;
-		$options['data']['comments-per-page'] = $options['data']['page-comments'] ? intval( get_option( 'comments_per_page' ) ) : 10;
+		$options['data']['comments-per-page'] = $options['data']['page-comments'] ? intval( get_option( 'comments_per_page' ) ) : 0;
 		$options['data']['comment-order'] = ( $options['data']['page-comments'] > 0 && 'newest' == get_option( 'default_comments_page' ) ) ? 'DESC' : 'ASC';
 
 		$options['data']['fetch-time'] = $this->fetch_time();
