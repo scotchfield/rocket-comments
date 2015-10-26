@@ -226,8 +226,11 @@ rocketComments.views.Comments = (function () {
 		fetchComments: function () {
 			var data = {
 				page: this.comment_page,
-				per_page: this.comments_per_page,
 			};
+
+			if ( this.comments_per_page > 0 ) {
+				data.per_page = this.comments_per_page;
+			}
 
 			if ( this.loading ) {
 				this.loading = false;
