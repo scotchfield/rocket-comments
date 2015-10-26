@@ -90,6 +90,10 @@ class RocketComments {
 		// This doesn't feel right.
 		add_filter( 'rest_url', array( $this, 'filter_rest_url' ) );
 
+		if ( $this->use_wp_die_handler() ) {
+			$this->rest_start_wp_die_handler();
+		}
+
 		return true;
 	}
 
@@ -212,6 +216,25 @@ class RocketComments {
 			'rocket-comments',
 			'rocket-comments-section-fetch-time'
 		);
+
+		register_setting(
+			'rocket-comments-group',
+			'rocket-comments-wp-die-handler',
+			array( $this, 'wp_die_handler_validate' )
+		);
+		add_settings_section(
+			'rocket-comments-section-wp-die-handler',
+			__( 'Convert wp_die errors to JSON responses', 'rocket-comments' ),
+			array( $this, 'wp_die_handler_callback' ),
+			'rocket-comments'
+		);
+		add_settings_field(
+			'rocket-comments-field-wp-die-handler',
+			__( 'Convert wp_die to JSON', 'rocket-comments' ),
+			array( $this, 'wp_die_handler_checkbox_callback' ),
+			'rocket-comments',
+			'rocket-comments-section-wp-die-handler'
+		);
 	}
 
 	public function development_enabled() {
@@ -270,14 +293,38 @@ class RocketComments {
 <?php
 	}
 
-	/**
-	 * A validated input is a checkbox that is either on or off.
-	 */
 	public function fetch_time_validate( $input ) {
 		$input = intval( $input );
 
 		if ( $input < 0 ) {
 			$input = 0;
+		}
+
+		return $input;
+	}
+
+	public function use_wp_die_handler() {
+		return get_option( 'rocket-comments-wp-die-handler' ) == 'on';
+	}
+
+	public function wp_die_handler_callback() {
+		_e( 'When submitting or retrieving comments, some errors may use the WordPress wp_die function. Rocket Comments can catch those and return them as JSON warnings.', 'rocket-comments' );
+	}
+
+	public function wp_die_handler_checkbox_callback() {
+		$checked = $this->use_wp_die_handler() ? 'checked' : '';
+
+?>
+		<input type="checkbox" name="rocket-comments-wp-die-handler" <?php echo $checked; ?>>
+<?php
+	}
+
+	/**
+	 * A validated input is a checkbox that is either on or off.
+	 */
+	public function wp_die_handler_validate( $input ) {
+		if ( ! in_array( $input, array( 'on', '' ) ) ) {
+			$input = '';
 		}
 
 		return $input;
@@ -421,6 +468,36 @@ class RocketComments {
 		$options['redirect_no_js_url'] = add_query_arg( 'rocket-nojs', '1' );
 
 		return $options;
+	}
+
+	public function rest_start_wp_die_handler() {
+		add_filter( 'wp_die_handler', array( $this, 'rest_wp_die_handler_callback' ) );
+	}
+
+	public function rest_stop_wp_die_handler() {
+		remove_filter( 'wp_die_handler', array( $this, 'rest_wp_die_handler_callback' ) );
+	}
+
+	public function rest_wp_die_handler_callback( $function ) {
+		return array( $this, 'rest_wp_die_handler' );
+	}
+
+	public function rest_wp_die_handler( $message, $title = '', $args = array() ) {
+		if ( $title ) {
+			$message = "$title: $message";
+		}
+
+		$status = isset( $args['response'] ) ? $args['response'] : 500;
+
+		$response = array(
+			'message' => wp_kses( $message ),
+			'data' => array( 'status' => $status )
+		);
+
+		status_header( $status );
+		echo json_encode( array( $response ) );
+
+		exit;
 	}
 
 }
