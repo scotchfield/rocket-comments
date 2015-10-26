@@ -14,11 +14,11 @@ function rocket_comments_comment_nav() {
 ?>
 <nav class="navigation comment-navigation" role="navigation">
 	<h2 class="screen-reader-text">
-		<?php _e( 'Comment navigation', 'rocket-comments' ); ?>
+		<?php esc_html_e( 'Comment navigation', 'rocket-comments' ); ?>
 	</h2>
 	<div class="nav-links">
-		<div class="nav-previous"><a><?php $newest_comments ? _e( 'Newer Comments', 'rocket-comments' ) : _e( 'Older Comments', 'rocket-comments' ); ?></a></div>
-		<div class="nav-next"><a><?php $newest_comments ? _e( 'Older Comments', 'rocket-comments' ) : _e( 'Newer Comments', 'rocket-comments' ); ?></a>
+		<div class="nav-previous"><a><?php $newest_comments ? esc_html_e( 'Newer Comments', 'rocket-comments' ) : esc_html_e( 'Older Comments', 'rocket-comments' ); ?></a></div>
+		<div class="nav-next"><a><?php $newest_comments ? esc_html_e( 'Older Comments', 'rocket-comments' ) : esc_html_e( 'Newer Comments', 'rocket-comments' ); ?></a>
 		</div>
 	</div>
 </nav>
@@ -29,7 +29,7 @@ function rocket_comments_implode_comment_options( $options ) {
 	$option_strings = array();
 
 	foreach ( $options['data'] as $k => $v ) {
-		array_push( $option_strings, 'data-' . $k . '="' . $v . '"' );
+		array_push( $option_strings, 'data-' . esc_attr( $k ) . '="' . esc_attr( $v ) . '"' );
 	}
 
 	return implode( ' ', $option_strings );
@@ -46,26 +46,26 @@ jQuery(function () {
 });
 </script>
 
-<div id="comments" class="comments-area" <?php echo rocket_comments_implode_comment_options( $wp_rocket_comments_options ); ?>>
+<div id="comments" class="comments-area" <?php echo esc_html( rocket_comments_implode_comment_options( $wp_rocket_comments_options ) ); ?>>
 
 	<noscript>
-		<a href="<?php echo esc_url( $wp_rocket_comments_options['redirect_no_js_url'] ); ?>"><?php _e( 'Click here to view comments on this post.', 'rocket-comments' ); ?></a>
+		<a href="<?php echo esc_url( $wp_rocket_comments_options['redirect_no_js_url'] ); ?>"><?php esc_html_e( 'Click here to view comments on this post.', 'rocket-comments' ); ?></a>
 	</noscript>
 
 	<div id="wp-loading">
-		<img src="<?php echo plugins_url( '../images/wp-loading.gif', __FILE__ ); ?>">
+		<img src="<?php echo esc_url( plugins_url( '../images/wp-loading.gif', __FILE__ ) ); ?>">
 	</div>
 
-	<div id="comment-notify" data-default="<?php _e( 'Loading...', 'rocket-comments' ); ?>"></div>
+	<div id="comment-notify" data-default="<?php esc_html_e( 'Loading...', 'rocket-comments' ); ?>"></div>
 
 	<div id="wp-comment-content">
 
 		<h2 id="comment-single" class="comments-title">
-			<?php printf( __( 'One thought on &ldquo;%s&rdquo;', 'rocket-comments' ), get_the_title() ); ?>
+			<?php printf( esc_html__( 'One thought on &ldquo;%s&rdquo;', 'rocket-comments' ), get_the_title() ); ?>
 		</h2>
 
 		<h2 id="comment-multiple" class="comments-title">
-			<?php printf( __( '<span id="comment-count"></span> thoughts on &ldquo;%s&rdquo;', 'rocket-comments' ), get_the_title() ); ?>
+			<?php printf( esc_html__( '<span id="comment-count"></span> thoughts on &ldquo;%s&rdquo;', 'rocket-comments' ), get_the_title() ); ?>
 		</h2>
 
 <?php
@@ -84,7 +84,7 @@ if ( ! comments_open() &&
 
 ?>
 		<p class="no-comments">
-			<?php _e( 'Comments are closed.', 'rocket-comments' ); ?>
+			<?php esc_html_e( 'Comments are closed.', 'rocket-comments' ); ?>
 		</p>
 <?php
 
@@ -94,19 +94,19 @@ if ( ! comments_open() &&
 
 		<div id="respond" class="comment-respond">
 			<h3 id="reply-title" class="comment-reply-title title-reply">
-				<?php _e( 'Leave a Reply', 'rocket-comments' ); ?>
+				<?php esc_html_e( 'Leave a Reply', 'rocket-comments' ); ?>
 				<small>
-					<a rel="nofollow" id="cancel-comment-reply-link" href="<?php echo get_permalink( get_the_ID() ); ?>#respond">
-						<?php _e( 'Cancel reply', 'rocket-comments' ); ?>
+					<a rel="nofollow" id="cancel-comment-reply-link" href="<?php echo esc_url( get_permalink( get_the_ID() ) ); ?>#respond">
+						<?php esc_html_e( 'Cancel reply', 'rocket-comments' ); ?>
 					</a>
 				</small>
 			</h3>
 
 			<h3 id="reply-title" class="comment-reply-title title-edit">
-				<?php _e( 'Edit Comment', 'rocket-comments' ); ?>
+				<?php esc_html_e( 'Edit Comment', 'rocket-comments' ); ?>
 				<small>
-					<a rel="nofollow" id="cancel-comment-reply-link" href="<?php echo get_permalink( get_the_ID() ); ?>#respond">
-						<?php _e( 'Cancel', 'rocket-comments' ); ?>
+					<a rel="nofollow" id="cancel-comment-reply-link" href="<?php echo esc_url( get_permalink( get_the_ID() ) ); ?>#respond">
+						<?php esc_html_e( 'Cancel', 'rocket-comments' ); ?>
 					</a>
 				</small>
 			</h3>
@@ -117,7 +117,7 @@ if ( ! comments_open() &&
 
 ?>
 			<p class="must-log-in">
-				<?php printf( __( 'You must be <a href="%s">logged in</a> to post a comment.' ), wp_login_url( apply_filters( 'the_permalink', get_permalink( get_the_ID() ) ) ) ); ?>
+				<?php printf( esc_html__( 'You must be <a href="%s">logged in</a> to post a comment.' ), wp_login_url( apply_filters( 'the_permalink', get_permalink( get_the_ID() ) ) ) ); ?>
 			</p>
 <?php
 
@@ -136,10 +136,10 @@ if ( ! comments_open() &&
 				<div class="comment-author-logged-in">
 					<p class="logged-in-as">
 <?php
-			$profile_url = '<a href="' . get_admin_url( null, 'profile.php' ) . '">' . $wp_rocket_comments_options['current_user']->display_name . '</a>';
-			printf( __( 'Logged in as %s.', 'rocket-comments' ), $profile_url );
+			$profile_url = '<a href="' . esc_url( get_admin_url( null, 'profile.php' ) ) . '">' . esc_html( $wp_rocket_comments_options['current_user']->display_name ) . '</a>';
+			printf( esc_html__( 'Logged in as %s.', 'rocket-comments' ), $profile_url );
 ?>
-						<a href="<?php echo wp_logout_url( get_permalink() ); ?>" title="<?php _e( 'Log out of this account', 'rocket-comments' ); ?>"><?php _e( 'Log out?', 'rocket-comments' ); ?></a>
+						<a href="<?php echo esc_url( wp_logout_url( get_permalink() ) ); ?>" title="<?php esc_html_e( 'Log out of this account', 'rocket-comments' ); ?>"><?php esc_html_e( 'Log out?', 'rocket-comments' ); ?></a>
 					</p>
 				</div>
 <?php
@@ -149,28 +149,30 @@ if ( ! comments_open() &&
 ?>
 				<div class="comment-author-not-logged-in <?php if ( is_user_logged_in() ) { echo 'hidden'; } ?>">
 					<p class="comment-notes">
-						<span id="email-notes"><?php _e( 'Your email address will not be published.', 'rocket-comments' ); ?></span>
-						<?php if ( $wp_rocket_comments_options['require_name_email'] ) { _e( 'Required fields are marked <span class="required">*</span>', 'rocket-coments' ); } ?>
+						<span id="email-notes"><?php esc_html_e( 'Your email address will not be published.', 'rocket-comments' ); ?></span>
+						<?php if ( $wp_rocket_comments_options['require_name_email'] ) {
+							esc_html_e( 'Required fields are marked <span class="required">*</span>', 'rocket-coments' );
+						} ?>
 					</p>
 					<p class="comment-form-author">
-						<label for="author"><?php _e( 'Name', 'rocket-comments' ); ?><?php if ( $wp_rocket_comments_options['require_name_email'] ) { echo '<span class="required">*</span>'; } ?></label>
+						<label for="author"><?php esc_html_e( 'Name', 'rocket-comments' ); ?><?php if ( $wp_rocket_comments_options['require_name_email'] ) { echo '<span class="required">*</span>'; } ?></label>
 						<input id="author" name="author" type="text" value="" size="30" aria-required='true' required='required' />
 					</p>
 					<p class="comment-form-email">
-						<label for="email"><?php _e( 'Email', 'rocket-comments' ); ?><?php if ( $wp_rocket_comments_options['require_name_email'] ) { echo '<span class="required">*</span>'; } ?></label>
+						<label for="email"><?php esc_html_e( 'Email', 'rocket-comments' ); ?><?php if ( $wp_rocket_comments_options['require_name_email'] ) { echo '<span class="required">*</span>'; } ?></label>
 						<input id="email" name="email" type="email" value="" size="30" aria-describedby="email-notes" aria-required='true' required='required' />
 					</p>
 					<p class="comment-form-url">
-						<label for="url"><?php _e( 'Website', 'rocket-comments' ); ?></label> <input id="url" name="url" type="url" value="" size="30" />
+						<label for="url"><?php esc_html_e( 'Website', 'rocket-comments' ); ?></label> <input id="url" name="url" type="url" value="" size="30" />
 					</p>
 				</div>
 				<p class="comment-form-comment">
-					<label for="comment"><?php _e( 'Comment', 'rocket-comments' ); ?></label>
+					<label for="comment"><?php esc_html_e( 'Comment', 'rocket-comments' ); ?></label>
 					<textarea id="comment" name="comment" cols="45" rows="8"  aria-required="true" required="required"></textarea>
 				</p>
 				<p class="form-submit">
-					<input name="submit" type="submit" id="submit" class="submit" value="<?php _e( 'Post Comment', 'rocket-comments' ); ?>" />
-					<input type='hidden' name='comment_post_ID' value='<?php echo get_the_ID(); ?>' id='comment_post_ID' />
+					<input name="submit" type="submit" id="submit" class="submit" value="<?php esc_html_e( 'Post Comment', 'rocket-comments' ); ?>" />
+					<input type='hidden' name='comment_post_ID' value='<?php echo esc_attr( get_the_ID() ); ?>' id='comment_post_ID' />
 					<input type='hidden' name='comment_parent' id='comment_parent' value='0' />
 				</p>
 				<?php wp_nonce_field( 'unfiltered-html-comment_' . get_the_ID(), '_wp_unfiltered_html_comment_disabled', false ); ?>
