@@ -242,7 +242,7 @@ class RocketComments {
 	}
 
 	public function comment_style_callback() {
-		_e( 'Change the way your comments are displayed.', 'rocket-comments' );
+		esc_html_e( 'Change the way your comments are displayed.', 'rocket-comments' );
 	}
 
 	public function comment_style_radio_callback() {
@@ -256,7 +256,7 @@ class RocketComments {
 			}
 ?>
 			<label>
-				<input type="radio" <?php echo $checked; ?> value="<?php echo esc_attr( $style_id ); ?>" name="rocket-comments-commentstyle">
+				<input type="radio" <?php echo esc_attr( $checked ); ?> value="<?php echo esc_attr( $style_id ); ?>" name="rocket-comments-commentstyle">
 				<?php esc_html_e( $style_data['description'] ); ?>
 			</label>
 			<br>
@@ -282,14 +282,14 @@ class RocketComments {
 	}
 
 	public function fetch_time_callback() {
-		_e( 'Rocket Comments will periodically refresh the post comments. You can change the number of seconds between each asynchronous request. (Default: 30, No Refresh: 0)', 'rocket-comments' );
+		esc_html_e( 'Rocket Comments will periodically refresh the post comments. You can change the number of seconds between each asynchronous request. (Default: 30, No Refresh: 0)', 'rocket-comments' );
 	}
 
 	public function fetch_time_checkbox_callback() {
 		$seconds = $this->fetch_time();
 
 ?>
-		<input type="text" name="rocket-comments-fetch-time" value="<?php echo $seconds; ?>">
+		<input type="text" name="rocket-comments-fetch-time" value="<?php echo esc_attr( $seconds ); ?>">
 <?php
 	}
 
@@ -308,14 +308,14 @@ class RocketComments {
 	}
 
 	public function wp_die_handler_callback() {
-		_e( 'When submitting or retrieving comments, some errors may use the WordPress wp_die function. Rocket Comments can catch those and return them as JSON warnings.', 'rocket-comments' );
+		esc_html_e( 'When submitting or retrieving comments, some errors may use the WordPress wp_die function. Rocket Comments can catch those and return them as JSON warnings.', 'rocket-comments' );
 	}
 
 	public function wp_die_handler_checkbox_callback() {
 		$checked = $this->use_wp_die_handler() ? 'checked' : '';
 
 ?>
-		<input type="checkbox" name="rocket-comments-wp-die-handler" <?php echo $checked; ?>>
+		<input type="checkbox" name="rocket-comments-wp-die-handler" <?php echo esc_attr( $checked ); ?>>
 <?php
 	}
 
@@ -349,7 +349,7 @@ class RocketComments {
 		<p><?php
 		printf(
 			__( 'Your current theme is <strong>%1$s</strong>. We suggest using the <strong>%2$s</strong> style.', 'rocket-comments' ),
-			$theme, $suggest
+			esc_attr( $theme ), esc_attr( $suggest )
 		);
 		?></p>
 
@@ -361,9 +361,9 @@ class RocketComments {
 
 		<p><?php
 		if ( $this->development_enabled() ) {
-			_e( 'Using non-minified scripts.', 'rocket-comments' );
+			esc_html_e( 'Using non-minified scripts.', 'rocket-comments' );
 		} else {
-			_e( 'Using minified scripts.', 'rocket-comments' );
+			esc_html_e( 'Using minified scripts.', 'rocket-comments' );
 		}
 		?></p>
 	</div>
@@ -491,7 +491,7 @@ class RocketComments {
 
 		$response = array(
 			'message' => wp_kses( $message ),
-			'data' => array( 'status' => $status )
+			'data' => array( 'status' => esc_attr( $status ) )
 		);
 
 		status_header( $status );
