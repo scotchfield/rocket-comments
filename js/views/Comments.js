@@ -27,7 +27,6 @@ rocketComments.views.Comments = (function () {
 			/*this.collection.on('all', function(eventName) {
 				console.log(eventName + ' was triggered!');
 			});*/
-			this.listenTo( this.collection, 'add', this.render );
 			this.collection.post_id = this.$el.data( 'post-id' );
 			this.collection.user_id = this.$el.data( 'user-id' );
 			this.collection.user_name = this.$el.data( 'user-name' );
@@ -255,6 +254,7 @@ rocketComments.views.Comments = (function () {
 
 					this.updateNavigationLinks();
 					this.fadeNotify();
+					this.render();
 
 					clearTimeout( this.timeout );
 
