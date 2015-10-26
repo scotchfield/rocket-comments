@@ -125,7 +125,7 @@ rocketComments.views.Comments = (function () {
 		},
 
 		submitComment: function ( e ) {
-			if ( ! e || ! e.hasOwnProperty( 'preventDefault' ) ) {
+			if ( ! _.isObject( e ) || ! ( 'preventDefault' in e ) ) {
 				return false;
 			}
 
@@ -154,6 +154,8 @@ rocketComments.views.Comments = (function () {
 								item,
 								{ remove: false }
 							);
+
+							this.render();
 						}
 					}, this ),
 					error: _.bind( this.handleError, this )
@@ -177,6 +179,8 @@ rocketComments.views.Comments = (function () {
 						if ( null !== response ) {
 							this.collection.add( item );
 						}
+
+						this.render();
 					}, this ),
 					error: _.bind( this.handleError, this )
 				} );
