@@ -43,39 +43,41 @@ rocketComments.shiftPage = function ( delta, rc ) {
 };
 
 rocketComments.setupForm = function( options ) {
-	var div, cancel_object;
+	var respond = rocketComments.getCache( '#respond' );
 
-	if ( ! options || ! options.cancel || ! options.respond ) {
+	if ( ! options ) {
 		return false;
 	}
 
-	cancel_object = options.cancel.parent();
+	rocketComments.setupTempForm();
 
-	if ( ! jQuery( '#wp-temp-form-div' ).length ) {
-		div = jQuery(
-			'<div id="wp-temp-form-div" style="display: none;"></div>'
-		);
-
-		jQuery( options.respond ).parent().append( div );
-	}
-
-	options.respond.data( 'comment-id', options.commentId );
-	options.respond.data( 'action', options.action );
-	options.respond.insertBefore( options.comment.next() );
+	respond.data( 'comment-id', options.commentId );
+	respond.data( 'action', options.action );
+	respond.insertBefore( options.comment.next() );
 	options.cancel.show();
 
-	jQuery( '.comment-reply-title' ).hide();
-	jQuery( '.title-' + options.action ).show();
-	jQuery( 'a#cancel-comment-reply-link' ).show();
+	rocketComments.getCache( '.comment-reply-title' ).hide();
+	rocketComments.getCache( '.title-' + options.action ).show();
+	rocketComments.getCache( '#cancel-comment-reply-link' ).show();
 
-	jQuery( '#comment' ).focus();
+	rocketComments.getCache( '#comment' ).focus();
 
 	return true;
 };
 
+rocketComments.setupTempForm = function () {
+	if ( ! jQuery( '#wp-temp-form-div' ).length ) {
+		var div = jQuery(
+			'<div id="wp-temp-form-div" style="display: none;"></div>'
+		);
+
+		rocketComments.getCache( '#respond' ).parent().append( div );
+	}
+}
+
 rocketComments.resetForm = function( cancel ) {
 	var temp = jQuery( '#wp-temp-form-div' ),
-		respond = jQuery( '#respond' );
+		respond = rocketComments.getCache( '#respond' );
 
 	if ( ! temp.length || ! respond.length ) {
 		return false;
@@ -96,21 +98,17 @@ rocketComments.resetForm = function( cancel ) {
 
 rocketComments.moveForm = function( event ) {
 	var commentId = jQuery( event.target ).data( 'id' ),
+		cancel = rocketComments.getCache( '.title-reply #cancel-comment-reply-link' );
 
-	    comment = jQuery( '#div-comment-' + commentId ),
-		respond = jQuery( '#respond' ),
-		cancel = jQuery( '.title-reply #cancel-comment-reply-link' );
-
-	if ( ! comment.length || ! respond.length || ! cancel.length ) {
+	if ( ! cancel.length ) {
 		return false;
 	}
 
 	rocketComments.setupForm({
 		action: 'reply',
 		cancel: cancel,
-		comment: comment,
+		comment: rocketComments.getCache( '#div-comment-' + commentId ),
 		commentId: commentId,
-		respond: respond,
 	});
 
 	cancel.click(function () {
@@ -124,10 +122,9 @@ rocketComments.moveForm = function( event ) {
 
 rocketComments.editForm = function ( event ) {
 	var commentId = jQuery( event.target ).data( 'id' ),
-		content,
-		comment = jQuery( '#div-comment-' + commentId ),
-		respond = jQuery( '#respond' ),
-		cancel = jQuery( '.title-edit #cancel-comment-reply-link' );
+		comment = rocketComments.getCache( '#div-comment-' + commentId ),
+		respond = rocketComments.getCache( '#respond' ),
+		cancel = rocketComments.getCache( '.title-edit #cancel-comment-reply-link' );
 
 	if ( ! comment.length || ! respond.length || ! cancel.length ) {
 		return false;
@@ -138,19 +135,15 @@ rocketComments.editForm = function ( event ) {
 		cancel: cancel,
 		comment: comment,
 		commentId: commentId,
-		respond: respond,
 	});
-
-	content = comment.children( '.comment-content' ).text();
-	respond.find( 'textarea#comment' ).val( content.trim() );
 
 	comment.hide();
 
 	cancel.click(function () {
 		rocketComments.resetForm( this );
 		comment.show();
-		jQuery( '.comment-author-not-logged-in' ).hide();
-		jQuery( '.comment-author-logged-in' ).show();
+		rocketComments.getCache( '.comment-author-not-logged-in' ).hide();
+		rocketComments.getCache( '.comment-author-logged-in' ).show();
 
 		return false;
 	});
@@ -159,9 +152,19 @@ rocketComments.editForm = function ( event ) {
 };
 
 rocketComments.setParentValue = function( id ) {
-	if ( ! rocketComments.hasOwnProperty( 'commentParent' ) ) {
-		rocketComments.commentParent = jQuery( '#comment_parent' );
+	var parent = rocketComments.getCache( '#comment_parent' );
+
+	parent.val( id );
+};
+
+rocketComments.getCache = function ( id ) {
+	if ( undefined === rocketComments.cache ) {
+		rocketComments.cache = {};
 	}
 
-	rocketComments.commentParent.val( id );
+	if ( undefined === rocketComments.cache[id] ) {
+		rocketComments.cache[id] = jQuery( id );
+	}
+
+	return rocketComments.cache[id];
 };

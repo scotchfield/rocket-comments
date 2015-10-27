@@ -295,6 +295,7 @@ rocketComments.views.Comments = (function () {
 				respond.find( '#author' ).val( model.get( 'author_name' ) );
 				respond.find( '#email' ).val( model.get( 'author_email' ) );
 				respond.find( '#url' ).val( model.get( 'author_url' ) );
+				respond.find( '#comment' ).val( model.get( 'content' ).raw );
 			}
 
 			rocketComments.editForm( event );
