@@ -72,38 +72,6 @@ rocketComments.startForm = function ( event, action ) {
 	return true;
 };
 
-rocketComments.setupForm = function ( options ) {
-	var respond = this.getCache( '#respond' ),
-		comment = this.getCache( '#div-comment-' + options.commentId );
-
-	if ( ! options ) {
-		return false;
-	}
-
-	if ( options.action === 'edit' ) {
-		comment.hide();
-	}
-
-	rocketComments.setupTempForm();
-
-	respond.data( 'comment-id', options.commentId );
-	respond.data( 'action', options.action );
-	respond.insertBefore( comment.next() );
-	options.cancel.show();
-
-	this.getCache( '.comment-reply-title' ).hide();
-	this.getCache( '.title-' + options.action ).show();
-	this.getCache( '#cancel-comment-reply-link' ).show();
-
-	this.getCache( '#comment' ).focus();
-
-	options.cancel.click(function () {
-		rocketComments.cancelForm.call( this, comment );
-	});
-
-	return true;
-};
-
 rocketComments.setupTempForm = function () {
 	if ( ! jQuery( '#wp-temp-form-div' ).length ) {
 		var div = jQuery(
