@@ -64,8 +64,6 @@ rocketComments.setupForm = function( options ) {
 	options.respond.insertBefore( options.comment.next() );
 	options.cancel.show();
 
-	this.respondId = options.respondId;
-
 	jQuery( '.comment-reply-title' ).hide();
 	jQuery( '.title-' + options.action ).show();
 	jQuery( 'a#cancel-comment-reply-link' ).show();
@@ -99,7 +97,6 @@ rocketComments.resetForm = function( cancel ) {
 rocketComments.moveForm = function(  ) {
 	var parentId = jQuery( event.target ).data( 'id' ),
 		commentId = 'div-comment-' + parentId,
-		respondId = 'respond',
 		postId = undefined,
 
 	    comment = jQuery( '#' + commentId ),
@@ -117,7 +114,6 @@ rocketComments.moveForm = function(  ) {
 		comment: comment,
 		commentId: commentId,
 		respond: respond,
-		respondId: respondId
 	});
 
 	rocketComments.setParentValue( parentId );
@@ -137,12 +133,10 @@ rocketComments.moveForm = function(  ) {
 };
 
 rocketComments.editForm = function ( event ) {
-	console.log( event );
-
-	var commentId = jQuery( event.target ).data( 'id' ), respondId = 'respond',
-		model, content,
+	var commentId = jQuery( event.target ).data( 'id' ),
+		content,
 		comment = jQuery( '#div-comment-' + commentId ),
-		respond = jQuery( '#' + respondId ),
+		respond = jQuery( '#respond' ),
 		cancel = jQuery( '.title-edit #cancel-comment-reply-link' );
 
 	if ( ! comment.length || ! respond.length || ! cancel.length ) {
@@ -155,7 +149,6 @@ rocketComments.editForm = function ( event ) {
 		comment: comment,
 		commentId: commentId,
 		respond: respond,
-		respondId: respondId
 	});
 
 	content = comment.children( '.comment-content' ).text();
@@ -164,7 +157,6 @@ rocketComments.editForm = function ( event ) {
 	comment.hide();
 
 	cancel.click(function () {
-		console.log( this );
 		rocketComments.resetForm( this );
 		comment.show();
 		jQuery( '.comment-author-not-logged-in' ).hide();
