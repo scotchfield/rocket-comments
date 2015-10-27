@@ -105,7 +105,7 @@ if ( ! comments_open() &&
 			<h3 id="reply-title" class="comment-reply-title title-edit">
 				<?php esc_html_e( 'Edit Comment', 'rocket-comments' ); ?>
 				<small>
-					<a rel="nofollow" id="cancel-comment-reply-link" href="<?php echo esc_url( get_permalink( get_the_ID() ) ); ?>#respond">
+					<a rel="nofollow" id="cancel-comment-edit-link" href="<?php echo esc_url( get_permalink( get_the_ID() ) ); ?>#respond">
 						<?php esc_html_e( 'Cancel', 'rocket-comments' ); ?>
 					</a>
 				</small>

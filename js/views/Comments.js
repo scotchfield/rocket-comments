@@ -122,7 +122,7 @@ rocketComments.views.Comments = (function () {
 				jQuery( '.comment-reply-link' ).click(function ( event ) {
 					event.preventDefault();
 
-					rocketComments.moveForm( event );
+					rocketComments.startForm( event, 'reply' );
 				});
 			}
 		},
@@ -298,7 +298,7 @@ rocketComments.views.Comments = (function () {
 				respond.find( '#comment' ).val( model.get( 'content' ).raw );
 			}
 
-			rocketComments.editForm( event );
+			rocketComments.startForm( event, 'edit' );
 		},
 
 	});

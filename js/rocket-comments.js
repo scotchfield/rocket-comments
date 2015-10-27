@@ -42,6 +42,36 @@ rocketComments.shiftPage = function ( delta, rc ) {
 	rc.fetchComments( rc.collection );
 };
 
+rocketComments.startForm = function ( event, action ) {
+	var commentId = jQuery( event.target ).data( 'id' ),
+		cancel = this.getCache( '#cancel-comment-' + action + '-link' ),
+		respond = this.getCache( '#respond' ),
+		comment = this.getCache( '#div-comment-' + commentId );
+
+	if ( action === 'edit' ) {
+		comment.hide();
+	}
+
+	rocketComments.setupTempForm();
+
+	respond.data( 'comment-id', commentId );
+	respond.data( 'action', action );
+	respond.insertBefore( comment.next() );
+	cancel.show();
+
+	this.getCache( '.comment-reply-title' ).hide();
+	this.getCache( '.title-' + action ).show();
+	this.getCache( '#cancel-comment-reply-link' ).show();
+
+	this.getCache( '#comment' ).focus();
+
+	cancel.click(function () {
+		rocketComments.cancelForm.call( this, comment );
+	});
+
+	return true;
+};
+
 rocketComments.setupForm = function ( options ) {
 	var respond = this.getCache( '#respond' ),
 		comment = this.getCache( '#div-comment-' + options.commentId );
@@ -101,26 +131,6 @@ rocketComments.resetForm = function ( cancel ) {
 
 	respond.find( 'textarea#comment' ).val( '' );
 	respond.removeData( 'action' ).removeData( 'comment-id' );
-
-	return true;
-};
-
-rocketComments.moveForm = function ( event ) {
-	rocketComments.setupForm({
-		action: 'reply',
-		cancel: rocketComments.getCache( '.title-reply #cancel-comment-reply-link' ),
-		commentId: jQuery( event.target ).data( 'id' ),
-	});
-
-	return true;
-};
-
-rocketComments.editForm = function ( event ) {
-	rocketComments.setupForm({
-		action: 'edit',
-		cancel: rocketComments.getCache( '.title-edit #cancel-comment-reply-link' ),
-		commentId: jQuery( event.target ).data( 'id' ),
-	});
 
 	return true;
 };
