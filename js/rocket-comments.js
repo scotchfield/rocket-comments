@@ -94,15 +94,12 @@ rocketComments.resetForm = function( cancel ) {
 	return true;
 };
 
-rocketComments.moveForm = function(  ) {
-	var parentId = jQuery( event.target ).data( 'id' ),
-		commentId = 'div-comment-' + parentId,
-		postId = undefined,
+rocketComments.moveForm = function( event ) {
+	var commentId = jQuery( event.target ).data( 'id' ),
 
-	    comment = jQuery( '#' + commentId ),
+	    comment = jQuery( '#div-comment-' + commentId ),
 		respond = jQuery( '#respond' ),
-		cancel = jQuery( '.title-reply #cancel-comment-reply-link' ),
-		post = jQuery( '#comment_post_ID' );
+		cancel = jQuery( '.title-reply #cancel-comment-reply-link' );
 
 	if ( ! comment.length || ! respond.length || ! cancel.length ) {
 		return false;
@@ -116,15 +113,8 @@ rocketComments.moveForm = function(  ) {
 		respond: respond,
 	});
 
-	rocketComments.setParentValue( parentId );
-	postId = postId || false;
-	if ( post.length && postId ) {
-		post.val(postId);
-	}
-
 	cancel.click(function () {
 		rocketComments.resetForm( this );
-		rocketComments.setParentValue( '0' );
 
 		return false;
 	});
