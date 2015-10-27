@@ -19,46 +19,40 @@ QUnit.test( 'Basic rocketComment object tests', function( assert ) {
 		rocketComments.collections.Comments,
 		'Comments collection exists'
 	);
-});
 
-QUnit.test( 'Basic addComment object tests', function( assert ) {
 	assert.ok(
-		addComment,
-		'addComment exists'
-	);
-	assert.ok(
-		addComment.setupForm,
+		rocketComments.setupForm,
 		'setupForm exists'
 	);
 	assert.ok(
-		addComment.resetForm,
+		rocketComments.resetForm,
 		'resetForm exists'
 	);
 	assert.ok(
-		addComment.moveForm,
+		rocketComments.moveForm,
 		'moveForm exists'
 	);
 	assert.ok(
-		addComment.editForm,
+		rocketComments.editForm,
 		'editForm exists'
 	);
 });
 
-QUnit.test( 'Basic addComment testing', function( assert ) {
+QUnit.test( 'Basic rocketComments form testing', function( assert ) {
 	assert.notOk(
-		addComment.setupForm(),
+		rocketComments.setupForm(),
 		'Return false for setupForm with undefined options'
 	);
 	assert.notOk(
-		addComment.resetForm(),
+		rocketComments.resetForm(),
 		'Return false for setupForm with undefined options'
 	);
 	assert.notOk(
-		addComment.moveForm(),
+		rocketComments.moveForm(),
 		'Return false for setupForm with undefined options'
 	);
 	assert.notOk(
-		addComment.editForm(),
+		rocketComments.editForm(),
 		'Return false for setupForm with undefined options'
 	);
 });

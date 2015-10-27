@@ -34,14 +34,14 @@ if ( get_option( 'comment_registration' ) && ! is_user_logged_in() ) {
 <?php
 } else {
 ?>
-					<a rel='nofollow' class='comment-reply-link' href='<?php echo esc_url( get_permalink() ); ?>?replytocom=<%= attributes.id %>#respond' onclick='return addComment.moveForm( "div-comment-<%= attributes.id %>", "<%= attributes.id %>", "respond", "<%= attributes.id %>" )' aria-label='<?php esc_html_e( 'Leave a Reply', 'rocket-comments' ); ?>'><?php esc_html_e( 'Reply', 'rocket-comments' ); ?></a>
+					<a rel='nofollow' class='comment-reply-link' href='<?php echo esc_url( get_permalink() ); ?>?replytocom=<%= attributes.id %>#respond' data-id="<%= attributes.id %>" aria-label='<?php esc_html_e( 'Leave a Reply', 'rocket-comments' ); ?>'><?php esc_html_e( 'Reply', 'rocket-comments' ); ?></a>
 <?php
 }
 ?>
 				</li>
 				<li class="edit-link">
 					<div class="genericon genericon-edit"></div>
-					<a class="comment-edit-link" href="<?php echo esc_url( get_admin_url() ); ?>comment.php?action=editcomment&amp;c=<%= attributes.id %>" onclick='return addComment.editForm(<%= attributes.id %>, "respond");' data-id="<%= attributes.id %>">
+					<a class="comment-edit-link" href="<?php echo esc_url( get_admin_url() ); ?>comment.php?action=editcomment&amp;c=<%= attributes.id %>" data-id="<%= attributes.id %>">
 						<?php esc_html_e( 'Edit', 'rocket-comments' ); ?>
 					</a>
 				</li>

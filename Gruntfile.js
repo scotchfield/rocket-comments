@@ -14,7 +14,6 @@ module.exports = function(grunt) {
           'js/views/Comments.js',
           'js/collections/Comments.js',
           'js/rocket-comments.js',
-          'js/add-comment.js'
         ],
         dest: 'js/rocket-comments.min.js'
       }

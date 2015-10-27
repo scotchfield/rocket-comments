@@ -116,10 +116,13 @@ rocketComments.views.Comments = (function () {
 					.css( 'display', 'none' );
 
 				jQuery( '.comment-edit-link' ).click(
-					_.bind( this.populateEditForm, this ) );
+					_.bind( this.populateEditForm, this )
+				);
 
 				jQuery( '.comment-reply-link' ).click(function ( event ) {
 					event.preventDefault();
+
+					rocketComments.moveForm( event );
 				});
 			}
 		},
@@ -293,6 +296,8 @@ rocketComments.views.Comments = (function () {
 				respond.find( '#email' ).val( model.get( 'author_email' ) );
 				respond.find( '#url' ).val( model.get( 'author_url' ) );
 			}
+
+			rocketComments.editForm( event );
 		},
 
 	});
