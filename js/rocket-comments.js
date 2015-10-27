@@ -43,28 +43,33 @@ rocketComments.shiftPage = function ( delta, rc ) {
 };
 
 rocketComments.setupForm = function ( options ) {
-	var respond = rocketComments.getCache( '#respond' );
+	var respond = this.getCache( '#respond' ),
+		comment = this.getCache( '#div-comment-' + options.commentId );
 
 	if ( ! options ) {
 		return false;
 	}
 
 	if ( options.action === 'edit' ) {
-		options.comment.hide();
+		comment.hide();
 	}
 
 	rocketComments.setupTempForm();
 
 	respond.data( 'comment-id', options.commentId );
 	respond.data( 'action', options.action );
-	respond.insertBefore( options.comment.next() );
+	respond.insertBefore( comment.next() );
 	options.cancel.show();
 
-	rocketComments.getCache( '.comment-reply-title' ).hide();
-	rocketComments.getCache( '.title-' + options.action ).show();
-	rocketComments.getCache( '#cancel-comment-reply-link' ).show();
+	this.getCache( '.comment-reply-title' ).hide();
+	this.getCache( '.title-' + options.action ).show();
+	this.getCache( '#cancel-comment-reply-link' ).show();
 
-	rocketComments.getCache( '#comment' ).focus();
+	this.getCache( '#comment' ).focus();
+
+	options.cancel.click(function () {
+		rocketComments.cancelForm.call( this, comment );
+	});
 
 	return true;
 };
@@ -81,7 +86,7 @@ rocketComments.setupTempForm = function () {
 
 rocketComments.resetForm = function ( cancel ) {
 	var temp = jQuery( '#wp-temp-form-div' ),
-		respond = rocketComments.getCache( '#respond' );
+		respond = this.getCache( '#respond' );
 
 	if ( ! temp.length || ! respond.length ) {
 		return false;
@@ -101,44 +106,20 @@ rocketComments.resetForm = function ( cancel ) {
 };
 
 rocketComments.moveForm = function ( event ) {
-	var commentId = jQuery( event.target ).data( 'id' ),
-		cancel = rocketComments.getCache( '.title-reply #cancel-comment-reply-link' );
-
-	if ( ! cancel.length ) {
-		return false;
-	}
-
 	rocketComments.setupForm({
 		action: 'reply',
-		cancel: cancel,
-		comment: rocketComments.getCache( '#div-comment-' + commentId ),
-		commentId: commentId,
-	});
-
-	cancel.click(function () {
-		rocketComments.cancelForm.call( this );
+		cancel: rocketComments.getCache( '.title-reply #cancel-comment-reply-link' ),
+		commentId: jQuery( event.target ).data( 'id' ),
 	});
 
 	return true;
 };
 
 rocketComments.editForm = function ( event ) {
-	var commentId = jQuery( event.target ).data( 'id' ),
-		cancel = rocketComments.getCache( '.title-edit #cancel-comment-reply-link' );
-
-	if ( ! cancel.length ) {
-		return false;
-	}
-
 	rocketComments.setupForm({
 		action: 'edit',
-		cancel: cancel,
-		comment: rocketComments.getCache( '#div-comment-' + commentId ),
-		commentId: commentId,
-	});
-
-	cancel.click(function () {
-		rocketComments.cancelForm.call( this, rocketComments.getCache( '#div-comment-' + commentId ) );
+		cancel: rocketComments.getCache( '.title-edit #cancel-comment-reply-link' ),
+		commentId: jQuery( event.target ).data( 'id' ),
 	});
 
 	return true;
@@ -146,7 +127,6 @@ rocketComments.editForm = function ( event ) {
 
 rocketComments.cancelForm = function ( comment ) {
 	if ( undefined !== comment ) {
-
 		comment.show();
 	}
 
