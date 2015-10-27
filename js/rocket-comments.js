@@ -42,11 +42,15 @@ rocketComments.shiftPage = function ( delta, rc ) {
 	rc.fetchComments( rc.collection );
 };
 
-rocketComments.setupForm = function( options ) {
+rocketComments.setupForm = function ( options ) {
 	var respond = rocketComments.getCache( '#respond' );
 
 	if ( ! options ) {
 		return false;
+	}
+
+	if ( options.action === 'edit' ) {
+		options.comment.hide();
 	}
 
 	rocketComments.setupTempForm();
@@ -75,7 +79,7 @@ rocketComments.setupTempForm = function () {
 	}
 }
 
-rocketComments.resetForm = function( cancel ) {
+rocketComments.resetForm = function ( cancel ) {
 	var temp = jQuery( '#wp-temp-form-div' ),
 		respond = rocketComments.getCache( '#respond' );
 
@@ -96,7 +100,7 @@ rocketComments.resetForm = function( cancel ) {
 	return true;
 };
 
-rocketComments.moveForm = function( event ) {
+rocketComments.moveForm = function ( event ) {
 	var commentId = jQuery( event.target ).data( 'id' ),
 		cancel = rocketComments.getCache( '.title-reply #cancel-comment-reply-link' );
 
@@ -112,9 +116,7 @@ rocketComments.moveForm = function( event ) {
 	});
 
 	cancel.click(function () {
-		rocketComments.resetForm( this );
-
-		return false;
+		rocketComments.cancelForm.call( this );
 	});
 
 	return true;
@@ -122,36 +124,40 @@ rocketComments.moveForm = function( event ) {
 
 rocketComments.editForm = function ( event ) {
 	var commentId = jQuery( event.target ).data( 'id' ),
-		comment = rocketComments.getCache( '#div-comment-' + commentId ),
-		respond = rocketComments.getCache( '#respond' ),
 		cancel = rocketComments.getCache( '.title-edit #cancel-comment-reply-link' );
 
-	if ( ! comment.length || ! respond.length || ! cancel.length ) {
+	if ( ! cancel.length ) {
 		return false;
 	}
 
 	rocketComments.setupForm({
 		action: 'edit',
 		cancel: cancel,
-		comment: comment,
+		comment: rocketComments.getCache( '#div-comment-' + commentId ),
 		commentId: commentId,
 	});
 
-	comment.hide();
-
 	cancel.click(function () {
-		rocketComments.resetForm( this );
-		comment.show();
-		rocketComments.getCache( '.comment-author-not-logged-in' ).hide();
-		rocketComments.getCache( '.comment-author-logged-in' ).show();
-
-		return false;
+		rocketComments.cancelForm.call( this, rocketComments.getCache( '#div-comment-' + commentId ) );
 	});
 
 	return true;
 };
 
-rocketComments.setParentValue = function( id ) {
+rocketComments.cancelForm = function ( comment ) {
+	if ( undefined !== comment ) {
+
+		comment.show();
+	}
+
+	rocketComments.resetForm( this );
+	rocketComments.getCache( '.comment-author-not-logged-in' ).hide();
+	rocketComments.getCache( '.comment-author-logged-in' ).show();
+
+	return false;
+}
+
+rocketComments.setParentValue = function ( id ) {
 	var parent = rocketComments.getCache( '#comment_parent' );
 
 	parent.val( id );
