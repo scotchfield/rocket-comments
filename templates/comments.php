@@ -46,7 +46,7 @@ jQuery(function () {
 });
 </script>
 
-<div id="comments" class="comments-area" <?php echo esc_html( rocket_comments_implode_comment_options( $wp_rocket_comments_options ) ); ?>>
+<div id="comments" class="comments-area" <?php echo rocket_comments_implode_comment_options( $wp_rocket_comments_options ); ?>>
 
 	<noscript>
 		<a href="<?php echo esc_url( $wp_rocket_comments_options['redirect_no_js_url'] ); ?>"><?php esc_html_e( 'Click here to view comments on this post.', 'rocket-comments' ); ?></a>
@@ -61,11 +61,11 @@ jQuery(function () {
 	<div id="wp-comment-content">
 
 		<h2 id="comment-single" class="comments-title">
-			<?php printf( esc_html__( 'One thought on &ldquo;%s&rdquo;', 'rocket-comments' ), get_the_title() ); ?>
+			<?php printf( __( 'One thought on &ldquo;%s&rdquo;', 'rocket-comments' ), esc_html( get_the_title() ) ); ?>
 		</h2>
 
 		<h2 id="comment-multiple" class="comments-title">
-			<?php printf( esc_html__( '<span id="comment-count"></span> thoughts on &ldquo;%s&rdquo;', 'rocket-comments' ), get_the_title() ); ?>
+			<?php printf( __( '<span id="comment-count"></span> thoughts on &ldquo;%s&rdquo;', 'rocket-comments' ), esc_html( get_the_title() ) ); ?>
 		</h2>
 
 <?php
@@ -151,7 +151,7 @@ if ( ! comments_open() &&
 					<p class="comment-notes">
 						<span id="email-notes"><?php esc_html_e( 'Your email address will not be published.', 'rocket-comments' ); ?></span>
 						<?php if ( $wp_rocket_comments_options['require_name_email'] ) {
-							esc_html_e( 'Required fields are marked <span class="required">*</span>', 'rocket-coments' );
+							printf( __( 'Required fields are marked %s', 'rocket-comments' ), '<span class="required">*</span>' );
 						} ?>
 					</p>
 					<p class="comment-form-author">

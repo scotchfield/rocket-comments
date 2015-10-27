@@ -450,22 +450,22 @@ class RocketComments {
 		$current_user = wp_get_current_user();
 		$options['current_user'] = wp_get_current_user();
 
-		$options['data']['user-id'] = $current_user->ID;
-		$options['data']['user-name'] = $current_user->display_name;
-		$options['data']['user-avatar'] = get_avatar_url( $current_user->ID );
-		$options['data']['post-id'] = get_the_ID();
+		$options['data']['user-id'] = intval( $current_user->ID );
+		$options['data']['user-name'] = esc_html( $current_user->display_name );
+		$options['data']['user-avatar'] = esc_url( get_avatar_url( $current_user->ID ) );
+		$options['data']['post-id'] = intval( get_the_ID() );
 
-		$options['data']['threaded'] = get_option( 'thread_comments', true ) ? get_option( 'thread_comments_depth' ) : 1;
+		$options['data']['threaded'] = get_option( 'thread_comments', true ) ? intval( get_option( 'thread_comments_depth' ) ) : 1;
 
 		$options['data']['page-comments'] = intval( get_option( 'page_comments' ) );
 		$options['data']['comment-page'] = 1;
 		$options['data']['comments-per-page'] = $options['data']['page-comments'] ? intval( get_option( 'comments_per_page' ) ) : 0;
 		$options['data']['comment-order'] = ( $options['data']['page-comments'] > 0 && 'newest' == get_option( 'default_comments_page' ) ) ? 'DESC' : 'ASC';
 
-		$options['data']['fetch-time'] = $this->fetch_time();
+		$options['data']['fetch-time'] = intval( $this->fetch_time() );
 
-		$options['require_name_email'] = get_option( 'require_name_email' );
-		$options['redirect_no_js_url'] = add_query_arg( 'rocket-nojs', '1' );
+		$options['require_name_email'] = esc_attr( get_option( 'require_name_email' ) );
+		$options['redirect_no_js_url'] = esc_url( add_query_arg( 'rocket-nojs', '1' ) );
 
 		return $options;
 	}
