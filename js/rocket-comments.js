@@ -18,12 +18,12 @@ rocketComments.start = function () {
 	rocketComments.started = true;
 
 	// Attach click handlers to the previous and next page elements.
-	jQuery( '#comment-navigation-previous' ).on( 'click', function () {
+	jQuery( '#comment-navigation-previous' ).click(function () {
 		rocketComments.shiftPage.call( rc, -1);
-	} );
-	jQuery( '#comment-navigation-next' ).on( 'click', function () {
+	});
+	jQuery( '#comment-navigation-next' ).click(function () {
 		rocketComments.shiftPage.call( rc, 1 );
-	} );
+	});
 
 	// Don't use the standard form submit; we'll trigger this using JS.
 	jQuery( 'form#commentform' ).submit(function ( e ) {
