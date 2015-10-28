@@ -38,6 +38,12 @@ rocketComments.shiftPage = function ( delta ) {
 	this.fetchComments( this.collection );
 };
 
+/**
+ * Move the form below or in-place of a comment to reply or edit.
+ *
+ * @param {Object} event - The link element that triggered the event
+ * @param {string} action - Either 'edit' or 'reply' based on the click
+ */
 rocketComments.startForm = function ( event, action ) {
 	var commentId = jQuery( event.target ).data( 'id' ),
 		cancel = this.getCache( '#cancel-comment-' + action + '-link' ),
@@ -63,6 +69,20 @@ rocketComments.startForm = function ( event, action ) {
 		});
 };
 
+/**
+ * Create the form placeholder, if it is not already set.
+ * The #respond element is detached and reattached near the comment
+ * that is either being replied to or edited. This placeholder
+ * tells us where to place the form when the action is over.
+ *
+ * Example: If we first arrive at a page and click on a reply button,
+ * we need to create a new temporary form placeholder so we know where
+ * to reattach the comment form.
+ *
+ * Example: If we hit reply in reference to one comment, and then
+ * decide to reply to a different comment, we don't want to create
+ * another form element.
+ */
 rocketComments.setupTempForm = function () {
 	if ( ! jQuery( '#wp-temp-form-div' ).length ) {
 		var div = jQuery(
@@ -73,11 +93,22 @@ rocketComments.setupTempForm = function () {
 	}
 };
 
+/**
+ * Hide comment form titles except for the one related to our context
+ *
+ * @param {string} action - Either 'edit' or 'reply' based on the click
+ */
 rocketComments.showCommentTitle = function ( action ) {
 	this.getCache( '.comment-reply-title' ).hide();
 	this.getCache( '.title-' + action ).show();
 };
 
+/**
+ * Return the detached comment form to where it originally started
+ * using the placeholder div.
+ *
+ * @param {Object} cancel - The cancel link element that triggered the event
+ */
 rocketComments.resetForm = function ( cancel ) {
 	var temp = jQuery( '#wp-temp-form-div' ),
 		respond = this.getCache( '#respond' );
