@@ -18,10 +18,10 @@ rocketComments.start = function () {
 	rocketComments.started = true;
 
 	// Attach click handlers to the previous and next page elements.
-	jQuery( '.comment-navigation .nav-previous a' ).on( 'click', function () {
+	jQuery( '#comment-navigation-previous' ).on( 'click', function () {
 		rocketComments.shiftPage.call( rc, -1);
 	} );
-	jQuery( '.comment-navigation .nav-next a' ).on( 'click', function () {
+	jQuery( '#comment-navigation-next' ).on( 'click', function () {
 		rocketComments.shiftPage.call( rc, 1 );
 	} );
 

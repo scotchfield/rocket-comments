@@ -17,8 +17,11 @@ function rocket_comments_comment_nav() {
 		<?php esc_html_e( 'Comment navigation', 'rocket-comments' ); ?>
 	</h2>
 	<div class="nav-links">
-		<div class="nav-previous"><a><?php $newest_comments ? esc_html_e( 'Newer Comments', 'rocket-comments' ) : esc_html_e( 'Older Comments', 'rocket-comments' ); ?></a></div>
-		<div class="nav-next"><a><?php $newest_comments ? esc_html_e( 'Older Comments', 'rocket-comments' ) : esc_html_e( 'Newer Comments', 'rocket-comments' ); ?></a>
+		<div class="nav-previous" id="comment-navigation-previous">
+			<a><?php $newest_comments ? esc_html_e( 'Newer Comments', 'rocket-comments' ) : esc_html_e( 'Older Comments', 'rocket-comments' ); ?></a>
+		</div>
+		<div class="nav-next" id="comment-navigation-next">
+			<a><?php $newest_comments ? esc_html_e( 'Older Comments', 'rocket-comments' ) : esc_html_e( 'Newer Comments', 'rocket-comments' ); ?></a>
 		</div>
 	</div>
 </nav>
