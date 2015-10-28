@@ -56,7 +56,6 @@ rocketComments.startForm = function ( event, action ) {
 		comment.hide();
 	}
 
-	this.setupTempForm();
 	this.showCommentTitle( action );
 
 	respond.data( 'comment-id', commentId )
@@ -69,31 +68,6 @@ rocketComments.startForm = function ( event, action ) {
 		.click(function () {
 			rocketComments.cancelForm.call( this, comment );
 		});
-};
-
-/**
- * Create the form placeholder, if it is not already set.
- * The #respond element is detached and reattached near the comment
- * that is either being replied to or edited. This placeholder
- * tells us where to place the form when the action is over.
- *
- * Example: If we first arrive at a page and click on a reply button,
- * we need to create a new temporary form placeholder so we know where
- * to reattach the comment form.
- *
- * Example: If we hit reply in reference to one comment, and then
- * decide to reply to a different comment, we don't want to create
- * another form element.
- */
-rocketComments.setupTempForm = function () {
-	if ( ! rocketComments.peek( '#wp-temp-form-div' ) ) {
-		var div = jQuery(
-			'<div id="wp-temp-form-div" style="display: none;"></div>'
-		);
-
-		rocketComments.set( '#wp-temp-form-div', div );
-		rocketComments.get( '#respond' ).parent().append( div );
-	}
 };
 
 /**
@@ -111,16 +85,9 @@ rocketComments.showCommentTitle = function ( action ) {
  * using the placeholder div.
  */
 rocketComments.resetForm = function () {
-	var temp = rocketComments.peek( '#wp-temp-form-div' ),
-		respond = this.get( '#respond' );
+	var respond = this.get( '#respond' );
 
-	if ( ! temp || ! respond.length ) {
-		return false;
-	}
-
-	temp.parent().append( respond );
-	temp.remove();
-	rocketComments.set( '#wp-temp-form-div', undefined );
+	rocketComments.get( '#wp-comment-content' ).append( respond );
 
 	this.get( '#comment' ).val( '' );
 	this.showCommentTitle( 'reply' );
@@ -161,15 +128,6 @@ rocketComments.get = function ( id ) {
 		rocketComments.set( id, jQuery( id ) );
 	}
 
-	return rocketComments.peek( id );
-};
-
-/**
- * Retrieve data from a cache by id, even if undefined.
- *
- * @param {String} id - The cache lookup key
- */
-rocketComments.peek = function ( id ) {
 	return rocketComments.cache[id];
 };
 
