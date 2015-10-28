@@ -146,13 +146,13 @@ rocketComments.cancelForm = function ( comment ) {
 	return false;
 }
 
-rocketComments.setParentValue = function ( id ) {
-	var parent = rocketComments.getCache( '#comment_parent' );
-
-	parent.val( id );
-};
-
-rocketComments.getCache = function ( id ) {
+/**
+ * Retrieve data from a cache by id, or get and store if it has not yet
+ * been retrieved.
+ *
+ * @param {String} id - The string selector to pass to jQuery
+ */
+ rocketComments.getCache = function ( id ) {
 	if ( undefined === rocketComments.cache ) {
 		rocketComments.cache = {};
 	}
