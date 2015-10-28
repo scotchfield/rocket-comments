@@ -46,9 +46,9 @@ rocketComments.shiftPage = function ( delta ) {
  */
 rocketComments.startForm = function ( event, action ) {
 	var commentId = jQuery( event.target ).data( 'id' ),
-		cancel = this.getCache( '#cancel-comment-' + action + '-link' ),
-		respond = this.getCache( '#respond' ),
-		comment = this.getCache( '#div-comment-' + commentId );
+		cancel = this.get( '#cancel-comment-' + action + '-link' ),
+		respond = this.get( '#respond' ),
+		comment = this.get( '#div-comment-' + commentId );
 
 	if ( action === 'edit' ) {
 		comment.hide();
@@ -61,7 +61,7 @@ rocketComments.startForm = function ( event, action ) {
 		.data( 'action', action )
 		.insertBefore( comment.next() );
 
-	this.getCache( '#comment' ).focus();
+	this.get( '#comment' ).focus();
 
 	cancel.show()
 		.click(function () {
@@ -89,7 +89,7 @@ rocketComments.setupTempForm = function () {
 			'<div id="wp-temp-form-div" style="display: none;"></div>'
 		);
 
-		rocketComments.getCache( '#respond' ).parent().append( div );
+		rocketComments.get( '#respond' ).parent().append( div );
 	}
 };
 
@@ -99,8 +99,8 @@ rocketComments.setupTempForm = function () {
  * @param {string} action - Either 'edit' or 'reply' based on the click
  */
 rocketComments.showCommentTitle = function ( action ) {
-	this.getCache( '.comment-reply-title' ).hide();
-	this.getCache( '.title-' + action ).show();
+	this.get( '.comment-reply-title' ).hide();
+	this.get( '.title-' + action ).show();
 };
 
 /**
@@ -109,7 +109,7 @@ rocketComments.showCommentTitle = function ( action ) {
  */
 rocketComments.resetForm = function () {
 	var temp = jQuery( '#wp-temp-form-div' ),
-		respond = this.getCache( '#respond' );
+		respond = this.get( '#respond' );
 
 	if ( ! temp.length || ! respond.length ) {
 		return false;
@@ -118,7 +118,7 @@ rocketComments.resetForm = function () {
 	temp.parent().append( respond );
 	temp.remove();
 
-	this.getCache( '#comment' ).val( '' );
+	this.get( '#comment' ).val( '' );
 	this.showCommentTitle( 'reply' );
 
 	respond.removeData( [ 'action', 'comment-id' ] );
@@ -140,8 +140,8 @@ rocketComments.cancelForm = function ( comment ) {
 	jQuery( this ).hide().prop( 'onclick', null );
 
 	rocketComments.resetForm( this );
-	rocketComments.getCache( '.comment-author-not-logged-in' ).hide();
-	rocketComments.getCache( '.comment-author-logged-in' ).show();
+	rocketComments.get( '.comment-author-not-logged-in' ).hide();
+	rocketComments.get( '.comment-author-logged-in' ).show();
 
 	return false;
 }
@@ -152,14 +152,28 @@ rocketComments.cancelForm = function ( comment ) {
  *
  * @param {String} id - The string selector to pass to jQuery
  */
- rocketComments.getCache = function ( id ) {
+ rocketComments.get = function ( id ) {
 	if ( undefined === rocketComments.cache ) {
 		rocketComments.cache = {};
 	}
 
 	if ( undefined === rocketComments.cache[id] ) {
-		rocketComments.cache[id] = jQuery( id );
+		rocketComments.set( id, jQuery( id ) );
 	}
 
 	return rocketComments.cache[id];
+};
+
+/**
+ * Set cache data by id.
+ *
+ * @param {String} id - The string selector
+ * @param data - A piece of data to associate with the id in the cache
+ */
+ rocketComments.set = function ( id, data ) {
+	if ( undefined === rocketComments.cache ) {
+		rocketComments.cache = {};
+	}
+
+	rocketComments.cache[id] = data;
 };
