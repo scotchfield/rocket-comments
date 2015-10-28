@@ -15,10 +15,10 @@ rocketComments.start = function () {
 
 		// Attach click handlers to the previous and next page elements.
 		jQuery( '.comment-navigation .nav-previous a' ).on( 'click', function () {
-			rocketComments.shiftPage( -1, rc );
+			rocketComments.shiftPage.call( rc, -1);
 		} );
 		jQuery( '.comment-navigation .nav-next a' ).on( 'click', function () {
-			rocketComments.shiftPage( 1, rc );
+			rocketComments.shiftPage.call( rc, 1 );
 		} );
 	}
 
@@ -33,13 +33,9 @@ rocketComments.start = function () {
  *
  * @param {number} delta - Number of pages to shift, may be negative.
  */
-rocketComments.shiftPage = function ( delta, rc ) {
-	if ( ! _.isObject( rc ) || ! ( 'fetchComments' in rc ) ) {
-		return false;
-	}
-
-	rc.comment_page += delta;
-	rc.fetchComments( rc.collection );
+rocketComments.shiftPage = function ( delta ) {
+	this.comment_page += delta;
+	this.fetchComments( this.collection );
 };
 
 rocketComments.startForm = function ( event, action ) {
