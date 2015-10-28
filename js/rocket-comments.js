@@ -86,11 +86,12 @@ rocketComments.startForm = function ( event, action ) {
  * another form element.
  */
 rocketComments.setupTempForm = function () {
-	if ( ! jQuery( '#wp-temp-form-div' ).length ) {
+	if ( ! rocketComments.peek( '#wp-temp-form-div' ) ) {
 		var div = jQuery(
 			'<div id="wp-temp-form-div" style="display: none;"></div>'
 		);
 
+		rocketComments.set( '#wp-temp-form-div', div );
 		rocketComments.get( '#respond' ).parent().append( div );
 	}
 };
@@ -110,15 +111,16 @@ rocketComments.showCommentTitle = function ( action ) {
  * using the placeholder div.
  */
 rocketComments.resetForm = function () {
-	var temp = jQuery( '#wp-temp-form-div' ),
+	var temp = rocketComments.peek( '#wp-temp-form-div' ),
 		respond = this.get( '#respond' );
 
-	if ( ! temp.length || ! respond.length ) {
+	if ( ! temp || ! respond.length ) {
 		return false;
 	}
 
 	temp.parent().append( respond );
 	temp.remove();
+	rocketComments.set( '#wp-temp-form-div', undefined );
 
 	this.get( '#comment' ).val( '' );
 	this.showCommentTitle( 'reply' );
@@ -154,7 +156,7 @@ rocketComments.cancelForm = function ( comment ) {
  *
  * @param {String} id - The string selector to pass to jQuery
  */
- rocketComments.get = function ( id ) {
+rocketComments.get = function ( id ) {
 	if ( undefined === rocketComments.cache[id] ) {
 		rocketComments.set( id, jQuery( id ) );
 	}
@@ -167,7 +169,7 @@ rocketComments.cancelForm = function ( comment ) {
  *
  * @param {String} id - The cache lookup key
  */
- rocketComments.peek = function ( id ) {
+rocketComments.peek = function ( id ) {
 	return rocketComments.cache[id];
 };
 
@@ -177,6 +179,6 @@ rocketComments.cancelForm = function ( comment ) {
  * @param {String} id - The string selector
  * @param data - A piece of data to associate with the id in the cache
  */
- rocketComments.set = function ( id, data ) {
+rocketComments.set = function ( id, data ) {
 	rocketComments.cache[id] = data;
 };
