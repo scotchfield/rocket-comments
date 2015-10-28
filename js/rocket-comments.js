@@ -54,22 +54,19 @@ rocketComments.startForm = function ( event, action ) {
 
 	rocketComments.setupTempForm();
 
-	respond.data( 'comment-id', commentId );
-	respond.data( 'action', action );
-	respond.insertBefore( comment.next() );
-	cancel.show();
-
 	this.getCache( '.comment-reply-title' ).hide();
 	this.getCache( '.title-' + action ).show();
-	this.getCache( '#cancel-comment-reply-link' ).show();
+
+	respond.data( 'comment-id', commentId )
+		.data( 'action', action )
+		.insertBefore( comment.next() );
 
 	this.getCache( '#comment' ).focus();
 
-	cancel.click(function () {
-		rocketComments.cancelForm.call( this, comment );
-	});
-
-	return true;
+	cancel.show()
+		.click(function () {
+			rocketComments.cancelForm.call( this, comment );
+		});
 };
 
 rocketComments.setupTempForm = function () {
