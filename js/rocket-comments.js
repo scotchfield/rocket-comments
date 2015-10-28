@@ -106,10 +106,8 @@ rocketComments.showCommentTitle = function ( action ) {
 /**
  * Return the detached comment form to where it originally started
  * using the placeholder div.
- *
- * @param {Object} cancel - The cancel link element that triggered the event
  */
-rocketComments.resetForm = function ( cancel ) {
+rocketComments.resetForm = function () {
 	var temp = jQuery( '#wp-temp-form-div' ),
 		respond = this.getCache( '#respond' );
 
@@ -120,24 +118,26 @@ rocketComments.resetForm = function ( cancel ) {
 	temp.parent().append( respond );
 	temp.remove();
 
-	jQuery( cancel )
-		.hide()
-		.prop( 'onclick', null );
-
 	this.getCache( '#comment' ).val( '' );
-
-	respond.removeData( 'action' )
-		.removeData( 'comment-id' );
-
 	this.showCommentTitle( 'reply' );
+
+	respond.removeData( [ 'action', 'comment-id' ] );
 
 	return true;
 };
 
+/**
+ * React to the cancel click by restoring the comment and resetting
+ * the form.
+ *
+ * @param {Object} comment - An optional reference to the comment object being edited
+ */
 rocketComments.cancelForm = function ( comment ) {
 	if ( undefined !== comment ) {
 		comment.show();
 	}
+
+	jQuery( this ).hide().prop( 'onclick', null );
 
 	rocketComments.resetForm( this );
 	rocketComments.getCache( '.comment-author-not-logged-in' ).hide();
