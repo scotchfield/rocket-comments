@@ -159,6 +159,15 @@ rocketComments.cancelForm = function ( comment ) {
 		rocketComments.set( id, jQuery( id ) );
 	}
 
+	return rocketComments.peek( id );
+};
+
+/**
+ * Retrieve data from a cache by id, even if undefined.
+ *
+ * @param {String} id - The cache lookup key
+ */
+ rocketComments.peek = function ( id ) {
 	return rocketComments.cache[id];
 };
 
