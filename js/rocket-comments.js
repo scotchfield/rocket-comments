@@ -10,19 +10,20 @@ rocketComments.start = function () {
 
 	jQuery( '#wp-loading' ).show();
 
-	if ( undefined === rocketComments.started ) {
-		var rc = new rocketComments.views.Comments();
-
-		rocketComments.started = true;
-
-		// Attach click handlers to the previous and next page elements.
-		jQuery( '.comment-navigation .nav-previous a' ).on( 'click', function () {
-			rocketComments.shiftPage.call( rc, -1);
-		} );
-		jQuery( '.comment-navigation .nav-next a' ).on( 'click', function () {
-			rocketComments.shiftPage.call( rc, 1 );
-		} );
+	if ( undefined !== rocketComments.started ) {
+		return;
 	}
+
+	var rc = new rocketComments.views.Comments();
+	rocketComments.started = true;
+
+	// Attach click handlers to the previous and next page elements.
+	jQuery( '.comment-navigation .nav-previous a' ).on( 'click', function () {
+		rocketComments.shiftPage.call( rc, -1);
+	} );
+	jQuery( '.comment-navigation .nav-next a' ).on( 'click', function () {
+		rocketComments.shiftPage.call( rc, 1 );
+	} );
 
 	// Don't use the standard form submit; we'll trigger this using JS.
 	jQuery( 'form#commentform' ).submit(function ( e ) {
