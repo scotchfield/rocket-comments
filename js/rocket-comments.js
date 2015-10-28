@@ -48,10 +48,8 @@ rocketComments.startForm = function ( event, action ) {
 		comment.hide();
 	}
 
-	rocketComments.setupTempForm();
-
-	this.getCache( '.comment-reply-title' ).hide();
-	this.getCache( '.title-' + action ).show();
+	this.setupTempForm();
+	this.showCommentTitle( action );
 
 	respond.data( 'comment-id', commentId )
 		.data( 'action', action )
@@ -73,7 +71,12 @@ rocketComments.setupTempForm = function () {
 
 		rocketComments.getCache( '#respond' ).parent().append( div );
 	}
-}
+};
+
+rocketComments.showCommentTitle = function ( action ) {
+	this.getCache( '.comment-reply-title' ).hide();
+	this.getCache( '.title-' + action ).show();
+};
 
 rocketComments.resetForm = function ( cancel ) {
 	var temp = jQuery( '#wp-temp-form-div' ),
@@ -90,8 +93,12 @@ rocketComments.resetForm = function ( cancel ) {
 		.hide()
 		.prop( 'onclick', null );
 
-	respond.find( 'textarea#comment' ).val( '' );
-	respond.removeData( 'action' ).removeData( 'comment-id' );
+	this.getCache( '#comment' ).val( '' );
+
+	respond.removeData( 'action' )
+		.removeData( 'comment-id' );
+
+	this.showCommentTitle( 'reply' );
 
 	return true;
 };
