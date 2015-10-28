@@ -8,7 +8,7 @@ var rocketComments = rocketComments || {};
 rocketComments.start = function () {
 	rocketComments.cache = {};
 
-	jQuery( '#wp-loading' ).show();
+	rocketComments.get( '#wp-loading' ).show();
 
 	if ( undefined !== rocketComments.started ) {
 		return;

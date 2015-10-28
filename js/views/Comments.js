@@ -47,7 +47,7 @@ rocketComments.views.Comments = (function () {
 		 */
 		updateNavigationLinks: function () {
 			if ( this.total_pages > 1 ) {
-				var nav = jQuery( '.comment-navigation' );
+				var nav = rocketComments.get( '.comment-navigation' );
 
 				nav.show();
 
@@ -67,9 +67,9 @@ rocketComments.views.Comments = (function () {
 				}
 
 				if ( this.comment_page < this.total_pages ) {
-					jQuery( '.nav-next' ).show();
+					rocketComments.get( '#comment-navigation-next' ).show();
 				} else {
-					jQuery( '.nav-next' ).hide();
+					rocketComments.get( '#comment-navigation-next' ).hide();
 				}
 
 				return true;
@@ -92,8 +92,8 @@ rocketComments.views.Comments = (function () {
 						$my_ol = $ol;
 
 					if ( item.get( 'parent' ) > 0 && depth > 1 ) {
-						var $parent_ol = jQuery( '#ol-comment-' +
-							item.get( 'parent' ) );
+						var $parent_ol = rocketComments.get(
+							'#ol-comment-' + item.get( 'parent' ) );
 
 						if ( 0 !== $parent_ol.length ) {
 							$my_ol = $parent_ol;
@@ -112,14 +112,14 @@ rocketComments.views.Comments = (function () {
 					).el );
 				}, this );
 
-				jQuery( '.comments-area .comments-title' )
+				rocketComments.get( '.comments-area .comments-title' )
 					.css( 'display', 'none' );
 
-				jQuery( '.comment-edit-link' ).click(
+				rocketComments.get( '.comment-edit-link' ).click(
 					_.bind( this.populateEditForm, this )
 				);
 
-				jQuery( '.comment-reply-link' ).click(function ( event ) {
+				rocketComments.get( '.comment-reply-link' ).click(function ( event ) {
 					event.preventDefault();
 
 					rocketComments.startForm( event, 'reply' );
@@ -136,7 +136,7 @@ rocketComments.views.Comments = (function () {
 
 			var $el = jQuery( e.currentTarget ).closest( 'li' ),
 				parent_id = $el.data( 'comment-id' ),
-				respond = jQuery( '.comment-respond' ),
+				respond = rocketComments.get( '#respond' ),
 				author_name = respond.find( 'input#author' ).val(),
 				author_email = respond.find( 'input#email' ).val(),
 				author_url = respond.find( 'input#url' ).val(),
@@ -145,8 +145,9 @@ rocketComments.views.Comments = (function () {
 				attributes, item;
 
 			if ( action == 'edit' ) {
-				item = this.collection.get( jQuery( '#respond' )
-					.data( 'comment-id' ) );
+				item = this.collection.get(
+					rocketComments.get( '#respond' ).data( 'comment-id' )
+				);
 
 				item.set({ content: content, type: '' });
 
@@ -189,14 +190,14 @@ rocketComments.views.Comments = (function () {
 				} );
 			}
 
-			jQuery( '#cancel-comment-reply-link' ).trigger( 'click' );
+			rocketComments.get( '#cancel-comment-reply-link' ).trigger( 'click' );
 			respond.find( 'textarea#comment' ).val( '' );
 
 			this.render();
 		},
 
 		showNotify: function ( message, time ) {
-			var notify = jQuery( '#comment-notify' );
+			var notify = rocketComments.get( '#comment-notify' );
 
 			if ( undefined === message ) {
 				message = notify.data( 'default' );
@@ -210,7 +211,7 @@ rocketComments.views.Comments = (function () {
 		},
 
 		fadeNotify: function () {
-			jQuery( '#comment-notify' ).fadeOut();
+			rocketComments.get( '#comment-notify' ).fadeOut();
 		},
 
 		handleError: function( model, response ) {
@@ -237,8 +238,8 @@ rocketComments.views.Comments = (function () {
 
 			if ( this.loading ) {
 				this.loading = false;
-				jQuery( 'div#wp-loading' ).fadeOut( 100, function () {
-					jQuery( '#wp-comment-content' ).fadeIn( 100 );
+				rocketComments.get( 'div#wp-loading' ).fadeOut( 100, function () {
+					rocketComments.get( '#wp-comment-content' ).fadeIn( 100 );
 				});
 			}
 
@@ -253,12 +254,12 @@ rocketComments.views.Comments = (function () {
 						options.xhr.getResponseHeader( 'X-WP-TotalPages' ) );
 
 					if ( this.total_comments == 1 ) {
-						jQuery( '.comments-area #comment-single' )
+						rocketComments.get( '.comments-area #comment-single' )
 							.fadeIn();
 					} else {
-						jQuery( 'span#comment-count' )
+						rocketComments.get( 'span#comment-count' )
 							.html( this.total_comments );
-						jQuery( '.comments-area #comment-multiple' )
+						rocketComments.get( '.comments-area #comment-multiple' )
 							.fadeIn();
 					}
 
@@ -281,7 +282,7 @@ rocketComments.views.Comments = (function () {
 
 		populateEditForm: function ( event ) {
 			var model, commentId,
-				respond = jQuery( '#respond' );
+				respond = rocketComments.get( '#respond' );
 
 			event.preventDefault();
 
@@ -289,8 +290,8 @@ rocketComments.views.Comments = (function () {
 			model = this.collection.get( commentId );
 
 			if ( model.get( 'author' ) != this.collection.user_id ) {
-				jQuery( '.comment-author-logged-in' ).hide();
-				jQuery( '.comment-author-not-logged-in' ).show();
+				rocketComments.get( '.comment-author-logged-in' ).hide();
+				rocketComments.get( '.comment-author-not-logged-in' ).show();
 
 				respond.find( '#author' ).val( model.get( 'author_name' ) );
 				respond.find( '#email' ).val( model.get( 'author_email' ) );
