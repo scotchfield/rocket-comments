@@ -83,7 +83,6 @@ rocketComments.views.Comments = (function () {
 		 */
 		render: function () {
 			var $ol = this.$el.find( 'ol#comment-root' );
-			$ol.empty();
 
 			if ( ! _.isEmpty( this.collection ) ) {
 				this.collection.each( function ( item ) {
@@ -91,8 +90,12 @@ rocketComments.views.Comments = (function () {
 						bypostauthor = '',
 						$my_ol = $ol;
 
+					if ( undefined !== item.view ) {
+						return;
+					}
+
 					if ( item.get( 'parent' ) > 0 && depth > 1 ) {
-						var $parent_ol = rocketComments.get(
+						var $parent_ol = jQuery(
 							'#ol-comment-' + item.get( 'parent' ) );
 
 						if ( 0 !== $parent_ol.length ) {
@@ -110,16 +113,18 @@ rocketComments.views.Comments = (function () {
 					$my_ol.append( item_view.render(
 						'comment depth-' + depth + bypostauthor
 					).el );
+
+					item.view = item_view;
 				}, this );
 
 				rocketComments.get( '.comments-area .comments-title' )
 					.css( 'display', 'none' );
 
-				rocketComments.get( '.comment-edit-link' ).click(
+				jQuery( '.comment-edit-link' ).click(
 					_.bind( this.populateEditForm, this )
 				);
 
-				rocketComments.get( '.comment-reply-link' ).click(function ( event ) {
+				jQuery( '.comment-reply-link' ).click(function ( event ) {
 					event.preventDefault();
 
 					rocketComments.startForm( event, 'reply' );
@@ -227,10 +232,12 @@ rocketComments.views.Comments = (function () {
 			);
 		},
 
-		fetchComments: function () {
-			var data = {
-				page: this.comment_page,
-			};
+		fetchComments: function ( empty ) {
+			var data = { page: this.comment_page };
+
+			if ( true === empty ) {
+				this.$el.find( 'ol#comment-root' ).empty();
+			}
 
 			if ( this.comments_per_page > 0 ) {
 				data.per_page = this.comments_per_page;

@@ -38,7 +38,7 @@ rocketComments.start = function () {
  */
 rocketComments.shiftPage = function ( delta ) {
 	this.comment_page += delta;
-	this.fetchComments( this.collection );
+	this.fetchComments( true );
 };
 
 /**
