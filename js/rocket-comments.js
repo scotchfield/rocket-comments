@@ -65,7 +65,8 @@ rocketComments.startForm = function ( event, action ) {
 	this.get( '#comment' ).focus();
 
 	cancel.show()
-		.click(function () {
+		.click(function ( event ) {
+			event.preventDefault();
 			rocketComments.cancelForm.call( this, comment );
 		});
 };
