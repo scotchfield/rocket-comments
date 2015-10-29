@@ -111,8 +111,8 @@ rocketComments.cancelForm = function ( comment ) {
 	jQuery( this ).hide().prop( 'onclick', null );
 
 	rocketComments.resetForm( this );
-	rocketComments.get( '.comment-author-not-logged-in' ).hide();
-	rocketComments.get( '.comment-author-logged-in' ).show();
+	rocketComments.get( '#comment-author-not-logged-in' ).hide();
+	rocketComments.get( '#comment-author-logged-in' ).show();
 
 	return false;
 }

@@ -136,7 +136,7 @@ if ( ! comments_open() &&
 		if ( is_user_logged_in() ) {
 
 ?>
-				<div class="comment-author-logged-in">
+				<div class="comment-author-logged-in" id="comment-author-logged-in">
 					<p class="logged-in-as">
 <?php
 			$profile_url = '<a href="' . esc_url( get_admin_url( null, 'profile.php' ) ) . '">' . esc_html( $wp_rocket_comments_options['current_user']->display_name ) . '</a>';
@@ -150,7 +150,7 @@ if ( ! comments_open() &&
 		}
 
 ?>
-				<div class="comment-author-not-logged-in <?php if ( is_user_logged_in() ) { echo 'hidden'; } ?>">
+				<div class="comment-author-not-logged-in <?php if ( is_user_logged_in() ) { echo 'hidden'; } ?>" id="comment-author-not-logged-in">
 					<p class="comment-notes">
 						<span id="email-notes"><?php esc_html_e( 'Your email address will not be published.', 'rocket-comments' ); ?></span>
 						<?php if ( $wp_rocket_comments_options['require_name_email'] ) {

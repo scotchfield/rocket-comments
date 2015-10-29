@@ -82,7 +82,7 @@ rocketComments.views.Comments = (function () {
 		 * Render the full list of comments.
 		 */
 		render: function () {
-			var $ol = this.$el.find( 'ol#comment-root' );
+			var $ol = rocketComments.get( '#comment-root' );
 
 			if ( ! _.isEmpty( this.collection ) ) {
 				this.collection.each( function ( item ) {
@@ -196,7 +196,7 @@ rocketComments.views.Comments = (function () {
 			}
 
 			rocketComments.get( '#cancel-comment-reply-link' ).trigger( 'click' );
-			respond.find( 'textarea#comment' ).val( '' );
+			respond.find( '#comment' ).val( '' );
 
 			this.render();
 		},
@@ -236,7 +236,7 @@ rocketComments.views.Comments = (function () {
 			var data = { page: this.comment_page };
 
 			if ( true === empty ) {
-				this.$el.find( 'ol#comment-root' ).empty();
+				rocketComments.get( '#comment-root' ).empty();
 			}
 
 			if ( this.comments_per_page > 0 ) {
@@ -245,7 +245,7 @@ rocketComments.views.Comments = (function () {
 
 			if ( this.loading ) {
 				this.loading = false;
-				rocketComments.get( 'div#wp-loading' ).fadeOut( 100, function () {
+				rocketComments.get( '#wp-loading' ).fadeOut( 100, function () {
 					rocketComments.get( '#wp-comment-content' ).fadeIn( 100 );
 				});
 			}
@@ -261,12 +261,12 @@ rocketComments.views.Comments = (function () {
 						options.xhr.getResponseHeader( 'X-WP-TotalPages' ) );
 
 					if ( this.total_comments == 1 ) {
-						rocketComments.get( '.comments-area #comment-single' )
+						rocketComments.get( '#comment-single' )
 							.fadeIn();
 					} else {
-						rocketComments.get( 'span#comment-count' )
+						rocketComments.get( '#comment-count' )
 							.html( this.total_comments );
-						rocketComments.get( '.comments-area #comment-multiple' )
+						rocketComments.get( '#comment-multiple' )
 							.fadeIn();
 					}
 
@@ -297,8 +297,8 @@ rocketComments.views.Comments = (function () {
 			model = this.collection.get( commentId );
 
 			if ( model.get( 'author' ) != this.collection.user_id ) {
-				rocketComments.get( '.comment-author-logged-in' ).hide();
-				rocketComments.get( '.comment-author-not-logged-in' ).show();
+				rocketComments.get( '#comment-author-logged-in' ).hide();
+				rocketComments.get( '#comment-author-not-logged-in' ).show();
 
 				respond.find( '#author' ).val( model.get( 'author_name' ) );
 				respond.find( '#email' ).val( model.get( 'author_email' ) );
