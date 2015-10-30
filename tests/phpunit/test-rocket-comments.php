@@ -141,6 +141,35 @@ class Test_RocketComments extends WP_UnitTestCase {
 	}
 
 	/**
+	 * @covers RocketComments::use_wp_die_handler
+	 */
+	public function test_use_wp_die_handler() {
+		$this->assertInternalType( 'bool', $this->class->use_wp_die_handler() );
+	}
+
+	/**
+	 * @covers RocketComments::wp_die_handler_callback
+	 */
+	public function test_wp_die_handler_callback() {
+		ob_start();
+		$this->class->wp_die_handler_callback();
+		$result = ob_get_clean();
+
+		$this->assertNotEmpty( $result );
+	}
+
+	/**
+	 * @covers RocketComments::wp_die_handler_checkbox_callback
+	 */
+	public function test_wp_die_handler_checkbox_callback() {
+		ob_start();
+		$this->class->wp_die_handler_checkbox_callback();
+		$result = ob_get_clean();
+
+		$this->assertContains( 'rocket-comments-wp-die-handler', $result );
+	}
+
+	/**
 	 * @covers RocketComments::comments_template
 	 */
 	public function test_comments_template() {
@@ -359,6 +388,28 @@ class Test_RocketComments extends WP_UnitTestCase {
 
 		foreach ( $values as $value ) {
 			$this->assertEquals( 0, $this->class->fetch_time_validate( $value ) );
+		}
+	}
+
+	/**
+	 * @covers RocketComments::wp_die_handler_validate
+	 */
+	public function test_wp_die_handler_validate_valid() {
+		$values = array( 'on', '' );
+
+		foreach ( $values as $value ) {
+			$this->assertEquals( $value, $this->class->wp_die_handler_validate( $value ) );
+		}
+	}
+
+	/**
+	 * @covers RocketComments::wp_die_handler_validate
+	 */
+	public function test_wp_die_handler_validate_invalid() {
+		$values = array( false, null, 'test', -1, -time() );
+
+		foreach ( $values as $value ) {
+			$this->assertEquals( '', $this->class->wp_die_handler_validate( $value ) );
 		}
 	}
 
