@@ -413,8 +413,8 @@ class RocketComments {
 		}
 
 		$updates = array(
-			'comment_date' => get_comment_date( '', $comment->comment_ID ),
-			'comment_time' => $this->get_comment_time( $comment ),
+			'comment_date' => esc_html( get_comment_date( '', $comment->comment_ID ) ),
+			'comment_time' => esc_html( $this->get_comment_time( $comment ) ),
 			'edit' => 0,
 		);
 
@@ -425,6 +425,11 @@ class RocketComments {
 		if ( is_object( $data ) && property_exists( $data, 'data' ) ) {
 			foreach ( $updates as $k => $v ) {
 				$data->data[ $k ] = $v;
+			}
+
+			if ( 1 == $updates['edit'] ) {
+				$data->data['content']['raw'] = esc_html( $comment->comment_content );
+				$data->data['author_email'] = esc_html( $comment->comment_author_email );
 			}
 		}
 
