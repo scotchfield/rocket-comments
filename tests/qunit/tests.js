@@ -21,39 +21,36 @@ QUnit.test( 'Basic rocketComment object tests', function( assert ) {
 	);
 
 	assert.ok(
-		rocketComments.setupForm,
-		'setupForm exists'
+		rocketComments.start,
+		'start exists'
+	);
+	assert.ok(
+		rocketComments.shiftPage,
+		'shiftPage exists'
+	);
+	assert.ok(
+		rocketComments.startForm,
+		'startForm exists'
+	);
+	assert.ok(
+		rocketComments.showCommentTitle,
+		'showCommentTitle exists'
 	);
 	assert.ok(
 		rocketComments.resetForm,
 		'resetForm exists'
 	);
 	assert.ok(
-		rocketComments.moveForm,
-		'moveForm exists'
+		rocketComments.cancelForm,
+		'cancelForm exists'
 	);
 	assert.ok(
-		rocketComments.editForm,
-		'editForm exists'
+		rocketComments.get,
+		'get exists'
 	);
-});
-
-QUnit.test( 'Basic rocketComments form testing', function( assert ) {
-	assert.notOk(
-		rocketComments.setupForm(),
-		'Return false for setupForm with undefined options'
-	);
-	assert.notOk(
-		rocketComments.resetForm(),
-		'Return false for setupForm with undefined options'
-	);
-	assert.notOk(
-		rocketComments.moveForm(),
-		'Return false for setupForm with undefined options'
-	);
-	assert.notOk(
-		rocketComments.editForm(),
-		'Return false for setupForm with undefined options'
+	assert.ok(
+		rocketComments.set,
+		'set exists'
 	);
 });
 
@@ -61,10 +58,6 @@ QUnit.test( 'Shotgun testing', function( assert ) {
 	assert.ok(
 		shotgun( _.bind( rocketComments.start, rocketComments ) ),
 		'Shotgun tests for rocketComments.start'
-	);
-	assert.ok(
-		shotgun( _.bind( rocketComments.shiftPage, rocketComments ) ),
-		'Shotgun tests for rocketComments.shiftPage'
 	);
 
 	var model = new rocketComments.models.Comment();

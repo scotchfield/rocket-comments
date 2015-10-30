@@ -88,6 +88,10 @@ rocketComments.showCommentTitle = function ( action ) {
 rocketComments.resetForm = function () {
 	var respond = this.get( '#respond' );
 
+	if ( ! respond.length ) {
+		return false;
+	}
+
 	rocketComments.get( '#wp-comment-content' ).append( respond );
 
 	this.get( '#comment' ).val( '' );
