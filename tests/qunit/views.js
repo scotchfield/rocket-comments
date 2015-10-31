@@ -1,7 +1,25 @@
 QUnit.test( 'Basic CommentView testing', function( assert ) {
+	var $el, view;
+
 	assert.ok(
 		new rocketComments.views.Comment(),
 		'New comment view creation'
+	);
+
+	view = new rocketComments.views.Comment();
+	view.render();
+	assert.notOk(
+		view.$el[0].id,
+		'CommentView render doesn\'t work with no model and template'
+	);
+
+	$el = jQuery( '<div id="comment-template"></div>' );
+	view = new rocketComments.views.Comment();
+	view.model = new rocketComments.models.Comment();
+	view.render();
+	assert.ok(
+		view.$el[0].id,
+		'CommentView render actually renders'
 	);
 });
 
