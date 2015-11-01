@@ -70,4 +70,9 @@ QUnit.test( 'Basic CommentsView testing', function( assert ) {
 		undefined === view.fetchComments(),
 		'No errors on fetchComments'
 	);
+
+	assert.ok(
+		view.handleError( undefined, { responseText: '"test"' } ),
+		'handleError with test responseText'
+	);
 });

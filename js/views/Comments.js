@@ -230,6 +230,8 @@ rocketComments.views.Comments = (function () {
 				responseText[0].message,
 				5000
 			);
+
+			return true;
 		},
 
 		fetchComments: function ( empty ) {

@@ -52,6 +52,12 @@ QUnit.test( 'Basic rocketComment object tests', function( assert ) {
 		rocketComments.set,
 		'set exists'
 	);
+
+	rocketComments.start();
+	assert.ok(
+		rocketComments.hasOwnProperty( 'cache' ),
+		'rocketComments cache created'
+	);
 });
 
 QUnit.test( 'Shotgun testing', function( assert ) {

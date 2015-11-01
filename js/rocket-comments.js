@@ -6,8 +6,6 @@ var rocketComments = rocketComments || {};
  * Set up the initial Rocket Comments environment and handlers.
  */
 rocketComments.start = function () {
-	rocketComments.cache = {};
-
 	rocketComments.get( '#wp-loading' ).show();
 
 	if ( undefined !== rocketComments.started ) {
@@ -129,6 +127,10 @@ rocketComments.cancelForm = function ( comment ) {
  * @param {String} id - The string selector to pass to jQuery
  */
 rocketComments.get = function ( id ) {
+	if ( undefined === rocketComments.cache ) {
+		rocketComments.cache = {};
+	}
+
 	if ( undefined === rocketComments.cache[id] ) {
 		rocketComments.set( id, jQuery( id ) );
 	}
@@ -143,5 +145,9 @@ rocketComments.get = function ( id ) {
  * @param data - A piece of data to associate with the id in the cache
  */
 rocketComments.set = function ( id, data ) {
+	if ( undefined === rocketComments.cache ) {
+		rocketComments.cache = {};
+	}
+
 	rocketComments.cache[id] = data;
 };
