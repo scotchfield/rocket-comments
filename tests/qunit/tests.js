@@ -52,11 +52,31 @@ QUnit.test( 'Basic rocketComment object tests', function( assert ) {
 		rocketComments.set,
 		'set exists'
 	);
+});
+
+QUnit.test( 'rocketComment functionality tests', function( assert ) {
+	var page = 1,
+		rc = { fetchComments: function () {} };
 
 	rocketComments.start();
+
 	assert.ok(
 		rocketComments.hasOwnProperty( 'cache' ),
 		'rocketComments cache created'
+	);
+
+	rc.comment_page = page;
+	rocketComments.shiftPage.call( rc, 1 );
+	assert.ok(
+		rc.comment_page === 2,
+		'shiftPage can increase page by one'
+	);
+
+	rc.comment_page = page;
+	rocketComments.shiftPage.call( rc, -1 );
+	assert.ok(
+		rc.comment_page === 0,
+		'shiftPage can increase page by one'
 	);
 });
 
