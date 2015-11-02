@@ -103,10 +103,6 @@ QUnit.test( 'Shotgun testing', function( assert ) {
 	);
 
 	var view = new rocketComments.views.Comments();
-	assert.ok(
-		shotgun( _.bind( view.submitComment, view ) ),
-		'Shotgun tests for Comments view submitComment'
-	);
 
 	assert.ok(
 		shotgun( _.bind( view.showNotify, view ) ),

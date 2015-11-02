@@ -46,9 +46,9 @@ QUnit.test( 'Basic CommentsView testing', function( assert ) {
 		'Render completes with no errors'
 	);
 
-	assert.notOk(
-		view.submitComment(),
-		'Get false from submitComment with undefined event'
+	assert.ok(
+		undefined === view.submitComment( new MouseEvent( 'click' ) ),
+		'No errors from submitComment with new click event'
 	);
 
 	assert.ok(

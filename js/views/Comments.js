@@ -133,10 +133,6 @@ rocketComments.views.Comments = (function () {
 		},
 
 		submitComment: function ( e ) {
-			if ( ! _.isObject( e ) || ! ( 'preventDefault' in e ) ) {
-				return false;
-			}
-
 			e.preventDefault();
 
 			var $el = jQuery( e.currentTarget ).closest( 'li' ),
