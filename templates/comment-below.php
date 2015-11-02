@@ -2,7 +2,7 @@
 	<article id="div-comment-<%= attributes.id %>" class="comment-body">
 		<footer class="comment-meta">
 			<div class="comment-author vcard">
-				<img alt src="<%= attributes.author_avatar_urls['56'] %>" class="avatar" height="56" width="56" />
+				<img alt="<?php _e( 'Avatar', 'rocket-comments' ); ?>" src="<%= attributes.author_avatar_urls['56'] %>" class="avatar" height="56" width="56" />
 				<?php echo '<b class="fn"><a href="<%= attributes.author_url %>" rel="external nofollow" class="url"><%= attributes.author_name %></a></b>'; ?>
 			</div>
 			<% if ( attributes.status == 'hold' ) { %>
